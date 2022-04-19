@@ -8,15 +8,49 @@ const headers = {
   'Access-Control-Allow-Methods': 'PATCH, POST, GET, OPTIONS, DELETE',
   'Content-Type': 'application/json',
 };
-const PostModel = [
-  {
-    userName: '邊綠小杰',
-    userPhoto: 'https://unsplash.it/500/500/?random=4',
-    discussContent: '外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<',
-    discussPhoto:
-      'https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80',
+
+const DBPath = 'mongodb://localhost:27017/MetaWall';
+mongoose
+  .connect(DBPath)
+  .then((response) => {
+    console.log('mongoose link ok !!');
+  })
+  .catch((error) => {
+    console.log('mongoose link error', error);
+  });
+
+const schemaOptions = {
+  toObject: {
+    getters: true,
+    virtuals: true,
+    versionKey: false,
   },
-];
+  toJSON: {
+    getters: true,
+    virtuals: true,
+    versionKey: false,
+  },
+  runSettersOnQuery: true,
+  versionKey: false,
+};
+const PostRequiredFormat = {
+  userName: {
+    type: String,
+    required: [true, '名稱必填'],
+  },
+  userPhoto: String,
+  discussContent: {
+    type: String,
+    required: [true, '內容必填'],
+  },
+  discussPhoto: String,
+  createAt: {
+    type: Date,
+    default: Date.now(),
+  },
+};
+const PostSchema = new mongoose.Schema(PostRequiredFormat, schemaOptions);
+const PostModel = mongoose.model('Post', PostSchema); // mongoose 'Post' => mongoDB posts
 
 const requestListener = async (req, res) => {
   let body = '';
@@ -27,7 +61,7 @@ const requestListener = async (req, res) => {
     res.write(
       JSON.stringify({
         status: 'success',
-        data: PostModel,
+        data: await PostModel.find(),
       })
     );
     res.end();
