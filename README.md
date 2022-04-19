@@ -1,9 +1,8 @@
 
 ## API 格式
-====
-
 ### POST /posts
 ``` JSON
+// JSON 格式
 {
   "userName": "邊綠小杰",
   "userPhoto": "https://unsplash.it/500/500/?random=4",
@@ -12,7 +11,5 @@
 }
 ```
 
-
 ## 相關資料
-====
 - [Adobe XD 設計稿 - MetaWall 連結](https://xd.adobe.com/view/c0763dbe-fc15-42e8-be0b-8956ed03e675-9525/grid)
