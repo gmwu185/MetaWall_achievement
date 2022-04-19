@@ -11,5 +11,18 @@
 }
 ```
 
+## 套件與指令
+
+專案 clone 或是沒有 node_modules 資料夾情形下，而下指令透 NPM 載下專案所需的套件。
+```
+npm i
+```
+
+開發時結合 Node 環境變數於指令使用，需與 `nodemon` 全域套件使用，在配合下指令執行 `npm run dev` 會直接由變數指向 mongoDB 本地端資料庫，其他的指令與都以遠端 mongoDB Altas 資料庫為主。
+
+```
+npm i nodemon --save
+```
+
 ## 相關資料
 - [Adobe XD 設計稿 - MetaWall 連結](https://xd.adobe.com/view/c0763dbe-fc15-42e8-be0b-8956ed03e675-9525/grid)

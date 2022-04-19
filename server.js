@@ -10,11 +10,15 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-// const DBPath = 'mongodb://localhost:27017/MetaWall';
-let DBPath = process.env.DB_URL;
-DBPath = DBPath.replace('<password>', process.env.DB_PASSWORD);
-DBPath = DBPath.replace('myFirstDatabase', process.env.DB_NAME);
-console.log('DBPath', DBPath);
+console.log('NODE_ENV', process.env.NODE_ENV);
+let DBPath = '';
+if (process.env.NODE_ENV === 'development') {
+  DBPath = 'mongodb://localhost:27017/' + process.env.DB_NAME;
+} else {
+  DBPath = process.env.DB_URL;
+  DBPath = DBPath.replace('<password>', process.env.DB_PASSWORD);
+  DBPath = DBPath.replace('myFirstDatabase', process.env.DB_NAME);
+}
 
 mongoose
   .connect(DBPath)
