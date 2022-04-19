@@ -65,6 +65,32 @@ const requestListener = async (req, res) => {
       })
     );
     res.end();
+  } else if (req.url === '/posts' && req.method === 'POST') {
+    req.on('end', async () => {
+      try {
+        const { userName, discussContent, userPhoto, discussPhoto } =
+          JSON.parse(body);
+        const newPostData = {
+          userName,
+          discussContent,
+          userPhoto,
+          discussPhoto,
+        };
+
+        await PostModel.create(newPostData);
+
+        res.writeHead(200, headers);
+        res.write(
+          JSON.stringify({
+            status: 'success',
+            data: await PostModel.find(),
+          })
+        );
+        res.end();
+      } catch (error) {
+        console.log('posts error', error);
+      }
+    });
   } else if (req.method === 'OPTIONS') {
     res.writeHead(200, headers);
     res.end();
