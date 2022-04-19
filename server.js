@@ -1,5 +1,6 @@
 const http = require('http');
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 const headers = {
   'Access-Control-Allow-Headers':
@@ -9,7 +10,12 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-const DBPath = 'mongodb://localhost:27017/MetaWall';
+// const DBPath = 'mongodb://localhost:27017/MetaWall';
+let DBPath = process.env.DB_URL;
+DBPath = DBPath.replace('<password>', process.env.DB_PASSWORD);
+DBPath = DBPath.replace('myFirstDatabase', process.env.DB_NAME);
+console.log('DBPath', DBPath);
+
 mongoose
   .connect(DBPath)
   .then((response) => {
