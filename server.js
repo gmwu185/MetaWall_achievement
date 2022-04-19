@@ -100,6 +100,10 @@ const requestListener = async (req, res) => {
     res.end();
   }
 };
-
 const server = http.createServer(requestListener);
-server.listen(3005);
+const localPortNum = 3005;
+server.listen(process.env.PORT || localPortNum, () => {
+  process.env.PORT
+    ? console.log('Deploy Heroku Successfully')
+    : console.log(`Server running at http://localhost:${localPortNum}/`);
+});
