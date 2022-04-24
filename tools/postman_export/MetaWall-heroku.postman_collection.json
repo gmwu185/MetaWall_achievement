@@ -32,13 +32,33 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"userName\": \"邊綠小杰\",\n  \"userPhoto\": \"https://unsplash.it/500/500/?random=4\",\n  \"discussContent\": \"外面看起來就超冷…\\n\\r我決定回被窩繼續睡…>.<\",\n  \"discussPhoto\": \"https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80\"\n}",
+					"raw": "{\n  \"userName\": \"邊綠小杰 Psot to heroku\",\n  \"userPhoto\": \"https://unsplash.it/500/500/?random=4\",\n  \"discussContent\": \"外面看起來就超冷…\\n\\r我決定回被窩繼續睡…>.<\",\n  \"discussPhoto\": \"https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
+				"url": {
+					"raw": "https://stormy-plateau-16452.herokuapp.com/posts",
+					"protocol": "https",
+					"host": [
+						"stormy-plateau-16452",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delAllPosts",
+			"request": {
+				"method": "DELETE",
+				"header": [],
 				"url": {
 					"raw": "https://stormy-plateau-16452.herokuapp.com/posts",
 					"protocol": "https",
