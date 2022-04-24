@@ -32,4 +32,4 @@ DB_PASSWORD="<password>"
 ```
 
 ## 相關資料
-- [Adobe XD 設計稿 - MetaWall 連結](https://xd.adobe.com/view/c0763dbe-fc15-42e8-be0b-8956ed03e675-9525/grid)
+- [第二週小組任務 - 文件與說明](https://xd.adobe.com/view/c0763dbe-fc15-42e8-be0b-8956ed03e675-9525/grid)
