@@ -11,7 +11,7 @@
 }
 ```
 
-## 套件與指令
+## 環境與套件與指令
 
 專案 clone 或是沒有 node_modules 資料夾情形下，而下指令透 NPM 載下專案所需的套件。
 ```
@@ -22,6 +22,13 @@ npm i
 
 ```
 npm i nodemon --save
+```
+
+與專案資料夾新增 .env 檔案，新增環境變數名稱 `<mongoDB_user_no>` 不列入以 DB 取得使用者名為主
+```
+DB_URL="mongodb+srv://<mongoDB_user_no>:<password>@cluster0.rrh0g.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+DB_NAME="<myFirstDatabase>"
+DB_PASSWORD="<password>"
 ```
 
 ## 相關資料
