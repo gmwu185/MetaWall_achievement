@@ -18,7 +18,8 @@
 npm i
 ```
 
-開發時結合 Node 環境變數於指令使用，需與 `nodemon` 全域套件使用，在配合下指令執行 `npm run dev` 會直接由變數指向 mongoDB 本地端資料庫，其他的指令與都以遠端 mongoDB Altas 資料庫為主。
+- 執行 `npm run dev`：開發時結合 Node 環境變數於指令使用，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB 本地端資料庫。
+- `npm start`： npm 預設指令以遠端主機與遠端 mongoDB Altas 資料庫為主。
 
 ```
 npm i nodemon --save
@@ -32,4 +33,4 @@ DB_PASSWORD="<password>"
 ```
 
 ## 相關資料
-- [第二週小組任務 - 文件與說明](https://xd.adobe.com/view/c0763dbe-fc15-42e8-be0b-8956ed03e675-9525/grid)
+- [第二週小組任務 - 文件與說明](https://hackmd.io/3a69ZWYYRWedOBFN3GZx0g?view)
