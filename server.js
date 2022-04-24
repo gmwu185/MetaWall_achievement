@@ -4,14 +4,6 @@ require('dotenv').config();
 
 const PostModel = require('./models/post');
 
-const headers = {
-  'Access-Control-Allow-Headers':
-    'Content-Type, Authorization, Content-Length, X-Requested-With',
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'PATCH, POST, GET, OPTIONS, DELETE',
-  'Content-Type': 'application/json',
-};
-
 console.log('NODE_ENV', process.env.NODE_ENV);
 let DBPath = '';
 if (process.env.NODE_ENV === 'development') {
@@ -31,18 +23,25 @@ mongoose
     console.log('mongoose link error', error);
   });
 
-
+const headers = {
+  'Access-Control-Allow-Headers':
+    'Content-Type, Authorization, Content-Length, X-Requested-With',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'PATCH, POST, GET, OPTIONS, DELETE',
+  'Content-Type': 'application/json',
+};
 
 const requestListener = async (req, res) => {
   let body = '';
   req.on('data', (chunk) => (body += chunk));
 
   if (req.url === '/posts' && req.method === 'GET') {
+    const rooms = await PostModel.find();
     res.writeHead(200, headers);
     res.write(
       JSON.stringify({
         status: 'success',
-        data: await PostModel.find(),
+        data: rooms,
       })
     );
     res.end();
@@ -57,21 +56,43 @@ const requestListener = async (req, res) => {
           userPhoto,
           discussPhoto,
         };
-
-        await PostModel.create(newPostData);
-
+        const createPostData = await PostModel.create({ ...newPostData });
         res.writeHead(200, headers);
         res.write(
           JSON.stringify({
             status: 'success',
-            data: await PostModel.find(),
+            data: createPostData,
           })
         );
         res.end();
+        console.log('createPostData', createPostData);
       } catch (error) {
-        console.log('posts error', error);
+        console.log(
+          'POST error.name => ',
+          error.name,
+          'POST error.message => ',
+          error.message
+        );
+        res.writeHead(400, headers);
+        res.write(
+          JSON.stringify({
+            status: 'false',
+            error: error.name == 'SyntaxError' ? '資料格式解析錯誤' : error,
+          })
+        );
+        res.end();
       }
     });
+  } else if (req.url == '/posts' && req.method == 'DELETE') {
+    await PostModel.deleteMany({});
+    res.writeHead(200, headers);
+    res.write(
+      JSON.stringify({
+        status: 'success',
+        data: [],
+      })
+    );
+    res.end();
   } else if (req.method === 'OPTIONS') {
     res.writeHead(200, headers);
     res.end();
