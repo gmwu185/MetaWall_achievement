@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "NODE_ENV=development nodemon server.js"
+    "start": "cross-env node server.js",
+    "dev": "cross-env NODE_ENV=development nodemon server.js"
   },
   "keywords": [],
   "author": "JimmyWu",
@@ -16,5 +16,8 @@
   },
   "engines": {
     "node": "16.x"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
