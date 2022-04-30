@@ -19,7 +19,7 @@ const PostRequiredFormat = {
   },
   createAt: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
     select: true,
     /** mongoos 自定時間搓
      * 寫入 db 時間轉成 UTC 時間（+0）
