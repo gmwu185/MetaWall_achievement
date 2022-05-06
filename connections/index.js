@@ -10,6 +10,7 @@ if (process.env.NODE_ENV === 'production') {
   DBPath = DBPath.replace('<password>', process.env.DB_PASSWORD);
   DBPath = DBPath.replace('myFirstDatabase', process.env.DB_NAME);
 } else if (process.env.NODE_ENV === 'development') {
+  console.log('env development > else if');
   DBPath = 'mongodb://localhost:27017/' + process.env.DB_NAME;
 }
 

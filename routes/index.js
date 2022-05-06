@@ -5,11 +5,6 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
-router.get('/posts', function (req, res, next) {
-  console.log('/posts req.url', req.url);
-  res.json({ title: 'json' });
-  res.end();
-});
+router.options('/', (req, res, next) => res.status(200).end());
 
 module.exports = router;
