@@ -10,13 +10,13 @@ module.exports = {
   async createdPost(req, res) {
     try {
       const { body } = req;
-      // console.log('createdPost req.body', req.body);
-      if (body.content) {
+      
+      if (body.userName) {
         const newPost = await Posts.create({
-          name: body.name,
-          content: body.content,
-          tags: body.tags,
-          type: body.type,
+          userName: body.userName,
+          userPhoto: body.userPhoto,
+          discussContent: body.discussContent,
+          discussPhoto: body.discussPhoto,
         });
         handleSuccess(res, newPost);
       } else {
@@ -56,16 +56,15 @@ module.exports = {
   async upDatePost(req, res) {
     try {
       const { body } = req;
-      // const data = JSON.parse(body);
       const urlID = req.url.split('/').pop();
-      if (body.content) {
+      if (body.userName) {
         const editPost = await Posts.findByIdAndUpdate(
           urlID,
           {
-            name: body.name,
-            content: body.content,
-            tags: body.tags,
-            type: body.type,
+            userName: body.userName,
+            userPhoto: body.userPhoto,
+            discussContent: body.discussContent,
+            discussPhoto: body.discussPhoto,
           },
           { returnDocument: 'after' }
         );
