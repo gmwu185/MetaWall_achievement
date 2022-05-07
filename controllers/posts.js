@@ -4,13 +4,20 @@ const Posts = require('../model/posts');
 
 module.exports = {
   async getPosts(req, res) {
-    const allPosts = await Posts.find();
+    const timeSort = req.query.timeSort === 'asc' ? 'createAt' : '-createAt';
+    const q =
+      req.query.q !== undefined ? { discussContent: new RegExp(req.query.q) } : {};
+    /** 網址參數用法：
+      * 參數名 timeSort 是否有 'asc' 值，有值有舊到新；沒值有新到舊
+      * 參數名 q 用正則表達式以 JS 轉 mongDB 語法 .find( parName: /<查尋字串>/)，以物件包裝查找留言
+    */
+    const allPosts = await Posts.find(q).sort(timeSort);
     handleSuccess(res, allPosts);
   },
   async createdPost(req, res) {
     try {
       const { body } = req;
-      
+
       if (body.userName) {
         const newPost = await Posts.create({
           userName: body.userName,
