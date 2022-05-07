@@ -1,23 +1,20 @@
 {
-  "name": "metawall_backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "express-mvc",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "node server.js",
-    "dev": "cross-env NODE_ENV=development nodemon server.js"
+    "start": "node ./bin/www",
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www ",
+    "server": "cross-env NODE_ENV=production nodemon ./bin/www"
   },
-  "keywords": [],
-  "author": "JimmyWu",
-  "license": "ISC",
   "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "debug": "~2.6.9",
     "dotenv": "^16.0.0",
-    "mongoose": "^6.3.0"
-  },
-  "engines": {
-    "node": "16.x"
-  },
-  "devDependencies": {
-    "cross-env": "^7.0.3"
+    "express": "~4.16.1",
+    "mongoose": "^6.3.2",
+    "morgan": "~1.9.1"
   }
 }

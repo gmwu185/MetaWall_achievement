@@ -1,11 +1,5 @@
 
 ## API 格式
-
-### GET /posts
-網址參數用法：
-- 參數名 `timeSort` 是否有 `asc` 值，有值有舊到新；沒值有新到舊
-- 參數名 q 使用正則表達式以 JS `new RegExp(<網址參數>)` 轉 mongDB 語法 `.find( parName: /<查尋字串>/)`，以物件包裝查找留言。
-
 ### POST /posts
 ``` JSON
 // JSON 格式
@@ -25,15 +19,18 @@ npm i
 ```
 
 - 執行 `npm run dev`：開發時結合 Node 環境變數於指令使用，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB 本地端資料庫。
-- 執行 `npm run server`：開發時結合 Node 環境變數於指令使用，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB Atias 遠端資料庫。
-- `npm start`： npm 預設指令以遠端主機與遠端 mongoDB Atias 資料庫為主。
+- `npm start`： npm 預設指令以遠端主機與遠端 mongoDB Altas 資料庫為主。
 
 ```
 npm i nodemon --save
 ```
 
-專案資料夾透過 `.env` 檔案，向遠端 mongoDB Atias，請參考 `ex.env` 檔做做設定
-
+與專案資料夾新增 .env 檔案，新增環境變數名稱 `<mongoDB_user_no>` 不列入以 DB 取得使用者名為主
+```
+DB_URL="mongodb+srv://<mongoDB_user_no>:<password>@cluster0.rrh0g.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+DB_NAME="<myFirstDatabase>"
+DB_PASSWORD="<password>"
+```
 
 ## 相關資料
 - [第二週小組任務 - 文件與說明](https://hackmd.io/3a69ZWYYRWedOBFN3GZx0g?view)
