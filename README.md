@@ -1,21 +1,8 @@
 
 ## API 格式
 
-### GET /posts
-網址參數用法：
-- 參數名 `timeSort` 是否有 `asc` 值，有值有舊到新；沒值有新到舊
-- 參數名 q 使用正則表達式以 JS `new RegExp(<網址參數>)` 轉 mongDB 語法 `.find( parName: /<查尋字串>/)`，以物件包裝查找留言。
-
-### POST /posts
-``` JSON
-// JSON 格式
-{
-  "userName": "邊綠小杰",
-  "userPhoto": "https://unsplash.it/500/500/?random=4",
-  "discussContent": "外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<",
-  "discussPhoto": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
-}
-```
+- [swagger 文件](https://stormy-plateau-16452.herokuapp.com/api-doc/)
+- [npm swagger-autogen 本版使用文件 (使用 v2.5.10 但此版文件找不到使用 v2.5.12)] (https://www.npmjs.com/package/swagger-autogen/v/2.5.12)
 
 ## 環境與套件與指令
 
