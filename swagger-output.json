@@ -11,34 +11,13 @@
     "http",
     "https"
   ],
-  "securityDefinitions": {
-    "apiKeyAuth": {
-      "type": "apiKey",
-      "in": "headers",
-      "name": "authorization",
-      "description": "請加上 API Token"
-    }
-  },
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      },
-      "options": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/posts/": {
       "get": {
-        "description": "",
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "  參數用法：  <ul>  <li><code>timeSort</code> 參數：  <ol>  <li>預設新到舊</li>  <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ol>  </li>  <li><code>q</code> 參數：  <ol>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ol>  </li>  </ul>  ",
         "parameters": [
           {
             "name": "timeSort",
@@ -51,22 +30,111 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "  取得全部貼文  ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "123456789"
+                      },
+                      "userName": {
+                        "type": "string",
+                        "example": "邊綠小杰"
+                      },
+                      "userPhoto": {
+                        "type": "string",
+                        "example": "https://unsplash.it/500/500/?random=4"
+                      },
+                      "discussContent": {
+                        "type": "string",
+                        "example": "string"
+                      },
+                      "discussPhoto": {
+                        "type": "string",
+                        "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                      },
+                      "createAt": {
+                        "type": "string",
+                        "example": "2022-04-30T16:22:16.418Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       },
       "post": {
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "新增單筆貼文",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "邊綠小杰"
+                },
+                "userPhoto": {
+                  "type": "string",
+                  "example": "https://unsplash.it/500/500/?random=4"
+                },
+                "discussContent": {
+                  "type": "string",
+                  "example": "外面看起來就超冷…\n 我決定回被窩繼續睡…>.<"
+                },
+                "discussPhoto": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                }
+              },
+              "required": [
+                "userName",
+                "discussContent"
+              ]
+            }
+          }
+        ],
         "responses": {}
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "刪除所有貼文",
         "parameters": [],
         "responses": {}
       }
     },
     "/posts/{id}": {
       "delete": {
-        "description": "",
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "刪除單筆貼文",
         "parameters": [
           {
             "name": "id",
@@ -78,13 +146,47 @@
         "responses": {}
       },
       "patch": {
-        "description": "",
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "更新單筆貼文",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "邊綠小杰-PACH"
+                },
+                "userPhoto": {
+                  "type": "string",
+                  "example": "https://unsplash.it/500/500/?random=4"
+                },
+                "discussContent": {
+                  "type": "string",
+                  "example": "string-PACH"
+                },
+                "discussPhoto": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                }
+              },
+              "required": [
+                "userName",
+                "discussContent"
+              ]
+            }
           }
         ],
         "responses": {}
@@ -92,7 +194,10 @@
     },
     "/users/": {
       "get": {
-        "description": "",
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "取得所有使用者資料",
         "parameters": [],
         "responses": {
           "200": {
@@ -100,38 +205,6 @@
           }
         }
       }
-    }
-  },
-  "definitions": {
-    "createdPosts": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": "createdPost--test 加入 swagger.js 中"
-        },
-        "content": {
-          "type": "string",
-          "example": "createdPost-test"
-        },
-        "tags": {
-          "type": "array",
-          "example": [
-            "string-1",
-            "string-2"
-          ],
-          "items": {
-            "type": "string"
-          }
-        },
-        "type": {
-          "type": "string",
-          "example": "string"
-        }
-      },
-      "required": [
-        "name"
-      ]
     }
   }
 }
