@@ -193,17 +193,46 @@
       }
     },
     "/users/": {
-      "get": {
+      "post": {
         "tags": [
           "users (使用者)"
         ],
-        "description": "取得所有使用者資料",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
+        "description": "新增使用者",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "jimmyWu"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "gg@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                },
+                "userPhoto": {
+                  "type": "string",
+                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                }
+              },
+              "required": [
+                "userName",
+                "email",
+                "password"
+              ]
+            }
           }
-        }
+        ],
+        "responses": {}
       }
     }
   }
