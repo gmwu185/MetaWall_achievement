@@ -6,6 +6,7 @@ module.exports = {
   async getPosts(req, res) {
     /** #swagger.tags = ['posts (貼文)']
       *? #swagger.description = `
+          <p>取得所有貼文。</p>
           參數用法：
           <ul>
             <li><code>timeSort</code> 參數：
@@ -30,12 +31,19 @@ module.exports = {
           "status": true,
           "data": [
             {
-              "_id": "123456789",
-              "userName": "邊綠小杰",
-              "userPhoto": "https://unsplash.it/500/500/?random=4",
-              "discussContent": "string",
-              "discussPhoto": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80",
-              "createAt": "2022-04-30T16:22:16.418Z"
+              "_id": "6284f91e51cc73dad4255eb3",
+              "userData": {
+                "_id": "6283dc5a60d07bddfa09e3a2",
+                "userName": "aa",
+                "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                "email": "aa@mail.com"
+              },
+              "discussContent": "外面看起來就超冷…\n\n我決定回被窩繼續睡…>.<-33",
+              "discussPhoto": "",
+              "tag": "標籤",
+              "likes": 0,
+              "comments": 0,
+              "createAt": "2022-05-18T13:48:14.766Z"
             },
           ]
         }
@@ -68,12 +76,16 @@ module.exports = {
             in: "body",
             type: "object",
             required: true,
-            description: "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            description: `
+              <ul>
+                <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>
+                <li>新增貼文需先有 user 資料 (<code>body.userData.id</code> 更換成 user ID)，透過 user 資料取 id (向 posts 的屬性欄位 <code>userData</code> 關連)。</li>
+              </ul> `,
             schema: {
-              "$userName": "邊綠小杰",
-              "userPhoto": "https://unsplash.it/500/500/?random=4",
-              "$discussContent": "外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<",
-              "discussPhoto": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+              "userData": "body.userData.id",
+              "$discussContent": "外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-",
+              "discussPhoto": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80",
+              "$tag": "標籤 string"
             }
           }
         */
@@ -141,8 +153,8 @@ module.exports = {
      */ 
     try {
       const { body } = req;
-      const urlID = req.url.split('/').pop();
-      if (body.userName) {
+      const urlID = req.params.id;
+      if (urlID) {
         /**
           ** #swagger.parameters['body'] = {
             in: "body",
@@ -150,9 +162,8 @@ module.exports = {
             required: true,
             description: "Body 資料格式",
             schema: {
-              "$userName": "邊綠小杰-PACH",
-              "userPhoto": "https://unsplash.it/500/500/?random=4",
-              "$discussContent": "string-PACH",
+              "tag": "string-PATCH",
+              "$discussContent": "string-PATCH",
               "discussPhoto": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
             },
           }
@@ -160,8 +171,7 @@ module.exports = {
         const editPost = await Posts.findByIdAndUpdate(
           urlID,
           {
-            userName: body.userName,
-            userPhoto: body.userPhoto,
+            tag: body.tag,
             discussContent: body.discussContent,
             discussPhoto: body.discussPhoto,
           },

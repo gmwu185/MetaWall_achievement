@@ -17,7 +17,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  參數用法：  <ul>  <li><code>timeSort</code> 參數：  <ol>  <li>預設新到舊</li>  <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ol>  </li>  <li><code>q</code> 參數：  <ol>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ol>  </li>  </ul>  ",
+        "description": "  <p>取得所有貼文。</p>  參數用法：  <ul>  <li><code>timeSort</code> 參數：  <ol>  <li>預設新到舊</li>  <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ol>  </li>  <li><code>q</code> 參數：  <ol>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ol>  </li>  </ul>  ",
         "parameters": [
           {
             "name": "timeSort",
@@ -47,27 +47,52 @@
                     "properties": {
                       "_id": {
                         "type": "string",
-                        "example": "123456789"
+                        "example": "6284f91e51cc73dad4255eb3"
                       },
-                      "userName": {
-                        "type": "string",
-                        "example": "邊綠小杰"
-                      },
-                      "userPhoto": {
-                        "type": "string",
-                        "example": "https://unsplash.it/500/500/?random=4"
+                      "userData": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6283dc5a60d07bddfa09e3a2"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "aa"
+                          },
+                          "userPhoto": {
+                            "type": "string",
+                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "aa@mail.com"
+                          }
+                        }
                       },
                       "discussContent": {
                         "type": "string",
-                        "example": "string"
+                        "example": "外面看起來就超冷…\n\n我決定回被窩繼續睡…>.<-33"
                       },
                       "discussPhoto": {
                         "type": "string",
-                        "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                        "example": ""
+                      },
+                      "tag": {
+                        "type": "string",
+                        "example": "標籤"
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "comments": {
+                        "type": "number",
+                        "example": 0
                       },
                       "createAt": {
                         "type": "string",
-                        "example": "2022-04-30T16:22:16.418Z"
+                        "example": "2022-05-18T13:48:14.766Z"
                       }
                     }
                   }
@@ -90,30 +115,30 @@
             "name": "body",
             "in": "body",
             "required": true,
-            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            "description": "  <ul>  <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>  <li>新增貼文需先有 user 資料 (<code>body.userData.id</code> 更換成 user ID)，透過 user 資料取 id (向 posts 的屬性欄位 <code>userData</code> 關連)。</li>  </ul> ",
             "schema": {
               "type": "object",
               "properties": {
-                "userName": {
+                "userData": {
                   "type": "string",
-                  "example": "邊綠小杰"
-                },
-                "userPhoto": {
-                  "type": "string",
-                  "example": "https://unsplash.it/500/500/?random=4"
+                  "example": "body.userData.id"
                 },
                 "discussContent": {
                   "type": "string",
-                  "example": "外面看起來就超冷…\n 我決定回被窩繼續睡…>.<"
+                  "example": "外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-"
                 },
                 "discussPhoto": {
                   "type": "string",
                   "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                },
+                "tag": {
+                  "type": "string",
+                  "example": "標籤 string"
                 }
               },
               "required": [
-                "userName",
-                "discussContent"
+                "discussContent",
+                "tag"
               ]
             }
           }
@@ -165,17 +190,13 @@
             "schema": {
               "type": "object",
               "properties": {
-                "userName": {
+                "tag": {
                   "type": "string",
-                  "example": "邊綠小杰-PACH"
-                },
-                "userPhoto": {
-                  "type": "string",
-                  "example": "https://unsplash.it/500/500/?random=4"
+                  "example": "string-PATCH"
                 },
                 "discussContent": {
                   "type": "string",
-                  "example": "string-PACH"
+                  "example": "string-PATCH"
                 },
                 "discussPhoto": {
                   "type": "string",
@@ -183,7 +204,6 @@
                 }
               },
               "required": [
-                "userName",
                 "discussContent"
               ]
             }
@@ -209,11 +229,11 @@
               "properties": {
                 "userName": {
                   "type": "string",
-                  "example": "jimmyWu"
+                  "example": "邊綠小杰"
                 },
                 "email": {
                   "type": "string",
-                  "example": "gg@mail.com"
+                  "example": "aa@mail.com"
                 },
                 "password": {
                   "type": "string",
@@ -221,7 +241,7 @@
                 },
                 "userPhoto": {
                   "type": "string",
-                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                  "example": "https://unsplash.it/500/500/?random=4"
                 }
               },
               "required": [
