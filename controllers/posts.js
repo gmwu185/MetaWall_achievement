@@ -48,8 +48,11 @@ module.exports = {
       * 參數名 timeSort 是否有 'asc' 值，有值有舊到新；沒值有新到舊
       * 參數名 q 用正則表達式以 JS 轉 mongDB 語法 .find( parName: /<查尋字串>/)，以物件包裝查找留言
     */
-    const allPosts = await Posts.find(q).sort(timeSort);
-    handleSuccess(res, allPosts);
+    const posts = await Posts.find(q).populate({
+        path: "userData",
+        select: "email userPhoto userName",
+      }).sort(timeSort);
+    handleSuccess(res, posts);
   },
   async createdPost(req, res) {
     /** #swagger.tags = ['posts (貼文)']
@@ -57,8 +60,9 @@ module.exports = {
      */
     try {
       const { body } = req;
-
-      if (body.userName) {
+      // console.log('body.user.id', body.user.id);
+      if (body.userData) {
+        console.log('body.userData', body.userData);
         /**
           ** #swagger.parameters['body'] = {
             in: "body",
@@ -74,10 +78,9 @@ module.exports = {
           }
         */
         const newPost = await Posts.create({
-          userName: body.userName,
-          userPhoto: body.userPhoto,
+          userData: body.userData,
           discussContent: body.discussContent,
-          discussPhoto: body.discussPhoto,
+          tag: body.tag
         });
         handleSuccess(res, newPost);
       } else {

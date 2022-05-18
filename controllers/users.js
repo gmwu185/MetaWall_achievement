@@ -28,6 +28,7 @@ module.exports = {
         email: data.email,
         password: data.password,
         userPhoto: data.userPhoto, // 頭像
+        gender: data.gender
       };
       await User.create(user).then(async () => {
         const allUser = await User.find();

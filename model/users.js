@@ -5,6 +5,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, '名字必填'],
     },
+    userPhoto: {
+      type: String,
+      required: false,
+    },
     email: {
       type: String,
       required: [true, 'email必填'],
@@ -12,10 +16,13 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: [true, 'password必填'],
+      minlength: 8,
+      // select: false,
     },
-    userPhoto: {
+    gender: {
       type: String,
       required: false,
+      enum: ["male", "female"],
     },
     createAt: {
       type: Date,
