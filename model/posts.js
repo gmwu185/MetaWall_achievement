@@ -1,13 +1,10 @@
 const mongoose = require('mongoose');
 
 const PostRequiredFormat = {
-  userName: {
-    type: String,
-    required: [true, '名稱必填'],
-  },
-  userPhoto: {
-    type: String,
-    default: '',
+  userData: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user',
+    required: [true, 'ID 需填寫'],
   },
   discussContent: {
     type: String,
@@ -16,6 +13,18 @@ const PostRequiredFormat = {
   discussPhoto: {
     type: String,
     default: '',
+  },
+  tag: {
+    type: String,
+    required: [true, "標籤必填"],
+  },
+  likes: {
+    type: Number,
+    default: 0,
+  },
+  comments: {
+    type: Number,
+    default: 0,
   },
   createAt: {
     type: Date,
