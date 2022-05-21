@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev": "cross-env NODE_ENV=development nodemon ./bin/www ",
+    "locall:dev": "cross-env NODE_ENV=dev nodemon ./bin/www ",
+    "locall:prod": "cross-env NODE_ENV=production nodemon ./bin/www ",
     "server": "cross-env NODE_ENV=production nodemon ./bin/www",
     "swagger": "node ./swagger.js"
   },

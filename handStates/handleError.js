@@ -1,14 +1,14 @@
-const handleError = (res, err) => {
-  let message = '';
-  if (err) {
-    console.log('handleError if err', err);
-    message = err.message;
-  } else {
-    message = "欄位未填寫正確或無此 id";
-  }
-  res.status(400).json({
-    status: "false",
-    message
-  }).end();
-}
-module.exports = handleError;
+const handleErrorAsync = (func) => {
+  // func 先將 async fun 帶入參數儲存
+  /** middleware
+   * 先接住 router 資料
+   * 再執行函式，async 可再用 catch 統一捕捉
+   */
+  return function (req, res, next) {
+    func(req, res, next).catch(function (error) {
+      return next(error);
+    });
+  };
+};
+
+module.exports = handleErrorAsync;
