@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, 'email 必填'],
+      // unique: true, // 獨有
     },
     password: {
       type: String,

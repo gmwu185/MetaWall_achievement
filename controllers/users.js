@@ -4,15 +4,15 @@ const appError = require('../customErr/appError');
 const User = require('../model/users');
 
 module.exports = {
+  /** #swagger.tags = ['users (使用者)']
+   ** #swagger.description = '新增使用者'
+   */
   async listUsers(req, res, next) {
     const allUser = await User.find();
     handleSuccess(res, allUser);
   },
   // 新增使用者
   async createdUser(req, res, next) {
-    /** #swagger.tags = ['users (使用者)']
-     ** #swagger.description = '新增使用者'
-     */
     /**
       ** #swagger.parameters['body'] = {
         in: "body",
@@ -61,6 +61,8 @@ module.exports = {
       return next(appError(400, '你沒有填寫 email 欄位', next));
     if (userData.password == undefined)
       return next(appError(400, '你沒有填寫 password 欄位', next));
+    const findUserByMail = await User.findOne({ email });
+    if (findUserByMail) return appError(400, 'email 已註冊過', next);
     const newUser = await User.create(userData);
     handleSuccess(res, newUser);
   },
