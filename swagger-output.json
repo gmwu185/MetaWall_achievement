@@ -5,7 +5,7 @@
     "description": "",
     "version": "1.0.0"
   },
-  "host": "damp-plateau-24758.herokuapp.com'",
+  "host": "damp-plateau-24758.herokuapp.com",
   "basePath": "/",
   "schemes": [
     "http",

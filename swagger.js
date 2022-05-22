@@ -9,7 +9,7 @@ const doc = {
   host:
     process.env.NODE_ENV === 'dev'
       ? 'localhost:3000'
-      : "damp-plateau-24758.herokuapp.com'",
+      : "damp-plateau-24758.herokuapp.com",
   schemes: ['http', 'https'],
   securityDefinitions: {
     apiKeyAuth: {
