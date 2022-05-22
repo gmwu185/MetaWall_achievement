@@ -1,29 +1,14 @@
-const handleSuccess = require('../handStates/handleSuccess');
-const handleError = require('../handStates/handleError');
-const appError = require('../customErr/appError');
-
 const bcrypt = require('bcryptjs'); // 密碼加密
 const validator = require('validator'); // 格式驗證
-const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config({ path: './.env' });
 
-const User = require('../model/users');
+const handleSuccess = require('../handStates/handleSuccess');
+const handleError = require('../handStates/handleError');
+const { generateSendJWT } = require('../handStates/auth');
+const appError = require('../customErr/appError');
 
-const generateSendJWT = (user, statusCode, res) => {
-  // 產生 JWT token
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_DAY,
-  });
-  user.password = undefined;
-  res.status(statusCode).json({
-    status: 'success',
-    user: {
-      token,
-      userName: user.userName,
-    },
-  });
-};
+const User = require('../model/users');
 
 module.exports = {
   /** #swagger.tags = ['users (使用者)']
@@ -89,7 +74,6 @@ module.exports = {
     // 加密密碼
     userData.password = await bcrypt.hash(req.body.password, 12);
     const newUser = await User.create(userData);
-    // handleSuccess(res, newUser);
     generateSendJWT(newUser, 201, res);
   },
   // 登入
