@@ -6,7 +6,7 @@ const doc = { // 生成資料、格式、設定
     description: '示範範例生成文件',
   },
   // host: 'localhost:3000',
-  host: 'https://damp-plateau-24758.herokuapp.com',
+  host: 'damp-plateau-24758.herokuapp.com',
   schemes: ['http', 'https'],
   securityDefinitions: {
     apiKeyAuth: {
