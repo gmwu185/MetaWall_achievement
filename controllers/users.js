@@ -14,12 +14,12 @@ module.exports = {
   /** #swagger.tags = ['users (使用者)']
    ** #swagger.description = '新增使用者'
    */
-  // 全列使用者 (後台)
+  // 列出全部會員 (後台)
   async listUsers(req, res, next) {
     const allUser = await User.find();
     handleSuccess(res, allUser);
   },
-  // 新增使用者 (後台)
+  // 新增單筆會員 (後台)
   async createdUser(req, res, next) {
     /**
       ** #swagger.parameters['body'] = {
@@ -56,12 +56,13 @@ module.exports = {
   },
   // 註冊
   async signUp(req, res, next) {
-    const data = req.body;
-    const { email, userName, password } = data;
+    const { email, userName, userPhoto, password, gender } = req.body;
     const userData = {
       userName,
+      userPhoto,
       email,
       password,
+      gender,
     };
     if (userData.userName == undefined)
       return next(appError(400, '你沒有填寫 userName 欄位', next));
@@ -69,6 +70,7 @@ module.exports = {
       return next(appError(400, '你沒有填寫 email 欄位', next));
     if (userData.password == undefined)
       return next(appError(400, '你沒有填寫 password 欄位', next));
+
     const findUserByMail = await User.findOne({ email });
     if (findUserByMail) return appError(400, 'email 已註冊過', next);
 
@@ -107,7 +109,7 @@ module.exports = {
     const { newPassword, confirmNewPassword } = req.body;
     if (newPassword !== confirmNewPassword)
       return appError(400, '密碼不一致', next);
-    bcryptNewPassword = await bcrypt.hash(newPassword, 12);
+    bcryptNewPassword = await bcrypt.hash(newPassword, 12); // 使用者由前台傳入的更新密碼轉碼
     const updateUser = await User.findByIdAndUpdate(
       req.user.id,
       {
