@@ -14,11 +14,12 @@ module.exports = {
   /** #swagger.tags = ['users (使用者)']
    ** #swagger.description = '新增使用者'
    */
+  // 全列使用者 (後台)
   async listUsers(req, res, next) {
     const allUser = await User.find();
     handleSuccess(res, allUser);
   },
-  // 新增使用者
+  // 新增使用者 (後台)
   async createdUser(req, res, next) {
     /**
       ** #swagger.parameters['body'] = {
@@ -81,12 +82,14 @@ module.exports = {
     const { email, password } = req.body;
     if (!email || !password) return appError(400, '帳號及密碼必填', next);
     const user = await User.findOne({ email }).select('+password');
-    if (!user) return appError(400, '帳號錯誤或尚未註冊', next);
-    if (user.password === password) {
-      handleSuccess(res, user);
-    } else {
-      return appError(400, '您的密碼不正確', next);
-    }
+    
+    /** auth
+     * 需是已註冊 user 的 email 才能進行
+     * 解密 password
+     */
+    const auth = await bcrypt.compare(password, user.password);
+    if (!auth) return next(appError(400, '帳號錯誤或尚未註冊', next));
+    generateSendJWT(user, 200, res);
   },
   // 修改會員資料
   async patchProfile(req, res, next) {
@@ -98,7 +101,7 @@ module.exports = {
     });
     handleSuccess(res, updateUser);
   },
-  //修改密碼
+  // 修改密碼
   async updatePassword(req, res, next) {
     const { id, newPassword, confirmNewPassword } = req.body;
     if (newPassword !== confirmNewPassword)
@@ -113,6 +116,6 @@ module.exports = {
         new: true, // 回傳更新後的資料, default: false
       }
     );
-    handleSuccess(res, updateUser);
+    generateSendJWT(updateUser, 200, res)
   },
 };
