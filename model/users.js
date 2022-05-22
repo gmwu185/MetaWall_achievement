@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'password 必填'],
       minlength: 8,
-      // select: false,
+      // select: false,  // 預設不顯示
     },
     gender: {
       type: String,

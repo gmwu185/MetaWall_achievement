@@ -1,6 +1,13 @@
 const handleSuccess = require('../handStates/handleSuccess');
 const handleError = require('../handStates/handleError');
 const appError = require('../customErr/appError');
+
+const bcrypt = require('bcryptjs'); // 密碼加密
+const validator = require('validator'); // 格式驗證
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env' });
+
 const User = require('../model/users');
 
 module.exports = {
@@ -65,6 +72,7 @@ module.exports = {
     if (findUserByMail) return appError(400, 'email 已註冊過', next);
     const newUser = await User.create(userData);
     handleSuccess(res, newUser);
+    
   },
   // 登入
   async login(req, res, next) {
