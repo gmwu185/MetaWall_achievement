@@ -46,7 +46,7 @@ const generateSendJWT = (user, statusCode, res) => {
   user.password = undefined;
   res.status(statusCode).json({
     status: 'success',
-    user: {
+    data: {
       token,
       userName: user.userName,
       userPhoto: user.userPhoto,

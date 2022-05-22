@@ -7,19 +7,17 @@ const handleError = require('../handStates/handleError');
 const { isAuth, generateSendJWT } = require('../handStates/auth');
 const UsersControllers = require('../controllers/users');
 
-router.get('/', handleError(UsersControllers.listUsers)); // 列出全部會員 (後台)
-router.post('/', handleError(UsersControllers.createdUser)); // 新增單筆會員 (後台)
-router.post('/signUp', handleError(UsersControllers.signUp)); // 註冊
-router.post('/login', handleError(UsersControllers.login)); // 登入
-router.patch(
-  '/patchProfile',
-  isAuth,
-  handleError(UsersControllers.patchProfile)
-); // 修改會員資料
-router.patch(
-  '/updatePassword',
-  isAuth,
-  handleError(UsersControllers.updatePassword)
-); // 修改密碼
+// 列出全部會員 (後台)
+// router.get('/', UsersControllers.listUsers());
+// 新增單筆會員 (後台)
+// router.post('/', UsersControllers.createdUser());
+// 註冊
+router.post('/signUp', UsersControllers.signUp());
+// 登入
+router.post('/login', UsersControllers.login());
+// 修改會員資料
+router.patch('/patchProfile', isAuth, UsersControllers.patchProfile());
+// 修改密碼
+router.patch('/updatePassword', isAuth, UsersControllers.updatePassword());
 
 module.exports = router;

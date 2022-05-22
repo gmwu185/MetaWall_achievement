@@ -7,14 +7,14 @@ const doc = { // 生成資料、格式、設定
   },
   host: 'localhost:3000',
   schemes: ['http', 'https'],
-  // securityDefinitions: {
-  //   apiKeyAuth: {
-  //     type: 'apiKey',
-  //     in: 'headers',
-  //     name: 'authorization',
-  //     description: '請加上 API Token'
-  //   }
-  // },
+  securityDefinitions: {
+    apiKeyAuth: {
+      type: 'apiKey',
+      in: 'headers',
+      name: 'Authorization',
+      description: 'Token 前請加上 Bearer，<code>Bearer ＜Token＞</code>'
+    }
+  },
   definitions: {
     // createdPosts: {
     //   // "$name": "createdPost--test 加入 swagger.js 中",

@@ -11,6 +11,14 @@
     "http",
     "https"
   ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "headers",
+      "name": "Authorization",
+      "description": "Token 前請加上 Bearer，<code>Bearer ＜Token＞</code>"
+    }
+  },
   "paths": {
     "/posts/": {
       "get": {
@@ -212,36 +220,40 @@
         "responses": {}
       }
     },
-    "/users/": {
+    "/users/signUp": {
       "post": {
         "tags": [
           "users (使用者)"
         ],
-        "description": "新增使用者",
+        "description": "  註冊  <ul>  <li>密碼產生 Token 後至其他 users API 使用</li>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>欄位 <code>\"gender\"</code> 只能接受 <code>\"male\", \"female\"</code>。</li>  </ul>  ",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "required": true,
-            "description": "資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的*",
+            "description": "",
             "schema": {
               "type": "object",
               "properties": {
                 "userName": {
                   "type": "string",
-                  "example": "邊綠小杰"
+                  "example": "小明"
                 },
                 "email": {
                   "type": "string",
-                  "example": "aa@mail.com"
+                  "example": "min-@mail.com"
                 },
                 "password": {
                   "type": "string",
-                  "example": "123456"
+                  "example": "12345678"
                 },
                 "userPhoto": {
                   "type": "string",
-                  "example": "https://unsplash.it/500/500/?random=4"
+                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
                 }
               },
               "required": [
@@ -252,7 +264,254 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "註冊資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "token"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "小明"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "  登入  <ul>  <li>登入以 mail 為帳號</li>  <li>忘記密碼就完蛋了 (去資料庫撈是加密的也沒用)，密碼由 Token 解密轉換</li>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "min-@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345678"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登入資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "Token"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "userPhoto": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/patchProfile": {
+      "patch": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "  修改會員資料  <ul>  <li>帶入 user Token，格式 <code>Bearer ＜Token＞</code></li>  <li>忘記密碼就完蛋了 (去資料庫撈是加密的也沒用)，密碼由 Token 解密轉換。</li>  <li>欄位 <code>\"gender\"</code> 只能接受 <code>\"male\", \"female\"</code>。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "大明"
+                },
+                "userPhoto": {
+                  "type": "string",
+                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                }
+              },
+              "required": [
+                "userName"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "修改資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "userPhoto": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "male"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/updatePassword": {
+      "patch": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "  修改會員資料  <ul>  <li>帶入 user Token，格式 <code>Bearer ＜Token＞</code></li>  <li>忘記密碼就完蛋了 (去資料庫撈是加密的也沒用)，密碼由 Token 解密轉換。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "newPassword": {
+                  "type": "string",
+                  "example": "11223344"
+                },
+                "confirmNewPassword": {
+                  "type": "string",
+                  "example": "11223344"
+                }
+              },
+              "required": [
+                "newPassword",
+                "confirmNewPassword"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "修改資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "token"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "userPhoto": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     }
   }
