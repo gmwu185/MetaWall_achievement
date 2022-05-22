@@ -25,5 +25,4 @@ npm i nodemon --save
 
 
 ## 相關資料
-- [第二週小組任務 - 文件與說明](https://hackmd.io/3a69ZWYYRWedOBFN3GZx0g?view)
 - [npm swagger-autogen 本版使用文件 (使用 v2.5.10 但此版文件找不到使用 v2.5.12)] (https://www.npmjs.com/package/swagger-autogen/v/2.5.12)
