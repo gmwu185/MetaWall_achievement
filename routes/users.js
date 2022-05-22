@@ -11,6 +11,8 @@ const UsersControllers = require('../controllers/users');
 // router.get('/', UsersControllers.listUsers());
 // 新增單筆會員 (後台)
 // router.post('/', UsersControllers.createdUser());
+// 取得登入者個人資訊
+router.get('/ownProfile', isAuth, UsersControllers.ownProfile());
 // 註冊
 router.post('/signUp', UsersControllers.signUp());
 // 登入

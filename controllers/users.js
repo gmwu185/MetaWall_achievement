@@ -47,6 +47,42 @@ module.exports = {
       });
     });
   },
+  // 取得登入者個人資訊
+  ownProfile() {
+  /**
+    *? #swagger.tags = ['users (使用者)']
+    * #swagger.description = `
+      取得登入者個人資訊
+      <ul>
+        <li>取得 Token 至下方 Parameters > Authorize，使用格式 <code>Bearer ＜Token＞</code> 取得 API 資訊。(可能是 swagger 的 Bug)。</li>
+      </ul>
+    `,
+    * #swagger.parameters['Authorization'] = {
+      in: 'header',
+      type: 'string',
+      description: `
+        <code>Bearer ＜Token＞</code>
+      `
+    },
+    * #swagger.responses[200] = {
+      description: 'user 資訊',
+      schema: {
+        status: 'success',
+        data: {
+          _id: '123123123',
+          name: '王小明',
+          photo: '',
+          gender: 'male'
+        }
+      }
+    }
+  */
+    return handleError(
+      async (req, res, next) => {
+        handleSuccess(res, req.user);
+      }
+    )
+  },
   // 註冊
   signUp() {
     /**

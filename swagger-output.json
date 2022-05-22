@@ -1,11 +1,11 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Meta API",
-    "description": "示範範例生成文件",
+    "title": "MetaWall_achievement API DOC",
+    "description": "",
     "version": "1.0.0"
   },
-  "host": "damp-plateau-24758.herokuapp.com",
+  "host": "damp-plateau-24758.herokuapp.com'",
   "basePath": "/",
   "schemes": [
     "http",
@@ -218,6 +218,60 @@
           }
         ],
         "responses": {}
+      }
+    },
+    "/users/ownProfile": {
+      "get": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "  取得登入者個人資訊  <ul>  <li>取得 Token 至下方 Parameters > Authorize，使用格式 <code>Bearer ＜Token＞</code> 取得 API 資訊。(可能是 swagger 的 Bug)。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "type": "string",
+            "description": "  <code>Bearer ＜Token＞</code>  "
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user 資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "123123123"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "male"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
       }
     },
     "/users/signUp": {

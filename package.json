@@ -7,7 +7,8 @@
     "locall:dev": "cross-env NODE_ENV=dev nodemon ./bin/www ",
     "locall:prod": "cross-env NODE_ENV=production nodemon ./bin/www ",
     "server": "cross-env NODE_ENV=production nodemon ./bin/www",
-    "swagger": "node ./swagger.js"
+    "swagger:dev": "cross-env NODE_ENV=dev node ./swagger.js",
+    "swagger:prod": "cross-env NODE_ENV=production node ./swagger.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
