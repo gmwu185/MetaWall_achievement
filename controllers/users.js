@@ -5,7 +5,7 @@ dotenv.config({ path: './.env' });
 
 const handleSuccess = require('../handStates/handleSuccess');
 const handleError = require('../handStates/handleError');
-const { generateSendJWT } = require('../handStates/auth');
+const { isAuth, generateSendJWT } = require('../handStates/auth');
 const appError = require('../customErr/appError');
 
 const User = require('../model/users');
@@ -82,7 +82,7 @@ module.exports = {
     const { email, password } = req.body;
     if (!email || !password) return appError(400, '帳號及密碼必填', next);
     const user = await User.findOne({ email }).select('+password');
-    
+
     /** auth
      * 需是已註冊 user 的 email 才能進行
      * 解密 password
@@ -93,10 +93,11 @@ module.exports = {
   },
   // 修改會員資料
   async patchProfile(req, res, next) {
-    const { id, userName, userPhoto, gender } = req.body;
+    const { userName, userPhoto, gender } = req.body;
     const data = { userName, userPhoto, gender };
     if (!userName) return appError(400, 'userName 名稱必填', next);
-    const updateUser = await User.findByIdAndUpdate(id, data, {
+    // req.user.id 登入後由 Token 解出 id
+    const updateUser = await User.findByIdAndUpdate(req.user.id, data, {
       new: true, // 回傳更新後的資料, default: false
     });
     handleSuccess(res, updateUser);
@@ -116,6 +117,6 @@ module.exports = {
         new: true, // 回傳更新後的資料, default: false
       }
     );
-    generateSendJWT(updateUser, 200, res)
+    generateSendJWT(updateUser, 200, res);
   },
 };
