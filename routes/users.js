@@ -7,8 +7,8 @@ const handleError = require('../handStates/handleError');
 const { isAuth, generateSendJWT } = require('../handStates/auth');
 const UsersControllers = require('../controllers/users');
 
-router.get('/', UsersControllers.listUsers); // 列出全部會員 (後台)
-router.post('/', UsersControllers.createdUser); // 新增單筆會員 (後台)
+router.get('/', handleError(UsersControllers.listUsers)); // 列出全部會員 (後台)
+router.post('/', handleError(UsersControllers.createdUser)); // 新增單筆會員 (後台)
 router.post('/signUp', handleError(UsersControllers.signUp)); // 註冊
 router.post('/login', handleError(UsersControllers.login)); // 登入
 router.patch(
