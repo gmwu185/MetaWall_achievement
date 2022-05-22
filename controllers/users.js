@@ -10,6 +10,21 @@ dotenv.config({ path: './.env' });
 
 const User = require('../model/users');
 
+const generateSendJWT = (user, statusCode, res) => {
+  // 產生 JWT token
+  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_DAY,
+  });
+  user.password = undefined;
+  res.status(statusCode).json({
+    status: 'success',
+    user: {
+      token,
+      userName: user.userName,
+    },
+  });
+};
+
 module.exports = {
   /** #swagger.tags = ['users (使用者)']
    ** #swagger.description = '新增使用者'
@@ -70,9 +85,12 @@ module.exports = {
       return next(appError(400, '你沒有填寫 password 欄位', next));
     const findUserByMail = await User.findOne({ email });
     if (findUserByMail) return appError(400, 'email 已註冊過', next);
+
+    // 加密密碼
+    userData.password = await bcrypt.hash(req.body.password, 12);
     const newUser = await User.create(userData);
-    handleSuccess(res, newUser);
-    
+    // handleSuccess(res, newUser);
+    generateSendJWT(newUser, 201, res);
   },
   // 登入
   async login(req, res, next) {
