@@ -1,6 +1,6 @@
 function handleSuccess (res, data = "") {
   res.json({
-    status: true,
+    status: "success",
     data
   });
   res.end();

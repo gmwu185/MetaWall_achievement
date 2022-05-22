@@ -230,7 +230,7 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
+            "required": false,
             "description": "",
             "schema": {
               "type": "object",
@@ -306,7 +306,7 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
+            "required": false,
             "description": "",
             "schema": {
               "type": "object",
@@ -373,7 +373,7 @@
           {
             "name": "body",
             "in": "body",
-            "required": true,
+            "required": false,
             "description": "資料格式",
             "schema": {
               "type": "object",
@@ -404,8 +404,8 @@
               "type": "object",
               "properties": {
                 "status": {
-                  "type": "boolean",
-                  "example": true
+                  "type": "string",
+                  "example": "success"
                 },
                 "data": {
                   "type": "object",
@@ -480,8 +480,8 @@
               "type": "object",
               "properties": {
                 "status": {
-                  "type": "boolean",
-                  "example": true
+                  "type": "string",
+                  "example": "success"
                 },
                 "data": {
                   "type": "object",

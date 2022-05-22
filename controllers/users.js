@@ -62,7 +62,7 @@ module.exports = {
       * #swagger.parameters['body'] = {
         in: "body",
         type: "object",
-        required: true,
+        required: "success",
         description: ``,
         schema: {
           "$userName": "小明",
@@ -123,7 +123,7 @@ module.exports = {
       * #swagger.parameters['body'] = {
         in: "body",
         type: "object",
-        required: true,
+        required: "success",
         description: ``,
         schema: {
           "$email": "min-@mail.com",
@@ -152,7 +152,7 @@ module.exports = {
        * 解密 password
        */
       const auth = await bcrypt.compare(password, user.password);
-      if (!auth) return next(appError(400, '帳號錯誤或尚未註冊', next));
+      if (!auth) return next(appError(400, '您的密碼不正確', next));
       generateSendJWT(user, 200, res);
     });
   },
@@ -174,7 +174,7 @@ module.exports = {
       * #swagger.parameters['body'] = {
         in: 'body',
         type: 'object',
-        required: true,
+        required: "success",
         description: '資料格式',
         schema: {
           $userName: '大明',
@@ -185,7 +185,7 @@ module.exports = {
       * #swagger.responses[200] = {
         description: '修改資訊',
         schema: {
-          status: true,
+          status: "success",
           data: {
             "id": "id",
             "name": "王小明",
@@ -233,7 +233,7 @@ module.exports = {
       * #swagger.responses[200] = {
         description: '修改資訊',
         schema: {
-          status: true,
+          status: "success",
           data: {
             "token": "token",
             "name": "王小明",
