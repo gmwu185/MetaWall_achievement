@@ -11,13 +11,14 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, 'email必填'],
+      required: [true, 'email 必填'],
+      // unique: true, // 獨有
     },
     password: {
       type: String,
-      required: [true, 'password必填'],
+      required: [true, 'password 必填'],
       minlength: 8,
-      // select: false,
+      select: false,  // 預設不顯示
     },
     gender: {
       type: String,

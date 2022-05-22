@@ -1,7 +1,7 @@
 
 ## API 格式
 
-- [swagger 文件](https://stormy-plateau-16452.herokuapp.com/api-doc/)
+- [swagger 文件](https://.../api-doc/)
 
 
 ## 環境與套件與指令
@@ -11,8 +11,9 @@
 npm i
 ```
 
-- 執行 `npm run dev`：開發時結合 Node 環境變數於指令使用，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB 本地端資料庫。
-- 執行 `npm run server`：開發時結合 Node 環境變數於指令使用，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB Atias 遠端資料庫。
+- 執行 `npm run locall:dev`：環境變數使用 `dev`，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB 本地端資料庫。
+- 執行 `npm run locall:prod`：環境變數使用 `production`，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB 本地端資料庫。
+- 執行 `npm run server`：環境變數使用 `production`，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB Atias 遠端資料庫。
 - 執行 `npm run swagger`： 產生 swagger 設定檔自動生成。
 - `npm start`： npm 預設指令以遠端主機與遠端 mongoDB Atias 資料庫為主。
 
