@@ -20,7 +20,7 @@ const isAuth = handleError(async (req, res, next) => {
   const decoded = await new Promise((resolve, reject) => {
     jwt.verify(token, process.env.JWT_SECRET, (err, payload) => {
       if (err) {
-        reject(err);
+        reject(next(next(appError(401, '驗證 token 發生問題或不一致', next))));
       } else {
         resolve(payload); // 正確流程將結果 payload 賦予到 decoded
       }
@@ -33,19 +33,23 @@ const isAuth = handleError(async (req, res, next) => {
 
 // 產生 JWT token
 const generateSendJWT = (user, statusCode, res) => {
-  const token = jwt.sign({
+  const token = jwt.sign(
+    {
       id: user._id,
       userName: user.userName,
-    }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_DAY,
-  });
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRES_DAY,
+    }
+  );
   user.password = undefined;
   res.status(statusCode).json({
     status: 'success',
     user: {
       token,
       userName: user.userName,
-      userPhoto: user.userPhoto
+      userPhoto: user.userPhoto,
     },
   });
 };
