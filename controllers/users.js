@@ -104,14 +104,14 @@ module.exports = {
   },
   // 修改密碼
   async updatePassword(req, res, next) {
-    const { id, newPassword, confirmNewPassword } = req.body;
+    const { newPassword, confirmNewPassword } = req.body;
     if (newPassword !== confirmNewPassword)
       return appError(400, '密碼不一致', next);
-    const user = await User.findOne({ id }); // 先假定向資料庫以 password 要
+    bcryptNewPassword = await bcrypt.hash(newPassword, 12);
     const updateUser = await User.findByIdAndUpdate(
-      user.id,
+      req.user.id,
       {
-        password: newPassword,
+        password: bcryptNewPassword,
       },
       {
         new: true, // 回傳更新後的資料, default: false

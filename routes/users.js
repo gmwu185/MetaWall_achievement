@@ -10,6 +10,6 @@ router.post('/', UsersControllers.createdUser); // 新增單筆會員
 router.post('/signUp', UsersControllers.signUp); // 註冊
 router.post('/login', UsersControllers.login); // 登入
 router.patch('/patchProfile', isAuth, UsersControllers.patchProfile); // 修改會員資料
-router.patch('/updatePassword', UsersControllers.updatePassword); // 修改密碼
+router.patch('/updatePassword', isAuth, UsersControllers.updatePassword); // 修改密碼
 
 module.exports = router;
