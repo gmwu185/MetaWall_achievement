@@ -1,7 +1,7 @@
 
 ## API 格式
 
-- [swagger 文件](https://.../api-doc/)
+- [swagger 文件](https://damp-plateau-24758.herokuapp.com/api-doc/)
 
 
 ## 環境與套件與指令
