@@ -10,17 +10,18 @@
 ```
 npm i
 ```
+全城下需安裝 
+```
+npm i nodemon --save
+```
 
 - 執行 `npm run locall:dev`：環境變數使用 `dev`，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB 本地端資料庫。
 - 執行 `npm run locall:prod`：環境變數使用 `production`，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB 本地端資料庫。
 - 執行 `npm run server`：環境變數使用 `production`，需與 `nodemon` 全域套件使用，在配合下指令 會直接由變數指向 mongoDB Atias 遠端資料庫。
-- 執行 `npm run swagger:dev`： 環境變數使用 `dev`，產生 swagger 設定檔自動生成，本地主機使用 http。
-- 執行 `npm run swagger:prod`： 環境變數使用 `production`，產生 swagger 設定檔自動生成，正式主機使用 https。
+- 執行 `npm run swagger:dev`：環境變數使用 `dev`，產生 swagger 設定檔自動生成，本地主機使用 http。
+- 執行 `npm run swagger:prod`：環境變數使用 `production`，產生 swagger 設定檔自動生成，正式主機使用 https。
+- 執行 `npm run swagger`：同時產生正式與本地主機產生 swagger 設定檔。
 - `npm start`： npm 預設指令以遠端主機與遠端 mongoDB Atias 資料庫為主。
-
-```
-npm i nodemon --save
-```
 
 專案資料夾透過 `.env` 檔案，向遠端 mongoDB Atias，請參考 `ex.env` 檔做做設定
 
