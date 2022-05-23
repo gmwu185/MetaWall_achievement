@@ -167,7 +167,7 @@
         "tags": [
           "users (使用者)"
         ],
-        "description": "  取得登入者個人資訊  <ul>  <li>取得 Token 至下方 Parameters > Authorize，使用格式 <code>Bearer ＜Token＞</code> 取得 API 資訊。(可能是 swagger 的 Bug)。</li>  </ul>  ",
+        "description": "  取得登入者個人資訊  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
         "parameters": [],
         "responses": {
           "200": {
@@ -370,7 +370,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  <p>取得所有貼文。</p>  參數用法：  <ul>  <li><code>timeSort</code> 參數：  <ol>  <li>預設新到舊</li>  <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ol>  </li>  <li><code>q</code> 參數：  <ol>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ol>  </li>  </ul>  ",
+        "description": "  <p>取得所有貼文。</p>  參數用法：  <ul>  <li><code>timeSort</code> 參數：  <ol>  <li>預設新到舊</li>  <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ol>  </li>  <li><code>q</code> 參數：  <ol>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ol>  </li>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
         "parameters": [
           {
             "name": "timeSort",
@@ -467,13 +467,12 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "新增單筆貼文",
+        "description": "  新增單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>新增貼文需先有 user.id 登入取得 Tokne</li>  <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>  <li>透過 user.id 向 posts 的屬性欄位 <code>userData</code> 關連。</li>  </ul>  ",
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "required": true,
-            "description": "  <ul>  <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>  <li>新增貼文需先有 user.id 登入取得 Tokne</li>  <li>透過 user.id 向 posts 的屬性欄位 <code>userData</code> 關連。</li>  </ul> ",
             "schema": {
               "type": "object",
               "properties": {
@@ -510,7 +509,12 @@
         ],
         "description": "刪除所有貼文",
         "parameters": [],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/posts/{id}": {
@@ -518,7 +522,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "刪除單筆貼文",
+        "description": "  刪除單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -527,13 +531,18 @@
             "type": "string"
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       },
       "patch": {
         "tags": [
           "posts (貼文)"
         ],
-        "description": "更新單筆貼文",
+        "description": "  更新單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -568,7 +577,12 @@
             }
           }
         ],
-        "responses": {}
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     }
   }

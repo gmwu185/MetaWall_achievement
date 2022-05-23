@@ -54,7 +54,7 @@ module.exports = {
     * #swagger.description = `
       取得登入者個人資訊
       <ul>
-        <li>取得 Token 至下方 Parameters > Authorize，使用格式 <code>Bearer ＜Token＞</code> 取得 API 資訊。(可能是 swagger 的 Bug)。</li>
+        <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
       </ul>
     `,
     * #swagger.security = [{

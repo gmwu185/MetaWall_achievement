@@ -33,6 +33,7 @@ module.exports = {
                 <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>
               </ol>
             </li>
+            <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
           </ul>
         `,
       *? #swagger.responses[200] = {
@@ -87,17 +88,19 @@ module.exports = {
       * #swagger.security = [{
         'apiKeyAuth': []
       }],
-      * #swagger.description = '新增單筆貼文',
+      * #swagger.description = `
+        新增單筆貼文
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>新增貼文需先有 user.id 登入取得 Tokne</li>
+          <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>
+          <li>透過 user.id 向 posts 的屬性欄位 <code>userData</code> 關連。</li>
+        </ul>
+        `,
       * #swagger.parameters['body'] = {
         in: "body",
         type: "object",
         required: true,
-        description: `
-          <ul>
-            <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>
-            <li>新增貼文需先有 user.id 登入取得 Tokne</li>
-            <li>透過 user.id 向 posts 的屬性欄位 <code>userData</code> 關連。</li>
-          </ul> `,
         schema: {
           "$discussContent": "外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-",
           "discussPhoto": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80",
@@ -105,8 +108,8 @@ module.exports = {
         }
       }
      */
-    
-      return handleError(async (req, res, next) => {
+
+    return handleError(async (req, res, next) => {
       const user = req.user.id;
       const { discussContent, discussPhoto, tag } = req.body;
 
@@ -124,9 +127,12 @@ module.exports = {
   },
   delALL() {
     /** #swagger.tags = ['posts (貼文)']
-     *! #swagger.description = '刪除所有貼文'
+     *! #swagger.description = '刪除所有貼文',
+     * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
     */
-    
+
     return async (req, res, next) => {
       if (req.originalUrl === '/posts/')
         return next(appError(404, '無此網站路由', next));
@@ -134,17 +140,24 @@ module.exports = {
     };
   },
   delOne() {
-    /** #swagger.tags = ['posts (貼文)']
-     *! #swagger.description = '刪除單筆貼文'
-     */
     /**
-      *! #swagger.parameters['id'] = {
+      *! #swagger.tags = ['posts (貼文)']
+      * #swagger.description = `
+        刪除單筆貼文
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+        </ul>
+      `,
+      * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+      * #swagger.parameters['id'] = {
         in: 'path',
         type: 'string',
         required: true,
       }
-    */
-    
+     */
+
     return async (req, res, next) => {
       if (!req.params.id || req.params.id === '')
         return next(appError(400, '未帶入刪除的資料 id 或其他錯誤', next));
@@ -156,16 +169,23 @@ module.exports = {
     };
   },
   upDatePost() {
-    /** #swagger.tags = ['posts (貼文)']
-     ** #swagger.description = '更新單筆貼文'
-     *! #swagger.parameters['id'] = {
+    /** 
+      ** #swagger.tags = ['posts (貼文)']
+      * #swagger.description = `
+        更新單筆貼文
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+        </ul>
+      `
+      * #swagger.parameters['id'] = {
           in: 'path',
           type: 'string',
           required: true,
         }
-    */
-    /**
-      ** #swagger.parameters['body'] = {
+      * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+      * #swagger.parameters['body'] = {
         in: "body",
         type: "object",
         required: true,
