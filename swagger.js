@@ -14,7 +14,7 @@ const doc = {
   securityDefinitions: {
     apiKeyAuth: {
       type: 'apiKey',
-      in: 'header',
+      in: 'headers',
       name: 'Authorization',
       description: 'Token 前請加上 Bearer，<code>Bearer ＜Token＞</code>',
     },
@@ -28,7 +28,7 @@ const doc = {
     // }
   },
 };
-const outputFile = './swagger-output.json'; // 使用套件生成文件讀取用的 JSON 資料檔
+const outputFile = `./swagger-output_${process.env.NODE_ENV}.json`; // 使用套件生成文件讀取用的 JSON 資料檔
 const endpointsFiles = ['./app.js']; // 專案系統的注入點，成為套件所讀取的檔案
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

@@ -5,15 +5,15 @@
     "description": "",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "damp-plateau-24758.herokuapp.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "securityDefinitions": {
     "apiKeyAuth": {
       "type": "apiKey",
-      "in": "header",
+      "in": "headers",
       "name": "Authorization",
       "description": "Token 前請加上 Bearer，<code>Bearer ＜Token＞</code>"
     }

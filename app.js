@@ -4,7 +4,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
-const swaggerFile = require('./swagger-output.json');
+const swaggerFilePath = `./swagger-output_${process.env.NODE_ENV}.json`;
+const swaggerFile = require(swaggerFilePath);
 
 /* router ------------------------------------------------------------------- */
 var usersRouter = require('./routes/users');
