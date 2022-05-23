@@ -57,13 +57,9 @@ module.exports = {
         <li>取得 Token 至下方 Parameters > Authorize，使用格式 <code>Bearer ＜Token＞</code> 取得 API 資訊。(可能是 swagger 的 Bug)。</li>
       </ul>
     `,
-    * #swagger.parameters['Authorization'] = {
-      in: 'header',
-      type: 'string',
-      description: `
-        <code>Bearer ＜Token＞</code>
-      `
-    },
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
     * #swagger.responses[200] = {
       description: 'user 資訊',
       schema: {

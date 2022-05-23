@@ -5,237 +5,54 @@
     "description": "",
     "version": "1.0.0"
   },
-  "host": "damp-plateau-24758.herokuapp.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "securityDefinitions": {
     "apiKeyAuth": {
       "type": "apiKey",
-      "in": "headers",
+      "in": "header",
       "name": "Authorization",
       "description": "Token 前請加上 Bearer，<code>Bearer ＜Token＞</code>"
     }
   },
   "paths": {
-    "/posts/": {
-      "get": {
-        "tags": [
-          "posts (貼文)"
-        ],
-        "description": "  <p>取得所有貼文。</p>  參數用法：  <ul>  <li><code>timeSort</code> 參數：  <ol>  <li>預設新到舊</li>  <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ol>  </li>  <li><code>q</code> 參數：  <ol>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ol>  </li>  </ul>  ",
-        "parameters": [
-          {
-            "name": "timeSort",
-            "in": "query",
-            "type": "string"
-          },
-          {
-            "name": "q",
-            "in": "query",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "  取得全部貼文  ",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "status": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string",
-                        "example": "6284f91e51cc73dad4255eb3"
-                      },
-                      "userData": {
-                        "type": "object",
-                        "properties": {
-                          "_id": {
-                            "type": "string",
-                            "example": "6283dc5a60d07bddfa09e3a2"
-                          },
-                          "userName": {
-                            "type": "string",
-                            "example": "aa"
-                          },
-                          "userPhoto": {
-                            "type": "string",
-                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
-                          },
-                          "email": {
-                            "type": "string",
-                            "example": "aa@mail.com"
-                          }
-                        }
-                      },
-                      "discussContent": {
-                        "type": "string",
-                        "example": "外面看起來就超冷…\n\n我決定回被窩繼續睡…>.<-33"
-                      },
-                      "discussPhoto": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "tag": {
-                        "type": "string",
-                        "example": "標籤"
-                      },
-                      "likes": {
-                        "type": "number",
-                        "example": 0
-                      },
-                      "comments": {
-                        "type": "number",
-                        "example": 0
-                      },
-                      "createAt": {
-                        "type": "string",
-                        "example": "2022-05-18T13:48:14.766Z"
-                      }
-                    }
-                  }
-                }
-              },
-              "xml": {
-                "name": "main"
-              }
-            }
-          }
-        }
-      },
+    "/users/login": {
       "post": {
-        "tags": [
-          "posts (貼文)"
-        ],
-        "description": "新增單筆貼文",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "  <ul>  <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>  <li>新增貼文需先有 user 資料 (<code>body.userData.id</code> 更換成 user ID)，透過 user 資料取 id (向 posts 的屬性欄位 <code>userData</code> 關連)。</li>  </ul> ",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "userData": {
-                  "type": "string",
-                  "example": "body.userData.id"
-                },
-                "discussContent": {
-                  "type": "string",
-                  "example": "外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-"
-                },
-                "discussPhoto": {
-                  "type": "string",
-                  "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
-                },
-                "tag": {
-                  "type": "string",
-                  "example": "標籤 string"
-                }
-              },
-              "required": [
-                "discussContent",
-                "tag"
-              ]
-            }
-          }
-        ],
-        "responses": {}
-      },
-      "delete": {
-        "tags": [
-          "posts (貼文)"
-        ],
-        "description": "刪除所有貼文",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/posts/{id}": {
-      "delete": {
-        "tags": [
-          "posts (貼文)"
-        ],
-        "description": "刪除單筆貼文",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
-      },
-      "patch": {
-        "tags": [
-          "posts (貼文)"
-        ],
-        "description": "更新單筆貼文",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "description": "Body 資料格式",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "tag": {
-                  "type": "string",
-                  "example": "string-PATCH"
-                },
-                "discussContent": {
-                  "type": "string",
-                  "example": "string-PATCH"
-                },
-                "discussPhoto": {
-                  "type": "string",
-                  "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
-                }
-              },
-              "required": [
-                "discussContent"
-              ]
-            }
-          }
-        ],
-        "responses": {}
-      }
-    },
-    "/users/ownProfile": {
-      "get": {
         "tags": [
           "users (使用者)"
         ],
-        "description": "  取得登入者個人資訊  <ul>  <li>取得 Token 至下方 Parameters > Authorize，使用格式 <code>Bearer ＜Token＞</code> 取得 API 資訊。(可能是 swagger 的 Bug)。</li>  </ul>  ",
+        "description": "  登入  <ul>  <li>登入以 mail 為帳號</li>  <li>忘記密碼就完蛋了 (去資料庫撈是加密的也沒用)，密碼由 Token 解密轉換</li>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
         "parameters": [
           {
-            "name": "Authorization",
-            "in": "header",
-            "type": "string",
-            "description": "  <code>Bearer ＜Token＞</code>  "
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "min-@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345678"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "user 資訊",
+            "description": "登入資訊",
             "schema": {
               "type": "object",
               "properties": {
@@ -246,21 +63,17 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "_id": {
+                    "token": {
                       "type": "string",
-                      "example": "123123123"
+                      "example": "Token"
                     },
                     "name": {
                       "type": "string",
                       "example": "王小明"
                     },
-                    "photo": {
+                    "userPhoto": {
                       "type": "string",
-                      "example": ""
-                    },
-                    "gender": {
-                      "type": "string",
-                      "example": "male"
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
                     }
                   }
                 }
@@ -349,40 +162,16 @@
         }
       }
     },
-    "/users/login": {
-      "post": {
+    "/users/ownProfile": {
+      "get": {
         "tags": [
           "users (使用者)"
         ],
-        "description": "  登入  <ul>  <li>登入以 mail 為帳號</li>  <li>忘記密碼就完蛋了 (去資料庫撈是加密的也沒用)，密碼由 Token 解密轉換</li>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": false,
-            "description": "",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "email": {
-                  "type": "string",
-                  "example": "min-@mail.com"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "12345678"
-                }
-              },
-              "required": [
-                "email",
-                "password"
-              ]
-            }
-          }
-        ],
+        "description": "  取得登入者個人資訊  <ul>  <li>取得 Token 至下方 Parameters > Authorize，使用格式 <code>Bearer ＜Token＞</code> 取得 API 資訊。(可能是 swagger 的 Bug)。</li>  </ul>  ",
+        "parameters": [],
         "responses": {
           "200": {
-            "description": "登入資訊",
+            "description": "user 資訊",
             "schema": {
               "type": "object",
               "properties": {
@@ -393,17 +182,21 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "token": {
+                    "_id": {
                       "type": "string",
-                      "example": "Token"
+                      "example": "123123123"
                     },
                     "name": {
                       "type": "string",
                       "example": "王小明"
                     },
-                    "userPhoto": {
+                    "photo": {
                       "type": "string",
-                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                      "example": ""
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "male"
                     }
                   }
                 }
@@ -413,7 +206,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/users/patchProfile": {
@@ -565,6 +363,212 @@
             "apiKeyAuth": []
           }
         ]
+      }
+    },
+    "/posts/": {
+      "get": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "  <p>取得所有貼文。</p>  參數用法：  <ul>  <li><code>timeSort</code> 參數：  <ol>  <li>預設新到舊</li>  <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ol>  </li>  <li><code>q</code> 參數：  <ol>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ol>  </li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "timeSort",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "  取得全部貼文  ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "6284f91e51cc73dad4255eb3"
+                      },
+                      "userData": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6283dc5a60d07bddfa09e3a2"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "aa"
+                          },
+                          "userPhoto": {
+                            "type": "string",
+                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "aa@mail.com"
+                          }
+                        }
+                      },
+                      "discussContent": {
+                        "type": "string",
+                        "example": "外面看起來就超冷…\n\n我決定回被窩繼續睡…>.<-33"
+                      },
+                      "discussPhoto": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "tag": {
+                        "type": "string",
+                        "example": "標籤"
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "comments": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "createAt": {
+                        "type": "string",
+                        "example": "2022-05-18T13:48:14.766Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "新增單筆貼文",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "  <ul>  <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>  <li>新增貼文需先有 user.id 登入取得 Tokne</li>  <li>透過 user.id 向 posts 的屬性欄位 <code>userData</code> 關連。</li>  </ul> ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "discussContent": {
+                  "type": "string",
+                  "example": "外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-"
+                },
+                "discussPhoto": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                },
+                "tag": {
+                  "type": "string",
+                  "example": "標籤 string"
+                }
+              },
+              "required": [
+                "discussContent",
+                "tag"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "刪除所有貼文",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/posts/{id}": {
+      "delete": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "刪除單筆貼文",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "更新單筆貼文",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tag": {
+                  "type": "string",
+                  "example": "string-PATCH"
+                },
+                "discussContent": {
+                  "type": "string",
+                  "example": "string-PATCH"
+                },
+                "discussPhoto": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                }
+              },
+              "required": [
+                "discussContent"
+              ]
+            }
+          }
+        ],
+        "responses": {}
       }
     }
   }

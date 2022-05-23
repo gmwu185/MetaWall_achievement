@@ -7,9 +7,9 @@ const swaggerUI = require('swagger-ui-express');
 const swaggerFile = require('./swagger-output.json');
 
 /* router ------------------------------------------------------------------- */
-var indexRouter = require('./routes/index');
-var postsRouter = require('./routes/posts');
 var usersRouter = require('./routes/users');
+var postsRouter = require('./routes/posts');
+var indexRouter = require('./routes/index');
 /* /router ------------------------------------------------------------------- */
 
 /* express 設定 --------------------------------------------------------------- */
@@ -23,9 +23,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/posts', postsRouter);
 app.use('/users', usersRouter);
+app.use('/posts', postsRouter);
+app.use('/', indexRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 /* /express 設定 --------------------------------------------------------------- */
 
