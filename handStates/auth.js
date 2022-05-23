@@ -47,7 +47,7 @@ const generateSendJWT = (user, statusCode, res) => {
   res.status(statusCode).json({
     status: 'success',
     data: {
-      token,
+      token: `Bearer ${token}`,
       userName: user.userName,
       userPhoto: user.userPhoto,
     },
