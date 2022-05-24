@@ -9,7 +9,7 @@ const commentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  user: {
+  commentUser: {
     type: mongoose.Schema.ObjectId,
     ref: 'user',
     require: [true, 'user must belong to a post.'],
@@ -22,8 +22,8 @@ const commentSchema = new mongoose.Schema({
 });
 commentSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'user', // 指定留言者 ID Document
-    select: 'userName userPhoto email _id createdAt', // 取得該留言者 Document 欄位資料
+    path: 'commentUser', // 指定留言者 ID Document
+    select: 'userName userPhoto email _id createAt', // 取得該留言者 Document 欄位資料
   });
 
   next();

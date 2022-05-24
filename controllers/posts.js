@@ -78,7 +78,7 @@ module.exports = {
       const posts = await Posts.find(q)
         .populate({
           path: 'comments',
-          select: 'comment user createAt',
+          select: 'comment commentUser createAt',
         })
         .populate({
           path: 'userData',
@@ -232,7 +232,7 @@ module.exports = {
       if (!comment) return next(appError(404, 'comment 欄位未帶上', next));
       const newComment = await Comment.create({
         post,
-        user: user,
+        commentUser: user,
         comment,
       }).catch((err) =>
         next(appError(404, '貼文或留言 user 資料格式有誤', next))
@@ -252,7 +252,7 @@ module.exports = {
       const posts = await Posts.find({ userID })
         .populate({
           path: 'comments',
-          select: 'comment user createAt',
+          select: 'comment commentUser createAt',
         })
         .populate({
           path: 'userData',
