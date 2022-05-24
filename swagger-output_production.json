@@ -584,6 +584,244 @@
           }
         ]
       }
+    },
+    "/posts/{id}/comment": {
+      "post": {
+        "tags": [
+          "posts (貼文留言)"
+        ],
+        "description": "  新增貼文留言功能  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Params path Variables <code>:id</code> (posts ID)"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string",
+                  "example": "這是留言在貼文裡的一段話"
+                }
+              },
+              "required": [
+                "comment"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新增貼文留言功能",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "comments": {
+                      "type": "object",
+                      "properties": {
+                        "comment": {
+                          "type": "string",
+                          "example": "這是留言在貼文裡的一段話 - swagger"
+                        },
+                        "commentUser": {
+                          "type": "string",
+                          "example": "628a629b1c4b458a51db745b"
+                        },
+                        "post": {
+                          "type": "string",
+                          "example": "628c367b714bc9f6a8e17857"
+                        },
+                        "_id": {
+                          "type": "string",
+                          "example": "628c6607e6b23dcb0832041d"
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "example": "2022-05-24T04:58:47.058Z"
+                        },
+                        "__v": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/user/{id}": {
+      "get": {
+        "tags": [
+          "posts (貼文留言)"
+        ],
+        "description": "  取得特定使用者的所有貼文，關連留言訊息。  <ul>  <li>不帶 Token 在可對外查看。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "  <ul>  <li>取得特定使用者的所有貼文，關連留言訊息資料格式。</li>  <li>Params Path Variables <code>:id</code> (user ID)</li>  </ul>  "
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得貼文留言格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "results": {
+                  "type": "number",
+                  "example": 1
+                },
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "post ID"
+                      },
+                      "discussContent": {
+                        "type": "string",
+                        "example": "外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-大明"
+                      },
+                      "discussPhoto": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "tag": {
+                        "type": "string",
+                        "example": "標籤 string"
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "userData": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "userData ID"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "大明"
+                          },
+                          "userPhoto": {
+                            "type": "string",
+                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "min-@mail.com"
+                          },
+                          "createAt": {
+                            "type": "string",
+                            "example": "2022-05-23T07:10:18.697Z"
+                          }
+                        }
+                      },
+                      "comments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "628c59c3d08d3db9169f9593"
+                            },
+                            "comment": {
+                              "type": "string",
+                              "example": "這是留言在貼文裡的一段話 for swagger min-@mail.com"
+                            },
+                            "commentUser": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "example": "628b335a5509d304d26e9c70"
+                                },
+                                "userName": {
+                                  "type": "string",
+                                  "example": "大明"
+                                },
+                                "userPhoto": {
+                                  "type": "string",
+                                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                                },
+                                "email": {
+                                  "type": "string",
+                                  "example": "min-@mail.com"
+                                },
+                                "createAt": {
+                                  "type": "string",
+                                  "example": "2022-05-23T07:10:18.697Z"
+                                }
+                              }
+                            },
+                            "post": {
+                              "type": "string",
+                              "example": "post ID"
+                            },
+                            "createAt": {
+                              "type": "string",
+                              "example": "2022-05-24T04:06:27.159Z"
+                            }
+                          }
+                        }
+                      },
+                      "id": {
+                        "type": "string",
+                        "example": "post ID"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
