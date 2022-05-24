@@ -5,7 +5,7 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: [true, 'comment can not be empty!'],
   },
-  createdAt: {
+  createAt: { // 注意時間欄位命名關連才會生效
     type: Date,
     default: Date.now,
   },

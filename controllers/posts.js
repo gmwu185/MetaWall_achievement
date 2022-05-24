@@ -252,11 +252,11 @@ module.exports = {
       const posts = await Posts.find({ userID })
         .populate({
           path: 'comments',
-          select: 'comment user createdAt',
+          select: 'comment user createAt',
         })
         .populate({
           path: 'userData',
-          select: 'email userPhoto userName createdAt',
+          select: 'email userPhoto userName createAt',
         });
 
       res.status(200).json({
