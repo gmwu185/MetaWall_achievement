@@ -230,13 +230,13 @@ module.exports = {
         新增貼文留言功能
         <ul>
           <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
-          <li>Params Path Variables <code>:id</code> (posts ID)</li>
         </ul>
       `
       * #swagger.parameters['id'] = {
           in: 'path',
           type: 'string',
           required: true,
+          description: `Params path Variables <code>:id</code> (posts ID)`
         }
       * #swagger.security = [{
         'apiKeyAuth': []
@@ -245,10 +245,26 @@ module.exports = {
         in: "body",
         type: "object",
         required: true,
-        description: "Body 資料格式",
+        description: `Body 資料格式`,
         schema: {
           "$comment": "這是留言在貼文裡的一段話"
         },
+      },
+      #swagger.responses[200] = {
+        description: `新增貼文留言功能`,
+        schema: {
+          "status": "success",
+          "data": {
+            "comments": {
+              "comment": "這是留言在貼文裡的一段話 - swagger",
+              "commentUser": "628a629b1c4b458a51db745b",
+              "post": "628c367b714bc9f6a8e17857",
+              "_id": "628c6607e6b23dcb0832041d",
+              "createAt": "2022-05-24T04:58:47.058Z",
+              "__v": 0
+            }
+          }
+        }
       }
     */
     return handleError(async (req, res, next) => {
@@ -276,17 +292,74 @@ module.exports = {
     /** 
       ** #swagger.tags = ['posts (貼文留言)']
       * #swagger.description = `
-        取得特定使用者的所有貼文，關連留言訊息
+        取得特定使用者的所有貼文，關連留言訊息。
         <ul>
-          <li>Params Path Variables <code>:id</code> (user ID)</li>
+          <li>不帶 Token 在可對外查看。</li>
         </ul>
       `
       * #swagger.parameters['id'] = {
           in: 'path',
           type: 'string',
           required: true,
-          description: "取得特定使用者的所有貼文，關連留言訊息資料格式",
+          description: `
+            <ul>
+              <li>取得特定使用者的所有貼文，關連留言訊息資料格式。</li>
+              <li>Params Path Variables <code>:id</code> (user ID)</li>
+            </ul>
+          `,
+        },
+      #swagger.responses[200] = {
+        description: `取得貼文留言格式`,
+        schema: {
+          "status": "success",
+          "results": 1,
+          "posts": [
+            {
+              "_id": "post ID",
+              "discussContent": "外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-大明",
+              "discussPhoto": "",
+              "tag": "標籤 string",
+              "likes": 0,
+              "userData": {
+                "_id": "userData ID",
+                "userName": "大明",
+                "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                "email": "min-@mail.com",
+                "createAt": "2022-05-23T07:10:18.697Z"
+              },
+              "comments": [
+                {
+                  "_id": "628c5951d08d3db9169f958b",
+                  "comment": "這是留言在貼文裡的一段話 for swagger",
+                  "commentUser": {
+                    "_id": "628a629b1c4b458a51db745b",
+                    "email": "min-@mail.com",
+                    "createAt": "2022-05-22T16:19:39.136Z",
+                    "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                    "userName": "大明"
+                  },
+                  "post": "post ID",
+                  "createAt": "2022-05-24T04:04:33.889Z"
+                },
+                {
+                  "_id": "628c59c3d08d3db9169f9593",
+                  "comment": "這是留言在貼文裡的一段話 for swagger min-@mail.com",
+                  "commentUser": {
+                    "_id": "628b335a5509d304d26e9c70",
+                    "userName": "大明",
+                    "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                    "email": "min-@mail.com",
+                    "createAt": "2022-05-23T07:10:18.697Z"
+                  },
+                  "post": "post ID",
+                  "createAt": "2022-05-24T04:06:27.159Z"
+                }
+              ],
+              "id": "post ID"
+            }
+          ]
         }
+      }
     */
     return handleError(async (req, res, next) => {
       const userID = req.params.id;
