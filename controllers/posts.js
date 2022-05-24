@@ -139,11 +139,11 @@ module.exports = {
       }],
     */
 
-    return async (req, res, next) => {
+    return handleError(async (req, res, next) => {
       if (req.originalUrl === '/posts/')
         return next(appError(404, '無此網站路由', next));
       handleSuccess(res, await Posts.deleteMany());
-    };
+    });
   },
   delOne() {
     /**
@@ -164,7 +164,7 @@ module.exports = {
       }
      */
 
-    return async (req, res, next) => {
+    return handleError(async (req, res, next) => {
       if (!req.params.id || req.params.id === '')
         return next(appError(400, '未帶入刪除的資料 id 或其他錯誤', next));
       const deletePost = await Posts.findByIdAndDelete({
@@ -172,7 +172,7 @@ module.exports = {
       }).catch((err) => appError(400, '無此 id 或 id 長度不足', next));
       if (!deletePost) return next(appError(400, '刪除失敗，查無此id', next));
       handleSuccess(res, req.params.id);
-    };
+    });
   },
   upDatePost() {
     /** 
@@ -203,7 +203,7 @@ module.exports = {
         },
       }
     */
-    return async (req, res, next) => {
+    return handleError(async (req, res, next) => {
       const { discussContent, discussPhoto, tag } = req.body;
       const paramsID = req.params.id;
 
@@ -221,7 +221,7 @@ module.exports = {
       if (!editPost)
         return appError(400, '更新失敗，查無此 id 或欄位格式錯誤', next);
       handleSuccess(res, editPost);
-    };
+    });
   },
   createComment() {
     /** 
