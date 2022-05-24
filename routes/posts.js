@@ -13,5 +13,7 @@ router.post('/', isAuth, PostsControllers.createdPost());
 router.delete('/', isAuth, PostsControllers.delALL());
 router.delete('/:id', isAuth, PostsControllers.delOne());
 router.patch('/:id', isAuth, PostsControllers.upDatePost());
+router.post('/:id/comment', isAuth, PostsControllers.createComment());
+router.get('/user/:id', PostsControllers.getComment());
 
 module.exports = router;

@@ -9,6 +9,8 @@ const { isAuth, generateSendJWT } = require('../handStates/auth');
 const appError = require('../customErr/appError');
 
 const Posts = require('../model/posts');
+const Comment = require('../model/comments');
+const User = require('../model/users');
 
 module.exports = {
   getPosts() {
@@ -75,8 +77,12 @@ module.exports = {
        */
       const posts = await Posts.find(q)
         .populate({
+          path: 'comments',
+          select: 'comment user createAt',
+        })
+        .populate({
           path: 'userData',
-          select: 'email userPhoto userName',
+          select: 'email userPhoto userName createAt',
         })
         .sort(timeSort);
       handleSuccess(res, posts);
@@ -216,5 +222,48 @@ module.exports = {
         return appError(400, '更新失敗，查無此 id 或欄位格式錯誤', next);
       handleSuccess(res, editPost);
     };
+  },
+  createComment() {
+    return handleError(async (req, res, next) => {
+      const user = req.user.id;
+      const post = req.params.id;
+      const { comment } = req.body;
+      console.log('post', post);
+      if (!comment) return next(appError(404, 'comment 欄位未帶上', next));
+      const newComment = await Comment.create({
+        post,
+        user: user,
+        comment,
+      }).catch((err) =>
+        next(appError(404, '貼文或留言 user 資料格式有誤', next))
+      );
+      res.status(201).json({
+        status: 'success',
+        data: {
+          comments: newComment,
+        },
+      });
+    });
+  },
+  getComment() {
+    return handleError(async (req, res, next) => {
+      const userID = req.params.id;
+
+      const posts = await Posts.find({ userID })
+        .populate({
+          path: 'comments',
+          select: 'comment user createdAt',
+        })
+        .populate({
+          path: 'userData',
+          select: 'email userPhoto userName createdAt',
+        });
+
+      res.status(200).json({
+        status: 'success',
+        results: posts.length,
+        posts,
+      });
+    });
   },
 };

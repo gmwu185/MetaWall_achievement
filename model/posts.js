@@ -16,20 +16,16 @@ const PostRequiredFormat = {
   },
   tag: {
     type: String,
-    required: [true, "標籤必填"],
+    required: [true, '標籤必填'],
   },
   likes: {
-    type: Number,
-    default: 0,
-  },
-  comments: {
     type: Number,
     default: 0,
   },
   createAt: {
     type: Date,
     default: Date.now,
-    select: true,
+    select: false,
     /** mongoos 自定時間搓
      * 寫入 db 時間轉成 UTC 時間（+0）
      * 從 db 拿回來的 UTC（+0）時間要轉回當地時間
@@ -38,11 +34,18 @@ const PostRequiredFormat = {
   },
 };
 const schemaOptions = {
-  runSettersOnQuery: true,
+  // runSettersOnQuery: true,
   versionKey: false,
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
 };
 
 const postsSchema = new mongoose.Schema(PostRequiredFormat, schemaOptions);
+postsSchema.virtual('comments', {
+  ref: 'Comment', // 指向 Comment Model
+  foreignField: 'post', // 指向 DB posts collection 
+  localField: '_id',
+});
 const posts = mongoose.model('Post', postsSchema);
 
 module.exports = posts;
