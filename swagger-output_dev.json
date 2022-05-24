@@ -584,6 +584,72 @@
           }
         ]
       }
+    },
+    "/posts/{id}/comment": {
+      "post": {
+        "tags": [
+          "posts (貼文留言)"
+        ],
+        "description": "  新增貼文留言功能  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>Params Path Variables <code>:id</code> (posts ID)</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string",
+                  "example": "這是留言在貼文裡的一段話"
+                }
+              },
+              "required": [
+                "comment"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/user/{id}": {
+      "get": {
+        "tags": [
+          "posts (貼文留言)"
+        ],
+        "description": "  取得特定使用者的所有貼文，關連留言訊息  <ul>  <li>Params Path Variables <code>:id</code> (user ID)</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "取得特定使用者的所有貼文，關連留言訊息資料格式"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
     }
   }
 }

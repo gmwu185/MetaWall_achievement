@@ -224,6 +224,33 @@ module.exports = {
     };
   },
   createComment() {
+    /** 
+      ** #swagger.tags = ['posts (貼文留言)']
+      * #swagger.description = `
+        新增貼文留言功能
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>Params Path Variables <code>:id</code> (posts ID)</li>
+        </ul>
+      `
+      * #swagger.parameters['id'] = {
+          in: 'path',
+          type: 'string',
+          required: true,
+        }
+      * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+      * #swagger.parameters['body'] = {
+        in: "body",
+        type: "object",
+        required: true,
+        description: "Body 資料格式",
+        schema: {
+          "$comment": "這是留言在貼文裡的一段話"
+        },
+      }
+    */
     return handleError(async (req, res, next) => {
       const user = req.user.id;
       const post = req.params.id;
@@ -246,10 +273,25 @@ module.exports = {
     });
   },
   getComment() {
+    /** 
+      ** #swagger.tags = ['posts (貼文留言)']
+      * #swagger.description = `
+        取得特定使用者的所有貼文，關連留言訊息
+        <ul>
+          <li>Params Path Variables <code>:id</code> (user ID)</li>
+        </ul>
+      `
+      * #swagger.parameters['id'] = {
+          in: 'path',
+          type: 'string',
+          required: true,
+          description: "取得特定使用者的所有貼文，關連留言訊息資料格式",
+        }
+    */
     return handleError(async (req, res, next) => {
       const userID = req.params.id;
 
-      const posts = await Posts.find({ userID })
+      const posts = await Posts.find({ userData: userID })
         .populate({
           path: 'comments',
           select: 'comment commentUser createAt',
