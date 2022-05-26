@@ -131,7 +131,7 @@ module.exports = {
       handleSuccess(res, newPost);
     });
   },
-  delALL() {
+  delALLPost() {
     /** #swagger.tags = ['posts (貼文)']
      *! #swagger.description = '刪除所有貼文',
      * #swagger.security = [{
@@ -145,7 +145,7 @@ module.exports = {
       handleSuccess(res, await Posts.deleteMany());
     });
   },
-  delOne() {
+  delOnePost() {
     /**
       *! #swagger.tags = ['posts (貼文)']
       * #swagger.description = `
@@ -267,6 +267,29 @@ module.exports = {
         }
       }
     */
+    return handleError(async (req, res, next) => {
+      const user = req.user.id;
+      const post = req.params.id;
+      const { comment } = req.body;
+      console.log('post', post);
+      if (!comment) return next(appError(404, 'comment 欄位未帶上', next));
+      const newComment = await Comment.create({
+        post,
+        commentUser: user,
+        comment,
+      }).catch((err) =>
+        next(appError(404, '貼文或留言 user 資料格式有誤', next))
+      );
+
+      // const commentData = {
+      //   comments: newComment,
+      // }
+      handleSuccess(res, {
+        comments: newComment,
+      });
+    });
+  },
+  delOneComment() {
     return handleError(async (req, res, next) => {
       const user = req.user.id;
       const post = req.params.id;

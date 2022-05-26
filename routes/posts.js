@@ -10,8 +10,8 @@ const PostsControllers = require('../controllers/posts');
 
 router.get('/', isAuth, PostsControllers.getPosts());
 router.post('/', isAuth, PostsControllers.createdPost());
-router.delete('/', isAuth, PostsControllers.delALL());
-router.delete('/:id', isAuth, PostsControllers.delOne());
+router.delete('/', isAuth, PostsControllers.delALLPost());
+router.delete('/:id', isAuth, PostsControllers.delOnePost());
 router.patch('/:id', isAuth, PostsControllers.upDatePost());
 router.post('/:id/comment', isAuth, PostsControllers.createComment());
 router.get('/user/:id', PostsControllers.getComment());
