@@ -231,6 +231,9 @@ module.exports = {
         新增貼文留言功能
         <ul>
           <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>Heders Token 指定留言 user (<code>commentUser</code>)。</li>
+          <li>網址路由 <code>:id</code> 傳入 post id 在特定貼文中留言。</li>
+          <li>成功留言將資料寫入 <code>Comment</code> collection 中建出 document。</li>
         </ul>
       `
       * #swagger.parameters['id'] = {
@@ -272,7 +275,7 @@ module.exports = {
       const user = req.user.id;
       const post = req.params.id;
       const { comment } = req.body;
-      console.log('post', post);
+      // console.log('post', post);
       if (!comment) return next(appError(404, 'comment 欄位未帶上', next));
       const newComment = await Comment.create({
         post,
@@ -291,7 +294,6 @@ module.exports = {
         刪除單筆貼文留言
         <ul>
           <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
-          <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Comment 中的 document id 進行刪除。</li>
         </ul>
       `,
       * #swagger.security = [{
@@ -301,6 +303,12 @@ module.exports = {
         in: 'path',
         type: 'string',
         required: true,
+        description: `
+          <ul>
+            <li>取得特定使用者的所有貼文，關連留言訊息資料格式。</li>
+            <li>Params Path Variables <code>:id</code> (comment ID)</li>
+          </ul>
+        `,
       }
      */
     return handleError(async (req, res, next) => {
@@ -326,7 +334,6 @@ module.exports = {
       * #swagger.parameters['id'] = {
           in: 'path',
           type: 'string',
-          required: true,
           description: `
             <ul>
               <li>取得特定使用者的所有貼文，關連留言訊息資料格式。</li>
