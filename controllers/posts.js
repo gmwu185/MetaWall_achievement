@@ -152,6 +152,7 @@ module.exports = {
         刪除單筆貼文
         <ul>
           <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行刪除。</li>
         </ul>
       `,
       * #swagger.security = [{
@@ -284,6 +285,24 @@ module.exports = {
     });
   },
   delOneComment() {
+    /**
+      *! #swagger.tags = ['posts (貼文留言)']
+      * #swagger.description = `
+        刪除單筆貼文留言
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Comment 中的 document id 進行刪除。</li>
+        </ul>
+      `,
+      * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+      * #swagger.parameters['id'] = {
+        in: 'path',
+        type: 'string',
+        required: true,
+      }
+     */
     return handleError(async (req, res, next) => {
       if (!req.params.id || req.params.id === '')
         return next(appError(400, '未帶入刪除的 commen id 或其他錯誤', next));
