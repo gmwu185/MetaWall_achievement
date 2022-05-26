@@ -166,12 +166,12 @@ module.exports = {
 
     return handleError(async (req, res, next) => {
       if (!req.params.id || req.params.id === '')
-        return next(appError(400, '未帶入刪除的資料 id 或其他錯誤', next));
+        return next(appError(400, '未帶入刪除的 post id 或其他錯誤', next));
       const deletePost = await Posts.findByIdAndDelete({
         _id: req.params.id,
       }).catch((err) => appError(400, '無此 id 或 id 長度不足', next));
       if (!deletePost) return next(appError(400, '刪除失敗，查無此id', next));
-      handleSuccess(res, req.params.id);
+      handleSuccess(res, `刪除 commen id ${req.params.id} 成功`);
     });
   },
   upDatePost() {
@@ -280,35 +280,19 @@ module.exports = {
       }).catch((err) =>
         next(appError(404, '貼文或留言 user 資料格式有誤', next))
       );
-
-      // const commentData = {
-      //   comments: newComment,
-      // }
-      handleSuccess(res, {
-        comments: newComment,
-      });
+      handleSuccess(res, { comments: newComment });
     });
   },
   delOneComment() {
     return handleError(async (req, res, next) => {
-      const user = req.user.id;
-      const post = req.params.id;
-      const { comment } = req.body;
-      console.log('post', post);
-      if (!comment) return next(appError(404, 'comment 欄位未帶上', next));
-      const newComment = await Comment.create({
-        post,
-        commentUser: user,
-        comment,
-      }).catch((err) =>
-        next(appError(404, '貼文或留言 user 資料格式有誤', next))
-      );
-      res.status(201).json({
-        status: 'success',
-        data: {
-          comments: newComment,
-        },
-      });
+      if (!req.params.id || req.params.id === '')
+        return next(appError(400, '未帶入刪除的 commen id 或其他錯誤', next));
+      const deleteComment = await Comment.findByIdAndDelete({
+        _id: req.params.id,
+      }).catch((err) => appError(400, '無此 id 或 id 長度不足', next));
+      if (!deleteComment)
+        return next(appError(400, '刪除失敗，查無此id', next));
+      handleSuccess(res, `刪除 commen id ${req.params.id} 成功`);
     });
   },
   getComment() {
