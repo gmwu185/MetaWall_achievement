@@ -86,7 +86,7 @@ module.exports = {
         <ul>
           <li>密碼產生 Token 後至其他 users API 使用</li>
           <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
-          <li>欄位 <code>"gender"</code> 只能接受 <code>"male", "female"</code>。</li>
+          <li>欄位 <code>"gender"</code> 只能接受 <code>"male"</code>、<code>"female"</code>、<code>""</code>。</li>
         </ul>
       `,
       * #swagger.parameters['body'] = {
