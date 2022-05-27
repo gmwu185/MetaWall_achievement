@@ -25,7 +25,7 @@ const PostRequiredFormat = {
   createAt: {
     type: Date,
     default: Date.now,
-    select: false,
+    select: true,  // 設定回傳時間呈現
     /** mongoos 自定時間搓
      * 寫入 db 時間轉成 UTC 時間（+0）
      * 從 db 拿回來的 UTC（+0）時間要轉回當地時間
