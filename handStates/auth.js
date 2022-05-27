@@ -37,6 +37,7 @@ const generateSendJWT = (user, statusCode, res) => {
     {
       id: user._id,
       userName: user.userName,
+      userPhoto: user.userPhoto,
     },
     process.env.JWT_SECRET,
     {
