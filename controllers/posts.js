@@ -77,10 +77,10 @@ module.exports = {
           type: 'string',
           required: false,
           description: `
-            <code>pageNum</code> 參數：取頁面資料筆數長度
+            <code>pageNum</code> 參數：取頁面資料筆數長度 (目前分頁數 <code>0</code> 為第一頁)
             <ul>
               <li>判斷網址參數 <code>pageSize</code> 是否有值，若無值會段 <code>0</code> 取出所有資料。</li>
-              <li>參數以由 <code>1</code> 以累計。</li>
+              <li>參數以 <code>1</code> 累計。</li>
             </ul>
           `,
         },
