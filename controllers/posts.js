@@ -23,59 +23,92 @@ module.exports = {
           <p>取得所有貼文。</p>
           參數用法：
           <ul>
-            <li><code>timeSort</code> 參數：
-              <ol>
-                <li>預設新到舊</li>
-                <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>
-              </ol>
-            </li>
-            <li><code>q</code> 參數：
-              <ol>
-                <li>查找物件中的留言 <code>discussContent</code>。</li>
-                <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>
-              </ol>
-            </li>
             <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+            <li><code>postsLength</code> 在相關網址參數運算下，執行後回傳資料長度。</li>
           </ul>
         `,
-      *? #swagger.responses[200] = {
-        description: `
-          取得全部貼文
-          `,
-        schema: {
-          "status": true,
-          "data": [
-            {
-              "_id": "6284f91e51cc73dad4255eb3",
-              "userData": {
-                "_id": "6283dc5a60d07bddfa09e3a2",
-                "userName": "aa",
-                "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
-                "email": "aa@mail.com"
-              },
-              "discussContent": "外面看起來就超冷…\n\n我決定回被窩繼續睡…>.<-33",
-              "discussPhoto": "",
-              "tag": "標籤",
-              "likes": 0,
-              "comments": 0,
-              "createAt": "2022-05-18T13:48:14.766Z"
-            },
-          ]
-        }
-      }
     */
-
+    
     return handleError(async (req, res, next) => {
-      const timeSort = req.query.timeSort === 'asc' ? 'createAt' : '-createAt';
-      const q =
-        req.query.q !== undefined
-          ? { discussContent: new RegExp(req.query.q) }
-          : {};
-      /** 網址參數用法：
-       * 參數名 timeSort 是否有 'asc' 值，有值有舊到新；沒值有新到舊
-       * 參數名 q 用正則表達式以 JS 轉 mongDB 語法 .find( parName: /<查尋字串>/)，以物件包裝查找留言
-       */
-      const posts = await Posts.find(q)
+      const { q, timeSort, pageNum, pageSize } = req.query;
+      /** * #swagger.parameters['timeSort'] = {
+          in: 'query',
+          type: 'string',
+          required: false,
+          description: `
+            <code>timeSort</code> 參數：
+            <ul>
+              <li>預設新到舊</li>
+              <li>是否有 <code>asc</code> 值？，有值有舊到新；沒值有新到舊。</li>
+            </ul>
+          `,
+        },
+      */
+      const filterQuery = q ? { discussContent: new RegExp(q) } : {};
+      /** * #swagger.parameters['q'] = {
+          in: 'query',
+          type: 'string',
+          required: false,
+          description: `
+            <code>q</code> 參數：
+            <ul>
+              <li>查找物件中的留言 <code>discussContent</code>。</li>
+              <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>
+            </ul>
+          `,
+        },
+      */
+      const filterTimeSort = timeSort === 'asc' ? 'createAt' : '-createAt';
+
+      function isPositiveInteger(str) {
+        if (typeof str === 'number') {
+          if (Number.isInteger(str) && str > 0) return true;
+          return false;
+        }
+
+        if (typeof str !== 'string') return false;
+        const num = Number(str);
+
+        if (Number.isInteger(num) && num > 0) return true;
+        return false;
+      }
+      /** * #swagger.parameters['pageNum'] = {
+          in: 'query',
+          type: 'string',
+          required: false,
+          description: `
+            <code>pageNum</code> 參數：取頁面資料筆數長度
+            <ul>
+              <li>判斷網址參數 <code>pageSize</code> 是否有值，若無值會段 <code>0</code> 取出所有資料。</li>
+              <li>參數以由 <code>1</code> 以累計。</li>
+            </ul>
+          `,
+        },
+      */
+      /** * #swagger.parameters['pageSize'] = {
+          in: 'query',
+          type: 'string',
+          required: false,
+          description: `
+            <code>pageSize</code> 參數：取頁面資料區間 (分頁中每頁的資料筆數)
+            <ul>
+              <li>由第 <code>0</code> 筆數位置做為 <code>1</code> 開始計算。</li>
+              <li>參數以由 <code>1</code> 以累計。</li>
+              <li>網址參數 <code>pageSize * pageNum = 頁面數</code> 做為計算結果。</li>
+            </ul>
+          `,
+        },
+      */
+      const currentPageLimit = isPositiveInteger(pageSize) ? pageSize : 0;
+      console.log('currentPageLimit', currentPageLimit);
+
+      const currentPageSkip =
+        isPositiveInteger(pageNum) && currentPageLimit > 0
+          ? Number(pageSize) * Number(pageNum)
+          : 0;
+      console.log('currentPageSkip', currentPageSkip);
+
+      const posts = await Posts.find(filterQuery)
         .populate({
           path: 'comments',
           select: 'comment commentUser createAt',
@@ -84,9 +117,48 @@ module.exports = {
           path: 'userData',
           select: 'email userPhoto userName createAt',
         })
-        .sort(timeSort);
-        
-      handleSuccess(res, posts);
+        .limit(currentPageLimit) // 筆數長度
+        .skip(currentPageSkip) // 筆數位置開始計算
+        .sort(filterTimeSort);
+
+      let postsLength = posts.length;
+      console.log('postsLength', postsLength);
+
+      handleSuccess(res, {
+        postsLength: postsLength,
+        posts,
+      });
+      /** #swagger.responses[200] = {
+        description: `
+          取得全部貼文
+        `,
+        schema: {
+          "status": "success",
+          "data": {
+            "postsLength": 4,
+            "posts": [
+              {
+                "_id": "6291b86e52362496781068cc",
+                "userData": {
+                  "_id": "628a629b1c4b458a51db745b",
+                  "email": "min-@mail.com",
+                  "createAt": "2022-05-22T16:19:39.136Z",
+                  "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                  "userName": "大明一"
+                },
+                "discussContent": "index_09__外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-大明二",
+                "discussPhoto": "",
+                "tag": "標籤 string",
+                "likes": 0,
+                "createAt": "2022-05-28T05:51:42.777Z",
+                "comments": [],
+                "id": "6291b86e52362496781068cc"
+              },
+            ]
+          }
+        }
+      }
+      */
     });
   },
   createdPost() {

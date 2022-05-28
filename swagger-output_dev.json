@@ -370,17 +370,35 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  <p>取得所有貼文。</p>  參數用法：  <ul>  <li><code>timeSort</code> 參數：  <ol>  <li>預設新到舊</li>  <li>是否有 <code>'asc'</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ol>  </li>  <li><code>q</code> 參數：  <ol>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ol>  </li>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "description": "  <p>取得所有貼文。</p>  參數用法：  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li><code>postsLength</code> 在相關網址參數運算下，執行後回傳資料長度。</li>  </ul>  ",
         "parameters": [
           {
             "name": "timeSort",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "  <code>timeSort</code> 參數：  <ul>  <li>預設新到舊</li>  <li>是否有 <code>asc</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ul>  "
           },
           {
             "name": "q",
             "in": "query",
-            "type": "string"
+            "type": "string",
+            "required": false,
+            "description": "  <code>q</code> 參數：  <ul>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ul>  "
+          },
+          {
+            "name": "pageNum",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "  <code>pageNum</code> 參數：取頁面資料筆數長度  <ul>  <li>判斷網址參數 <code>pageSize</code> 是否有值，若無值會段 <code>0</code> 取出所有資料。</li>  <li>參數以由 <code>1</code> 以累計。</li>  </ul>  "
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "  <code>pageSize</code> 參數：取頁面資料區間 (分頁中每頁的資料筆數)  <ul>  <li>由第 <code>0</code> 筆數位置做為 <code>1</code> 開始計算。</li>  <li>參數以由 <code>1</code> 以累計。</li>  <li>網址參數 <code>pageSize * pageNum = 頁面數</code> 做為計算結果。</li>  </ul>  "
           }
         ],
         "responses": {
@@ -390,62 +408,80 @@
               "type": "object",
               "properties": {
                 "status": {
-                  "type": "boolean",
-                  "example": true
+                  "type": "string",
+                  "example": "success"
                 },
                 "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string",
-                        "example": "6284f91e51cc73dad4255eb3"
-                      },
-                      "userData": {
+                  "type": "object",
+                  "properties": {
+                    "postsLength": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
                         "type": "object",
                         "properties": {
                           "_id": {
                             "type": "string",
-                            "example": "6283dc5a60d07bddfa09e3a2"
+                            "example": "6291b86e52362496781068cc"
                           },
-                          "userName": {
-                            "type": "string",
-                            "example": "aa"
+                          "userData": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "628a629b1c4b458a51db745b"
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": "min-@mail.com"
+                              },
+                              "createAt": {
+                                "type": "string",
+                                "example": "2022-05-22T16:19:39.136Z"
+                              },
+                              "userPhoto": {
+                                "type": "string",
+                                "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                              },
+                              "userName": {
+                                "type": "string",
+                                "example": "大明一"
+                              }
+                            }
                           },
-                          "userPhoto": {
+                          "discussContent": {
                             "type": "string",
-                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                            "example": "index_09__外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-大明二"
                           },
-                          "email": {
+                          "discussPhoto": {
                             "type": "string",
-                            "example": "aa@mail.com"
+                            "example": ""
+                          },
+                          "tag": {
+                            "type": "string",
+                            "example": "標籤 string"
+                          },
+                          "likes": {
+                            "type": "number",
+                            "example": 0
+                          },
+                          "createAt": {
+                            "type": "string",
+                            "example": "2022-05-28T05:51:42.777Z"
+                          },
+                          "comments": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "6291b86e52362496781068cc"
                           }
                         }
-                      },
-                      "discussContent": {
-                        "type": "string",
-                        "example": "外面看起來就超冷…\n\n我決定回被窩繼續睡…>.<-33"
-                      },
-                      "discussPhoto": {
-                        "type": "string",
-                        "example": ""
-                      },
-                      "tag": {
-                        "type": "string",
-                        "example": "標籤"
-                      },
-                      "likes": {
-                        "type": "number",
-                        "example": 0
-                      },
-                      "comments": {
-                        "type": "number",
-                        "example": 0
-                      },
-                      "createAt": {
-                        "type": "string",
-                        "example": "2022-05-18T13:48:14.766Z"
                       }
                     }
                   }
