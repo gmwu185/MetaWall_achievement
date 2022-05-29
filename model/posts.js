@@ -16,7 +16,7 @@ const PostRequiredFormat = {
   },
   tag: {
     type: String,
-    required: [true, '標籤必填'],
+    default: '',
   },
   likes: {
     type: Number,

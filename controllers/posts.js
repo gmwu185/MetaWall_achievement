@@ -28,7 +28,7 @@ module.exports = {
           </ul>
         `,
     */
-    
+
     return handleError(async (req, res, next) => {
       const { q, timeSort, pageNum, pageSize } = req.query;
       /** * #swagger.parameters['timeSort'] = {
@@ -159,6 +159,50 @@ module.exports = {
         }
       }
       */
+    });
+  },
+  getPost() {
+    /**
+      ** #swagger.tags = ['posts (貼文)']
+      * #swagger.description = `
+        取得單筆貼文
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行取得資料。</li>
+        </ul>
+      `,
+      * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+      * #swagger.parameters['id'] = {
+        in: 'path',
+        type: 'string',
+        required: true,
+      },
+      #swagger.responses[200] = {
+        description: `取得單筆貼文`,
+        schema: {
+          "status": "success",
+          "data": {
+            "_id": "6291b87a52362496781068d5",
+            "userData": "628a629b1c4b458a51db745b",
+            "discussContent": "index_12__外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-大明二",
+            "discussPhoto": "",
+            "tag": "標籤 string",
+            "likes": 0,
+            "createAt": "2022-05-28T05:51:54.236Z",
+            "id": "6291b87a52362496781068d5"
+          }
+        }
+      }
+     */
+    return handleError(async (req, res, next) => {
+      if (!req.params.id || req.params.id === '')
+        return next(appError(400, '未帶入刪除的 post id 或其他錯誤', next));
+      const findOnePost = await Posts.findOne({
+        _id: req.params.id,
+      }).catch((err) => appError(400, '無此 id 或 id 長度不足', next));
+      handleSuccess(res, findOnePost);
     });
   },
   createdPost() {

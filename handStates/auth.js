@@ -38,6 +38,7 @@ const generateSendJWT = (user, statusCode, res) => {
       id: user._id,
       userName: user.userName,
       userPhoto: user.userPhoto,
+      gender: user.gender,
     },
     process.env.JWT_SECRET,
     {
@@ -52,6 +53,7 @@ const generateSendJWT = (user, statusCode, res) => {
       wholeToken: `Bearer ${token}`,
       userName: user.userName,
       userPhoto: user.userPhoto,
+      gender: user.gender,
     },
   });
 };

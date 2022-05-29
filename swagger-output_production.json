@@ -554,11 +554,11 @@
       }
     },
     "/posts/{id}": {
-      "delete": {
+      "get": {
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  刪除單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行刪除。</li>  </ul>  ",
+        "description": "  取得單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行取得資料。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -567,7 +567,60 @@
             "type": "string"
           }
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "取得單筆貼文",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "6291b87a52362496781068d5"
+                    },
+                    "userData": {
+                      "type": "string",
+                      "example": "628a629b1c4b458a51db745b"
+                    },
+                    "discussContent": {
+                      "type": "string",
+                      "example": "index_12__外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-大明二"
+                    },
+                    "discussPhoto": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "tag": {
+                      "type": "string",
+                      "example": "標籤 string"
+                    },
+                    "likes": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-05-28T05:51:54.236Z"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "6291b87a52362496781068d5"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
         "security": [
           {
             "apiKeyAuth": []
@@ -611,6 +664,26 @@
                 "discussContent"
               ]
             }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "description": "  刪除單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行刪除。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "responses": {},
