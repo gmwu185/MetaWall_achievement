@@ -117,6 +117,7 @@ module.exports = {
           path: 'userData',
           select: 'email userPhoto userName createAt',
         })
+        .populate('likes')
         .limit(currentPageLimit) // 筆數長度
         .skip(currentPageSkip) // 筆數位置開始計算
         .sort(filterTimeSort);
@@ -201,7 +202,17 @@ module.exports = {
         return next(appError(400, '未帶入刪除的 post id 或其他錯誤', next));
       const findOnePost = await Posts.findOne({
         _id: req.params.id,
-      }).catch((err) => appError(400, '無此 id 或 id 長度不足', next));
+      })
+        .populate({
+          path: 'comments',
+          select: 'comment commentUser createAt',
+        })
+        .populate({
+          path: 'userData',
+          select: 'email userPhoto userName createAt',
+        })
+        .populate('likes')
+        .catch((err) => appError(400, '無此 id 或 id 長度不足', next));
       handleSuccess(res, findOnePost);
     });
   },
@@ -336,7 +347,16 @@ module.exports = {
           tag,
         },
         { returnDocument: 'after' }
-      );
+      )
+        .populate({
+          path: 'comments',
+          select: 'comment commentUser createAt',
+        })
+        .populate({
+          path: 'userData',
+          select: 'email userPhoto userName createAt',
+        })
+        .populate('likes');
       if (!editPost)
         return appError(400, '更新失敗，查無此 id 或欄位格式錯誤', next);
       handleSuccess(res, editPost);

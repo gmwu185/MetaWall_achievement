@@ -18,34 +18,12 @@ const PostRequiredFormat = {
     type: String,
     default: '',
   },
-  // likes: {
-  //   type: Array,
-  //   default: [],
-  // },
   likes: [
     {
       type: mongoose.Schema.ObjectId,
       ref: 'user', // id 要去找 user 的那張表的 ID
     }
   ],
-  // likes: [
-  //   {
-  //     type: mongoose.Schema.ObjectId,
-  //     ref: 'user', // id 要去找 user 的那張表的 ID
-  //     // like: {
-  //     // },
-  //     // createAt: {
-  //     //   type: Date,
-  //     //   default: Date.now,
-  //     // }
-  //     // like: {
-  //     //   likeID: {
-  //         // type: mongoose.Schema.ObjectId,
-  //         // ref: 'user', // id 要去找 user 的那張表的 ID
-  //     //   }
-  //     // }
-  //   }
-  // ],
   createAt: {
     type: Date,
     default: Date.now,
