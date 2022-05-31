@@ -341,6 +341,118 @@ module.exports = {
       handleSuccess(res, editPost);
     });
   },
+  addLike() {
+    /**
+      *? #swagger.tags = ['posts (貼文按讚)']
+      * #swagger.description = `
+        新增單筆貼文按讚
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增按讚。</li>
+        </ul>
+      `,
+      * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+      * #swagger.parameters['id'] = {
+        in: 'path',
+        type: 'string',
+        required: true,
+      }
+     */
+    return handleError(async (req, res, next) => {
+      const postID = req.params.id;
+      const userID = req.user.id;
+      // 以不同 user id 寫入 DB 集合中
+      const updateLike = await Posts.findOneAndUpdate(
+        { _id: postID },
+        {
+          $addToSet: { likes: userID },
+        },
+        { new: true } // 回傳最新改過的資料
+      ).catch((err) =>
+        appError(400, `新增失敗，查無此 ${postID} id 或欄位格式錯誤`, next)
+      );
+      handleSuccess(res, updateLike);
+    });
+  },
+  delLike() {
+    /** #swagger.description =` 刪除單筆貼文按讚 123
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 userID 進行刪除按讚。</li>
+        </ul>
+      `,
+      *! #swagger.tags = ['posts (貼文按讚)']
+      * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+      * #swagger.parameters['id'] = {
+        in: 'path',
+        type: 'string',
+        required: true,
+      }
+     */
+    return handleError(async (req, res, next) => {
+      const postID = req.params.id;
+      const userID = req.user.id;
+      const delLike = await Posts.findOneAndUpdate(
+        { _id: postID },
+        { $pull: { likes: userID } },
+        { new: true } // 回傳最新改過
+      ).catch((err) =>
+        appError(400, `刪除失敗，查無此 ${postID} id 或欄位格式錯誤`, next)
+      );
+      handleSuccess(res, delLike);
+    });
+  },
+  toggleLike() {
+    /**
+      *? #swagger.tags = ['posts (貼文按讚)']
+      * #swagger.description = `
+        新增與移除單筆貼文按讚
+        <ul>
+          <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+          <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增或移除按讚。</li>
+        </ul>
+      `,
+      * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+      * #swagger.parameters['id'] = {
+        in: 'path',
+        type: 'string',
+        required: true,
+      }
+     */
+    return handleError(async (req, res, next) => {
+      const postID = req.params.id;
+      const userID = req.user.id;
+      const findPost = await Posts.findById({
+        _id: postID,
+      }).catch((err) => appError(400, `無此貼文 ${postID} ID`, next));
+      // 貼文按讚的 user id 判斷
+      if (findPost.likes.includes(userID)) {
+        const pullLike = await Posts.findOneAndUpdate(
+          { _id: postID },
+          { $pull: { likes: userID } },
+          { new: true } // 回傳最新改過
+        ).catch((err) =>
+          appError(400, `刪除失敗請查明貼文 ${postID} ID`, next)
+        );
+        handleSuccess(res, pullLike);
+      } else {
+        const newLike = await Posts.findOneAndUpdate(
+          { _id: postID },
+          { $push: { likes: userID } },
+          { new: true } // 回傳最新改過
+        ).catch((err) =>
+          appError(400, `新增失敗請查明貼文 ${postID} ID`, next)
+        );
+        handleSuccess(res, newLike);
+      }
+    });
+  },
   createComment() {
     /** 
       ** #swagger.tags = ['posts (貼文留言)']

@@ -18,10 +18,12 @@ const PostRequiredFormat = {
     type: String,
     default: '',
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: "user", // id 要去找 user 的那張表的 ID
+    },
+  ],
   createAt: {
     type: Date,
     default: Date.now,

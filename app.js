@@ -57,6 +57,10 @@ const resErrorProd = (err, res) => {
 };
 // 開發環境錯誤
 const resErrorDev = (err, res) => {
+  /** 錯誤發生時的順序
+   * 套件錯誤印出
+   * DB 錯誤印出
+   */
   res.status(err.statusCode).json({
     message: err.message,
     error: err,
