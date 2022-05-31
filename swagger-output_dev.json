@@ -465,8 +465,9 @@
                             "example": "標籤 string"
                           },
                           "likes": {
-                            "type": "number",
-                            "example": 0
+                            "type": "array",
+                            "example": [],
+                            "items": {}
                           },
                           "createAt": {
                             "type": "string",
@@ -601,8 +602,9 @@
                       "example": "標籤 string"
                     },
                     "likes": {
-                      "type": "number",
-                      "example": 0
+                      "type": "array",
+                      "example": [],
+                      "items": {}
                     },
                     "createAt": {
                       "type": "string",
@@ -748,7 +750,84 @@
             "type": "string"
           }
         ],
-        "responses": {},
+        "responses": {
+          "200": {
+            "description": "  新增與移除單筆貼文按讚資料格式  ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "62930bf5f09683041ecd0b3a"
+                    },
+                    "userData": {
+                      "type": "string",
+                      "example": "6290f87ed5f22368e79e666e"
+                    },
+                    "discussContent": {
+                      "type": "string",
+                      "example": "測試github方面"
+                    },
+                    "discussPhoto": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "tag": {
+                      "type": "string",
+                      "example": "標籤 string"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "628a53f86e242867112a2321"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "大明123"
+                          },
+                          "userPhoto": {
+                            "type": "string",
+                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "min-@mail.com"
+                          },
+                          "gender": {
+                            "type": "string",
+                            "example": "male"
+                          }
+                        }
+                      }
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-05-29T06:00:21.753Z"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "62930bf5f09683041ecd0b3a"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
         "security": [
           {
             "apiKeyAuth": []
@@ -921,8 +1000,9 @@
                         "example": "標籤 string"
                       },
                       "likes": {
-                        "type": "number",
-                        "example": 0
+                        "type": "array",
+                        "example": [],
+                        "items": {}
                       },
                       "userData": {
                         "type": "object",

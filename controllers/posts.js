@@ -149,7 +149,7 @@ module.exports = {
                 "discussContent": "index_09__外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-大明二",
                 "discussPhoto": "",
                 "tag": "標籤 string",
-                "likes": 0,
+                "likes": [],
                 "createAt": "2022-05-28T05:51:42.777Z",
                 "comments": [],
                 "id": "6291b86e52362496781068cc"
@@ -189,7 +189,7 @@ module.exports = {
             "discussContent": "index_12__外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-大明二",
             "discussPhoto": "",
             "tag": "標籤 string",
-            "likes": 0,
+            "likes": [],
             "createAt": "2022-05-28T05:51:54.236Z",
             "id": "6291b87a52362496781068d5"
           }
@@ -244,6 +244,7 @@ module.exports = {
         discussContent,
         discussPhoto,
         tag,
+        like: [],
       });
       handleSuccess(res, newPost);
     });
@@ -370,10 +371,17 @@ module.exports = {
           $addToSet: { likes: userID },
         },
         { new: true } // 回傳最新改過的資料
-      ).catch((err) =>
-        appError(400, `新增失敗，查無此 ${postID} id 或欄位格式錯誤`, next)
-      );
-      handleSuccess(res, updateLike);
+      )
+        .populate('likes')
+        .exec((err, likes) => {
+          if (err)
+            return appError(
+              400,
+              `新增失敗，查無此 ${postID} id 或欄位格式錯誤`,
+              next
+            );
+          handleSuccess(res, likes);
+        });
     });
   },
   delLike() {
@@ -400,10 +408,13 @@ module.exports = {
         { _id: postID },
         { $pull: { likes: userID } },
         { new: true } // 回傳最新改過
-      ).catch((err) =>
-        appError(400, `刪除失敗，查無此 ${postID} id 或欄位格式錯誤`, next)
-      );
-      handleSuccess(res, delLike);
+      )
+        .populate('likes')
+        .exec((err, likes) => {
+          if (err)
+            return appError(400, `刪除失敗，請查無此 ${postID} ID`, next);
+          handleSuccess(res, likes);
+        });
     });
   },
   toggleLike() {
@@ -423,33 +434,74 @@ module.exports = {
         in: 'path',
         type: 'string',
         required: true,
+      },
+      * #swagger.responses[200] = {
+        description: `
+          新增與移除單筆貼文按讚資料格式
+        `,
+        schema: {
+          "status": "success",
+          "data": {
+            "_id": "62930bf5f09683041ecd0b3a",
+            "userData": "6290f87ed5f22368e79e666e",
+            "discussContent": "測試github方面",
+            "discussPhoto": "",
+            "tag": "標籤 string",
+            "likes": [
+              {
+                "_id": "628a53f86e242867112a2321",
+                "userName": "大明123",
+                "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                "email": "min-@mail.com",
+                "gender": "male"
+              }
+            ],
+            "createAt": "2022-05-29T06:00:21.753Z",
+            "id": "62930bf5f09683041ecd0b3a"
+          }
+        }
       }
      */
     return handleError(async (req, res, next) => {
+      console.log('toggleLike');
       const postID = req.params.id;
       const userID = req.user.id;
+      // console.log('userID', userID, 'postID', postID);
       const findPost = await Posts.findById({
         _id: postID,
       }).catch((err) => appError(400, `無此貼文 ${postID} ID`, next));
+      // console.log('findPost', findPost);
+      // 判斷貼文按讚欄位與值判斷
+      if (findPost.like) return appError(400, `此貼文沒有 likes 欄位`, next);
       // 貼文按讚的 user id 判斷
       if (findPost.likes.includes(userID)) {
         const pullLike = await Posts.findOneAndUpdate(
           { _id: postID },
-          { $pull: { likes: userID } },
+          {
+            $pull: { likes: userID },
+          },
           { new: true } // 回傳最新改過
-        ).catch((err) =>
-          appError(400, `刪除失敗請查明貼文 ${postID} ID`, next)
-        );
-        handleSuccess(res, pullLike);
+        )
+          .populate('likes')
+          .exec((err, likes) => {
+            if (err)
+              return appError(400, `刪除失敗，請查明貼文 ${postID} ID`, next);
+            handleSuccess(res, likes);
+          });
       } else {
         const newLike = await Posts.findOneAndUpdate(
           { _id: postID },
-          { $push: { likes: userID } },
+          {
+            $push: { likes: userID },
+          },
           { new: true } // 回傳最新改過
-        ).catch((err) =>
-          appError(400, `新增失敗請查明貼文 ${postID} ID`, next)
-        );
-        handleSuccess(res, newLike);
+        )
+          .populate('likes')
+          .exec((err, likes) => {
+            if (err)
+              return appError(400, `新增失敗，請查明貼文 ${postID} ID`, next);
+            handleSuccess(res, likes);
+          });
       }
     });
   },
@@ -581,7 +633,7 @@ module.exports = {
               "discussContent": "外面看起來就超冷…\n\r我決定回被窩繼續睡…>.<-大明",
               "discussPhoto": "",
               "tag": "標籤 string",
-              "likes": 0,
+              "likes": [],
               "userData": {
                 "_id": "userData ID",
                 "userName": "大明",
