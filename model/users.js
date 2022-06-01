@@ -18,17 +18,25 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, 'password 必填'],
       minlength: 8,
-      select: false,  // 預設不顯示
+      select: false, // 預設不顯示
     },
     gender: {
       type: String,
       required: false,
-      enum: ["male", "female", ""],
+      enum: ['male', 'female', ''],
     },
     createAt: {
       type: Date,
       default: Date.now,
       select: false,
+    },
+    premiumMember: {
+      //0 = false, 1=true
+      paid: { type: Number, enum: [0, 1], default: 0 },
+      pay: { type: mongoose.Schema.ObjectId, ref: 'pay' },
+      startAt: {
+        type: Date,
+      },
     },
   },
   { versionKey: false }
