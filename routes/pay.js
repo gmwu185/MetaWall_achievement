@@ -35,6 +35,7 @@ router.post(
   '/tradeConfirm',
   /** #swagger.summary = '提供綠界回傳的 url',
     * #swagger.tags = ['pay (綠界)'],
+    * #swagger.ignore = true
     * #swagger.description = `
       <p>提供綠界回傳的 url</p>
       <p>取得交易結果，且更新document Users 和 Pays</p>

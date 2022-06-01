@@ -1170,17 +1170,6 @@
         ]
       }
     },
-    "/pay/tradeConfirm": {
-      "post": {
-        "tags": [
-          "pay (綠界)"
-        ],
-        "summary": "提供綠界回傳的 url",
-        "description": "  <p>提供綠界回傳的 url</p>  <p>取得交易結果，且更新document Users 和 Pays</p>  ",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/pay/tradeResult/{id}": {
       "get": {
         "tags": [
