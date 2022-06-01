@@ -11,14 +11,15 @@ const PostsControllers = require('../controllers/posts');
 router.get(
   '/',
   isAuth,
-  /** #swagger.description = `取得所有貼文。
+  /** #swagger.summary = '取得所有貼文',
+    #swagger.description = `取得所有貼文。
       <p>參數用法：</p>
       <ul>
         <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
         <li><code>postsLength</code> 在相關網址參數運算下，執行後回傳資料長度。</li>
       </ul>
     `,
-    *? #swagger.tags = ['posts (貼文)'],
+    * #swagger.tags = ['posts (貼文)'],
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -107,7 +108,8 @@ router.get(
 router.get(
   '/:id',
   isAuth,
-  /** #swagger.description = `取得單筆貼文
+  /** #swagger.summary = '取得單筆貼文',
+    #swagger.description = `取得單筆貼文
       <ul>
         <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
         <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行取得資料。</li>
@@ -144,7 +146,8 @@ router.get(
 router.post(
   '/',
   isAuth,
-  /** * #swagger.description = `新增單筆貼文
+  /** #swagger.summary = '新增單筆貼文',
+    #swagger.description = `新增單筆貼文
     <ul>
       <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
       <li>新增貼文需先有 user.id 登入取得 Tokne</li>
@@ -173,7 +176,8 @@ router.post(
 router.patch(
   '/:id',
   isAuth,
-  /** #swagger.description = `更新單筆貼文
+  /** #swagger.summary = '更新單筆貼文'
+    #swagger.description = `更新單筆貼文
     <ul>
       <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
     </ul>
@@ -204,9 +208,10 @@ router.patch(
 router.delete(
   '/',
   isAuth,
-  /** #swagger.description = '刪除所有貼文',
-   * #swagger.tags = ['posts (貼文)'],
-   * #swagger.security = [{
+  /** #swagger.summary = '刪除所有貼文',
+    * #swagger.description = '刪除所有貼文',
+    * #swagger.tags = ['posts (貼文)'],
+    * #swagger.security = [{
       'apiKeyAuth': []
     }],
   */
@@ -215,12 +220,13 @@ router.delete(
 router.delete(
   '/:id',
   isAuth,
-  /** #swagger.description = `刪除單筆貼文
-    <ul>
-      <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
-      <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行刪除。</li>
-    </ul>
-  `,
+  /** #swagger.summary = '刪除單筆貼文',
+    * #swagger.description = `
+      <ul>
+        <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+        <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行刪除。</li>
+      </ul>
+    `,
     * #swagger.tags = ['posts (貼文)'],
     * #swagger.security = [{
       'apiKeyAuth': []
@@ -236,13 +242,14 @@ router.delete(
 router.post(
   '/:id/likes',
   isAuth,
-  /** #swagger.description = `新增單筆貼文按讚
+  /** #swagger.summary = '新增單筆貼文按讚',
+    * #swagger.description = `
     <ul>
       <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
       <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增按讚。</li>
     </ul>
   `,
-  *? #swagger.tags = ['posts (貼文按讚)'],
+  * #swagger.tags = ['posts (貼文按讚)'],
   * #swagger.security = [{
     'apiKeyAuth': []
   }],
@@ -257,13 +264,14 @@ router.post(
 router.delete(
   '/:id/likes',
   isAuth,
-  /** #swagger.description =`刪除單筆貼文按讚
-    <ul>
-      <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
-      <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 userID 進行刪除按讚。</li>
-    </ul>
+  /** #swagger.summary = '刪除單筆貼文按讚',
+    * #swagger.description =`
+      <ul>
+        <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+        <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 userID 進行刪除按讚。</li>
+      </ul>
     `,
-    *! #swagger.tags = ['posts (貼文按讚)']
+    * #swagger.tags = ['posts (貼文按讚)']
     * #swagger.security = [{
       'apiKeyAuth': []
     }],
@@ -278,60 +286,62 @@ router.delete(
 router.patch(
   '/:id/likes',
   isAuth,
-  /** #swagger.description = `新增與移除單筆貼文按讚
-    <ul>
-      <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
-      <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增或移除按讚。</li>
-    </ul>
-  `,
-  * #swagger.tags = ['posts (貼文按讚)'],
-  * #swagger.security = [{
-    'apiKeyAuth': []
-  }],
-  * #swagger.parameters['id'] = {
-    in: 'path',
-    type: 'string',
-    required: true,
-  },
-  * #swagger.responses[200] = {
-    description: `
-      新增與移除單筆貼文按讚資料格式
+  /** #swagger.summary = '新增與移除單筆貼文按讚',
+    * #swagger.description = `
+      <ul>
+        <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+        <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增或移除按讚。</li>
+      </ul>
     `,
-    schema: {
-      "status": "success",
-      "data": {
-        "_id": "62930bf5f09683041ecd0b3a",
-        "userData": "6290f87ed5f22368e79e666e",
-        "discussContent": "測試github方面",
-        "discussPhoto": "",
-        "tag": "標籤 string",
-        "likes": [
-          {
-            "_id": "628a53f86e242867112a2321",
-            "userName": "大明123",
-            "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
-            "email": "min-@mail.com",
-            "gender": "male"
-          }
-        ],
-        "createAt": "2022-05-29T06:00:21.753Z",
-        "id": "62930bf5f09683041ecd0b3a"
+    * #swagger.tags = ['posts (貼文按讚)'],
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.parameters['id'] = {
+      in: 'path',
+      type: 'string',
+      required: true,
+    },
+    * #swagger.responses[200] = {
+      description: `
+        新增與移除單筆貼文按讚資料格式
+      `,
+      schema: {
+        "status": "success",
+        "data": {
+          "_id": "62930bf5f09683041ecd0b3a",
+          "userData": "6290f87ed5f22368e79e666e",
+          "discussContent": "測試github方面",
+          "discussPhoto": "",
+          "tag": "標籤 string",
+          "likes": [
+            {
+              "_id": "628a53f86e242867112a2321",
+              "userName": "大明123",
+              "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+              "email": "min-@mail.com",
+              "gender": "male"
+            }
+          ],
+          "createAt": "2022-05-29T06:00:21.753Z",
+          "id": "62930bf5f09683041ecd0b3a"
+        }
       }
     }
-  }
- */
+  */
   (req, res, next) => PostsControllers.toggleLike(req, res, next)
 );
 router.post(
   '/:id/comment',
   isAuth,
-  /** #swagger.description = `新增貼文留言功能
-    <ul>
-      <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
-      <li>Heders Token 指定留言 user (<code>commentUser</code>)。</li>
-      <li>網址路由 <code>:id</code> 傳入 post id 在特定貼文中留言。</li>
-      <li>成功留言將資料寫入 <code>Comment</code> collection 中建出 document。</li>
-    </ul>
+  /** #swagger.summary = '新增貼文留言功能',
+    * #swagger.description = `
+      <ul>
+        <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+        <li>Heders Token 指定留言 user (<code>commentUser</code>)。</li>
+        <li>網址路由 <code>:id</code> 傳入 post id 在特定貼文中留言。</li>
+        <li>成功留言將資料寫入 <code>Comment</code> collection 中建出 document。</li>
+      </ul>
     `,
     * #swagger.tags = ['posts (貼文留言)']
     * #swagger.parameters['id'] = {
@@ -374,7 +384,8 @@ router.post(
 router.delete(
   '/comment/:id',
   isAuth,
-  /** #swagger.description = `刪除單筆貼文留言
+  /** #swagger.summary = '刪除單筆貼文留言',
+    * #swagger.description = `
       <ul>
         <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
       </ul>
@@ -399,7 +410,8 @@ router.delete(
 );
 router.get(
   '/user/:id',
-  /** #swagger.description = `取得特定使用者的所有貼文，關連留言訊息。
+  /** #swagger.summary = '取得特定使用者的所有貼文，關連留言訊息',
+    #swagger.description = `
       <ul>
         <li>不帶 Token 在可對外查看。</li>
       </ul>
