@@ -19,6 +19,49 @@
     }
   },
   "paths": {
+    "/users/": {
+      "get": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "列出全部會員 (後台)",
+        "parameters": [],
+        "responses": {}
+      },
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "description": "新增單筆會員 (後台)",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "example": "any"
+                },
+                "userPhoto": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "gender": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/users/login": {
       "post": {
         "tags": [
@@ -370,7 +413,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  <p>取得所有貼文。</p>  參數用法：  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li><code>postsLength</code> 在相關網址參數運算下，執行後回傳資料長度。</li>  </ul>  ",
+        "description": "取得所有貼文。  <p>參數用法：</p>  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li><code>postsLength</code> 在相關網址參數運算下，執行後回傳資料長度。</li>  </ul>  ",
         "parameters": [
           {
             "name": "timeSort",
@@ -504,7 +547,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  新增單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>新增貼文需先有 user.id 登入取得 Tokne</li>  <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>  <li>透過 user.id 向 posts 的屬性欄位 <code>userData</code> 關連。</li>  </ul>  ",
+        "description": "新增單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>新增貼文需先有 user.id 登入取得 Tokne</li>  <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>  <li>透過 user.id 向 posts 的屬性欄位 <code>userData</code> 關連。</li>  </ul>  ",
         "parameters": [
           {
             "name": "body",
@@ -559,7 +602,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  取得單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行取得資料。</li>  </ul>  ",
+        "description": "取得單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行取得資料。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -633,7 +676,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  更新單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "description": "更新單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -679,7 +722,7 @@
         "tags": [
           "posts (貼文)"
         ],
-        "description": "  刪除單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行刪除。</li>  </ul>  ",
+        "description": "刪除單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行刪除。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -701,7 +744,7 @@
         "tags": [
           "posts (貼文按讚)"
         ],
-        "description": "  新增單筆貼文按讚  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增按讚。</li>  </ul>  ",
+        "description": "新增單筆貼文按讚  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增按讚。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -721,7 +764,7 @@
         "tags": [
           "posts (貼文按讚)"
         ],
-        "description": " 刪除單筆貼文按讚 123  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 userID 進行刪除按讚。</li>  </ul>  ",
+        "description": "刪除單筆貼文按讚  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 userID 進行刪除按讚。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -741,7 +784,7 @@
         "tags": [
           "posts (貼文按讚)"
         ],
-        "description": "  新增與移除單筆貼文按讚  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增或移除按讚。</li>  </ul>  ",
+        "description": "新增與移除單筆貼文按讚  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增或移除按讚。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -840,7 +883,7 @@
         "tags": [
           "posts (貼文留言)"
         ],
-        "description": "  新增貼文留言功能  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>Heders Token 指定留言 user (<code>commentUser</code>)。</li>  <li>網址路由 <code>:id</code> 傳入 post id 在特定貼文中留言。</li>  <li>成功留言將資料寫入 <code>Comment</code> collection 中建出 document。</li>  </ul>  ",
+        "description": "新增貼文留言功能  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>Heders Token 指定留言 user (<code>commentUser</code>)。</li>  <li>網址路由 <code>:id</code> 傳入 post id 在特定貼文中留言。</li>  <li>成功留言將資料寫入 <code>Comment</code> collection 中建出 document。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -931,7 +974,7 @@
         "tags": [
           "posts (貼文留言)"
         ],
-        "description": "  刪除單筆貼文留言  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "description": "刪除單筆貼文留言  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",
@@ -954,7 +997,7 @@
         "tags": [
           "posts (貼文留言)"
         ],
-        "description": "  取得特定使用者的所有貼文，關連留言訊息。  <ul>  <li>不帶 Token 在可對外查看。</li>  </ul>  ",
+        "description": "取得特定使用者的所有貼文，關連留言訊息。  <ul>  <li>不帶 Token 在可對外查看。</li>  </ul>  ",
         "parameters": [
           {
             "name": "id",

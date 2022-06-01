@@ -8,9 +8,9 @@ const { isAuth, generateSendJWT } = require('../handStates/auth');
 const UsersControllers = require('../controllers/users');
 
 // 列出全部會員 (後台)
-// router.get('/', UsersControllers.listUsers());
+router.get('/', UsersControllers.listUsers());
 // 新增單筆會員 (後台)
-// router.post('/', UsersControllers.createdUser());
+router.post('/', UsersControllers.createdUser());
 // 登入
 router.post('/login', UsersControllers.login());
 // 取得登入者個人資訊
