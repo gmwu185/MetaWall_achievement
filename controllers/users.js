@@ -68,7 +68,12 @@ module.exports = {
           _id: '123123123',
           name: '王小明',
           photo: '',
-          gender: 'male'
+          gender: 'male',
+          premiumMember: {
+            paid: 1,
+            pay: '6296cbeb434714f163c88163',
+            startAt: '2022-06-01T02:16:11.955Z'
+        },
         }
       }
     }
@@ -175,7 +180,7 @@ module.exports = {
     return handleError(async (req, res, next) => {
       const { email, password } = req.body;
       if (!email || !password) return appError(400, '帳號及密碼必填', next);
-      
+
       const user = await User.findOne({ email }).select('+password');
       if (!user) return next(appError(400, '未註冊使用者帳號無法登入', next));
 
