@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
 var indexRouter = require('./routes/index');
 const payRouter = require('./routes/pay');
+const tpAuthRouter = require('./routes/tpAuth');
 /* /router ------------------------------------------------------------------- */
 
 /* express 設定 --------------------------------------------------------------- */
@@ -28,6 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/pay', payRouter);
+app.use('/tp-auth', tpAuthRouter);
 app.use('/', indexRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 /* /express 設定 --------------------------------------------------------------- */
