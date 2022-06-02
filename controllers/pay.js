@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const handleError = require('../handStates/handleError');
 const { Merchant, CreditOneTimePayment } = require('node-ecpay-aio');
 const dayjs = require('dayjs');
-const randomId = require('../service/randomId');
+const randomId = require('../helps/randomId');
 const appError = require('../customErr/appError');
 
 module.exports = {
