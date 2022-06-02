@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./bin/www",
+    "start": "cross-env NODE_ENV=production npm run swagger:prod\n node ./bin/www",
     "locall:dev": "cross-env NODE_ENV=dev nodemon ./bin/www ",
     "locall:prod": "cross-env NODE_ENV=production nodemon ./bin/www ",
     "server": "cross-env NODE_ENV=production nodemon ./bin/www",
