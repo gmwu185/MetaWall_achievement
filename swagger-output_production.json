@@ -217,6 +217,23 @@
                 "data": {
                   "type": "object",
                   "properties": {
+                    "premiumMember": {
+                      "type": "object",
+                      "properties": {
+                        "paid": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "pay": {
+                          "type": "string",
+                          "example": "629727dce2cc9e17f4edaf7d"
+                        },
+                        "startAt": {
+                          "type": "string",
+                          "example": "2022-06-01T08:48:28.701Z"
+                        }
+                      }
+                    },
                     "_id": {
                       "type": "string",
                       "example": "123123123"

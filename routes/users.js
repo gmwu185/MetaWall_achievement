@@ -114,6 +114,11 @@ router.get(
       schema: {
         status: 'success',
         data: {
+          "premiumMember": {
+            "paid": 1,
+            "pay": "629727dce2cc9e17f4edaf7d",
+            "startAt": "2022-06-01T08:48:28.701Z"
+          },
           _id: '123123123',
           name: '王小明',
           photo: '',
