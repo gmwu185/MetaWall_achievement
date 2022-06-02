@@ -1,5 +1,5 @@
 node_modules
 .env
 swagger-output_dev.json
-swagger-output_production.json
+# swagger-output_production.json
 .vscode
