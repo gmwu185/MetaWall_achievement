@@ -58,4 +58,21 @@ const generateSendJWT = (user, statusCode, res) => {
   });
 };
 
-module.exports = { isAuth, generateSendJWT };
+const generateRedirectJWT = (user, res) => {
+  const token = jwt.sign(
+    {
+      id: user._id,
+      userName: user.userName,
+      userPhoto: user.userPhoto,
+      gender: user.gender,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRES_DAY,
+    }
+  );
+  user.password = undefined;
+  res.redirect(`${process.env.FRONTEND_URL}?t=${token}`);
+};
+
+module.exports = { isAuth, generateSendJWT, generateRedirectJWT };

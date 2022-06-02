@@ -38,6 +38,16 @@ const userSchema = new mongoose.Schema(
         type: Date,
       },
     },
+    thirdParty: {
+      googleID: {
+        type: String,
+        default: '0',
+      },
+      facebookID: {
+        type: String,
+        default: '0',
+      },
+    },
   },
   { versionKey: false }
 );
