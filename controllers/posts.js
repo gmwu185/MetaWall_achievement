@@ -47,7 +47,10 @@ module.exports = {
         path: 'userData',
         select: 'email userPhoto userName createAt',
       })
-      .populate('likes')
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      })
       .limit(currentPageLimit) // 筆數長度
       .skip(currentPageSkip) // 筆數位置開始計算
       .sort(filterTimeSort);
@@ -74,7 +77,10 @@ module.exports = {
         path: 'userData',
         select: 'email userPhoto userName createAt',
       })
-      .populate('likes')
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      })
       .catch((err) => appError(400, '無此 id 或 id 長度不足', next));
     if (findOnePost == null) return appError(400, '查無此 post id 貼文', next);
     handleSuccess(res, findOnePost);
@@ -133,7 +139,10 @@ module.exports = {
         path: 'userData',
         select: 'email userPhoto userName createAt',
       })
-      .populate('likes');
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      });
     if (!editPost)
       return appError(400, '更新失敗，查無此 id 或欄位格式錯誤', next);
     handleSuccess(res, editPost);
