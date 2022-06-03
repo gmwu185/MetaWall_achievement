@@ -50,7 +50,7 @@ module.exports = {
       params
     );
     const htmlRedirectPostForm = await payment.checkout();
-    res.status(200).send(htmlRedirectPostForm);
+    res.status(200).json({ resHTML: htmlRedirectPostForm });
     res.end();
   }),
   tradeConfirm: handleError(async (req, res, next) => {
