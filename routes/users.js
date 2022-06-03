@@ -206,17 +206,94 @@ router.patch('/updatePassword', isAuth, (req, res, next) =>
   */
   UsersControllers.updatePassword(req, res, next)
 );
-// 新增追蹤
-router.post('/:id/follow', isAuth, (req, res, next) =>
-  UsersControllers.addFollow(req, res, next)
+router.post(
+  '/:id/follow',
+  isAuth,
+  /** #swagger.summary = '新增追蹤',
+    * #swagger.tags = ['users (追蹤)'],
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.description = `取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。`,
+    * #swagger.parameters['id'] = {
+      description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
+    },
+    * #swagger.responses[200] = {
+      schema: {
+        "status": "success",
+        "data": {
+          "message": "您已成功將 628a629b1c4b458a51db745b 加入追蹤！"
+        }
+      }
+    }
+   */
+  (req, res, next) => UsersControllers.addFollow(req, res, next)
 );
-// 取消追蹤
-router.delete('/:id/follow', isAuth, (req, res, next) =>
-  UsersControllers.unFollow(req, res, next)
+router.delete(
+  '/:id/follow',
+  isAuth,
+  /** #swagger.summary = '取消追蹤',
+    * #swagger.tags = ['users (追蹤)'],
+    * #swagger.security = [{
+        'apiKeyAuth': []
+      }],
+    * #swagger.description = `取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。`,
+    * #swagger.parameters['id'] = {
+        description: `網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。`
+      },
+    * #swagger.responses[200] = {
+        schema: {
+          "status": "success",
+          "data": {
+            "message": "您已成功將 628a629b1c4b458a51db745b 取消追蹤！"
+          }
+        }
+      }
+  */
+  (req, res, next) => UsersControllers.unFollow(req, res, next)
 );
-// 取得使用者追蹤名單
-router.get('/follow', isAuth, (req, res, next) =>
-  UsersControllers.getFollows(req, res, next)
+router.get(
+  '/follow',
+  isAuth,
+  /** #swagger.summary = '取得使用者追蹤名單',
+  * #swagger.tags = ['users (追蹤)'],
+  * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+  * #swagger.description = `取得 JWT 使用者的追蹤 (<code>following</code>) 與被追蹤對象 (<code>followers</code>)`,
+  * #swagger.responses[200] = {
+      schema: {
+        "status": "success",
+        "data": {
+          "followers": [
+            {
+              "userData": {
+                "_id": "628a629b1c4b458a51db745b",
+                "createAt": "2022-05-22T16:19:39.136Z",
+                "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                "userName": "大明一"
+              },
+              "_id": "6299b7b3896e3dab06e506ba",
+              "createdAt": "2022-06-03T07:26:43.382Z"
+            }
+          ],
+          "following": [
+            {
+              "userData": {
+                "_id": "628a629b1c4b458a51db745b",
+                "createAt": "2022-05-22T16:19:39.136Z",
+                "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+                "userName": "大明一"
+              },
+              "_id": "6299bac06b06dd973601fc85",
+              "createdAt": "2022-06-03T07:39:44.356Z"
+            }
+          ]
+        }
+      }
+    }
+  */
+  (req, res, next) => UsersControllers.getFollows(req, res, next)
 );
 
 module.exports = router;

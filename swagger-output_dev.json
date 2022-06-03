@@ -419,6 +419,213 @@
         ]
       }
     },
+    "/users/{id}/follow": {
+      "post": {
+        "tags": [
+          "users (追蹤)"
+        ],
+        "summary": "新增追蹤",
+        "description": "取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "您已成功將 628a629b1c4b458a51db745b 加入追蹤！"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "users (追蹤)"
+        ],
+        "summary": "取消追蹤",
+        "description": "取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "您已成功將 628a629b1c4b458a51db745b 取消追蹤！"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/follow": {
+      "get": {
+        "tags": [
+          "users (追蹤)"
+        ],
+        "summary": "取得使用者追蹤名單",
+        "description": "取得 JWT 使用者的追蹤 (<code>following</code>) 與被追蹤對象 (<code>followers</code>)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "followers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userData": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "628a629b1c4b458a51db745b"
+                              },
+                              "createAt": {
+                                "type": "string",
+                                "example": "2022-05-22T16:19:39.136Z"
+                              },
+                              "userPhoto": {
+                                "type": "string",
+                                "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                              },
+                              "userName": {
+                                "type": "string",
+                                "example": "大明一"
+                              }
+                            }
+                          },
+                          "_id": {
+                            "type": "string",
+                            "example": "6299b7b3896e3dab06e506ba"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2022-06-03T07:26:43.382Z"
+                          }
+                        }
+                      }
+                    },
+                    "following": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userData": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "628a629b1c4b458a51db745b"
+                              },
+                              "createAt": {
+                                "type": "string",
+                                "example": "2022-05-22T16:19:39.136Z"
+                              },
+                              "userPhoto": {
+                                "type": "string",
+                                "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                              },
+                              "userName": {
+                                "type": "string",
+                                "example": "大明一"
+                              }
+                            }
+                          },
+                          "_id": {
+                            "type": "string",
+                            "example": "6299bac06b06dd973601fc85"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2022-06-03T07:39:44.356Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/posts/": {
       "get": {
         "tags": [
