@@ -207,4 +207,8 @@ router.patch('/updatePassword', isAuth, (req, res, next) =>
   UsersControllers.updatePassword(req, res, next)
 );
 
+router.post('/:id/follow', isAuth, (req, res, next) =>
+  UsersControllers.addFollow(req, res, next)
+);
+
 module.exports = router;
