@@ -1,0 +1,1488 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "MetaWall_achievement API DOC",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "headers",
+      "name": "Authorization",
+      "description": "Token 前請加上 Bearer，<code>Bearer ＜Token＞</code>"
+    }
+  },
+  "paths": {
+    "/users/admin/listUsers": {
+      "get": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "列出全部會員 (後台)",
+        "description": "列出全部會員 (後台)",
+        "parameters": [],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/admin/createdUser": {
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "新增單筆會員 (後台)",
+        "description": "新增單筆會員 (後台)",
+        "parameters": [],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "使用者登入",
+        "description": "  <ul>  <li>登入以 mail 為帳號</li>  <li>忘記密碼就完蛋了 (去資料庫撈是加密的也沒用)，密碼由 Token 解密轉換</li>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "min-@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345678"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登入資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "Token"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "userPhoto": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/signUp": {
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "使用者註冊",
+        "description": "  <ul>  <li>密碼產生 Token 後至其他 users API 使用</li>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>欄位 <code>\"gender\"</code> 只能接受 <code>\"male\"</code>、<code>\"female\"</code>、<code>\"\"</code>。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "小明"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "min-@mail.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "12345678"
+                },
+                "userPhoto": {
+                  "type": "string",
+                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                }
+              },
+              "required": [
+                "userName",
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "註冊資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "token"
+                    },
+                    "userName": {
+                      "type": "string",
+                      "example": "小明"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/ownProfile": {
+      "get": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "取得登入者個人資訊",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "user 資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "premiumMember": {
+                      "type": "object",
+                      "properties": {
+                        "paid": {
+                          "type": "number",
+                          "example": 1
+                        },
+                        "pay": {
+                          "type": "string",
+                          "example": "629727dce2cc9e17f4edaf7d"
+                        },
+                        "startAt": {
+                          "type": "string",
+                          "example": "2022-06-01T08:48:28.701Z"
+                        }
+                      }
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "123123123"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "photo": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "male"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/patchProfile": {
+      "patch": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "修改會員資料",
+        "description": "  <ul>  <li>帶入 user Token，格式 <code>Bearer ＜Token＞</code></li>  <li>忘記密碼就完蛋了 (去資料庫撈是加密的也沒用)，密碼由 Token 解密轉換。</li>  <li>欄位 <code>\"gender\"</code> 只能接受 <code>\"male\", \"female\"</code>。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userName": {
+                  "type": "string",
+                  "example": "大明"
+                },
+                "userPhoto": {
+                  "type": "string",
+                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                }
+              },
+              "required": [
+                "userName"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "修改資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "userPhoto": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "male"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/updatePassword": {
+      "patch": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "修改會員密碼",
+        "description": "  <ul>  <li>帶入 user Token，格式 <code>Bearer ＜Token＞</code></li>  <li>忘記密碼就完蛋了 (去資料庫撈是加密的也沒用)，密碼由 Token 解密轉換。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "newPassword": {
+                  "type": "string",
+                  "example": "11223344"
+                },
+                "confirmNewPassword": {
+                  "type": "string",
+                  "example": "11223344"
+                }
+              },
+              "required": [
+                "newPassword",
+                "confirmNewPassword"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "修改資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "token"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "userPhoto": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/follow": {
+      "post": {
+        "tags": [
+          "users (追蹤)"
+        ],
+        "summary": "新增追蹤",
+        "description": "取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "您已成功將 628a629b1c4b458a51db745b 加入追蹤！"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "users (追蹤)"
+        ],
+        "summary": "取消追蹤",
+        "description": "取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "網址參數 <code>:id</code> 指定追蹤對象的 <code>user.id</code>。"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "您已成功將 628a629b1c4b458a51db745b 取消追蹤！"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/users/follow": {
+      "get": {
+        "tags": [
+          "users (追蹤)"
+        ],
+        "summary": "取得使用者追蹤名單",
+        "description": "取得 JWT 使用者的追蹤 (<code>following</code>) 與被追蹤對象 (<code>followers</code>)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "followers": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userData": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "628a629b1c4b458a51db745b"
+                              },
+                              "createAt": {
+                                "type": "string",
+                                "example": "2022-05-22T16:19:39.136Z"
+                              },
+                              "userPhoto": {
+                                "type": "string",
+                                "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                              },
+                              "userName": {
+                                "type": "string",
+                                "example": "大明一"
+                              }
+                            }
+                          },
+                          "_id": {
+                            "type": "string",
+                            "example": "6299b7b3896e3dab06e506ba"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2022-06-03T07:26:43.382Z"
+                          }
+                        }
+                      }
+                    },
+                    "following": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "userData": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "628a629b1c4b458a51db745b"
+                              },
+                              "createAt": {
+                                "type": "string",
+                                "example": "2022-05-22T16:19:39.136Z"
+                              },
+                              "userPhoto": {
+                                "type": "string",
+                                "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                              },
+                              "userName": {
+                                "type": "string",
+                                "example": "大明一"
+                              }
+                            }
+                          },
+                          "_id": {
+                            "type": "string",
+                            "example": "6299bac06b06dd973601fc85"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "example": "2022-06-03T07:39:44.356Z"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/": {
+      "get": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "summary": "取得所有貼文",
+        "description": "取得所有貼文。  <p>參數用法：</p>  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li><code>postsLength</code> 在相關網址參數運算下，執行後回傳資料長度。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "timeSort",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "  <code>timeSort</code> 參數：  <ul>  <li>預設新到舊</li>  <li>是否有 <code>asc</code> 值？，有值有舊到新；沒值有新到舊。</li>  </ul>  "
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "  <code>q</code> 參數：  <ul>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ul>  "
+          },
+          {
+            "name": "pageNum",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "  <code>pageNum</code> 參數：取頁面資料筆數長度 (目前分頁數 <code>0</code> 為第一頁)  <ul>  <li>判斷網址參數 <code>pageSize</code> 是否有值，若無值會段 <code>0</code> 取出所有資料。</li>  <li>參數以 <code>1</code> 累計。</li>  </ul>  "
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "  <code>pageSize</code> 參數：取頁面資料區間 (分頁中每頁的資料筆數)  <ul>  <li>由第 <code>0</code> 筆數位置做為 <code>1</code> 開始計算。</li>  <li>參數以由 <code>1</code> 以累計。</li>  <li>網址參數 <code>pageSize * pageNum = 頁面數</code> 做為計算結果。</li>  </ul>  "
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "  取得全部貼文  ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "postsLength": {
+                      "type": "number",
+                      "example": 4
+                    },
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "6291b86e52362496781068cc"
+                          },
+                          "userData": {
+                            "type": "object",
+                            "properties": {
+                              "_id": {
+                                "type": "string",
+                                "example": "628a629b1c4b458a51db745b"
+                              },
+                              "email": {
+                                "type": "string",
+                                "example": "min-@mail.com"
+                              },
+                              "createAt": {
+                                "type": "string",
+                                "example": "2022-05-22T16:19:39.136Z"
+                              },
+                              "userPhoto": {
+                                "type": "string",
+                                "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                              },
+                              "userName": {
+                                "type": "string",
+                                "example": "大明一"
+                              }
+                            }
+                          },
+                          "discussContent": {
+                            "type": "string",
+                            "example": "index_09__外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-大明二"
+                          },
+                          "discussPhoto": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "tag": {
+                            "type": "string",
+                            "example": "標籤 string"
+                          },
+                          "likes": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          },
+                          "createAt": {
+                            "type": "string",
+                            "example": "2022-05-28T05:51:42.777Z"
+                          },
+                          "comments": {
+                            "type": "array",
+                            "example": [],
+                            "items": {}
+                          },
+                          "id": {
+                            "type": "string",
+                            "example": "6291b86e52362496781068cc"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "summary": "新增單筆貼文",
+        "description": "新增單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>新增貼文需先有 user.id 登入取得 Tokne</li>  <li>資料格式查看必填欄位，點按下方 Model 切換後，屬性欄位名稱的後方紅色的 <code>*</code></li>  <li>透過 user.id 向 posts 的屬性欄位 <code>userData</code> 關連。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "discussContent": {
+                  "type": "string",
+                  "example": "外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-"
+                },
+                "discussPhoto": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                },
+                "tag": {
+                  "type": "string",
+                  "example": "標籤 string"
+                }
+              },
+              "required": [
+                "discussContent",
+                "tag"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "summary": "刪除所有貼文",
+        "description": "刪除所有貼文",
+        "parameters": [],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "summary": "取得單筆貼文",
+        "description": "取得單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行取得資料。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得單筆貼文",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "6291b87a52362496781068d5"
+                    },
+                    "userData": {
+                      "type": "string",
+                      "example": "628a629b1c4b458a51db745b"
+                    },
+                    "discussContent": {
+                      "type": "string",
+                      "example": "index_12__外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-大明二"
+                    },
+                    "discussPhoto": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "tag": {
+                      "type": "string",
+                      "example": "標籤 string"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "example": [],
+                      "items": {}
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-05-28T05:51:54.236Z"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "6291b87a52362496781068d5"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "summary": "更新單筆貼文",
+        "description": "更新單筆貼文  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tag": {
+                  "type": "string",
+                  "example": "string-PATCH"
+                },
+                "discussContent": {
+                  "type": "string",
+                  "example": "string-PATCH"
+                },
+                "discussPhoto": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1485594050903-8e8ee7b071a8?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=350&q=80"
+                }
+              },
+              "required": [
+                "discussContent"
+              ]
+            }
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "posts (貼文)"
+        ],
+        "summary": "刪除單筆貼文",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 document id 進行刪除。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/{id}/likes": {
+      "post": {
+        "tags": [
+          "posts (貼文按讚)"
+        ],
+        "summary": "新增單筆貼文按讚",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增按讚。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "posts (貼文按讚)"
+        ],
+        "summary": "刪除單筆貼文按讚",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 userID 進行刪除按讚。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "posts (貼文按讚)"
+        ],
+        "summary": "新增與移除單筆貼文按讚",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>網址路由以 <code>:id</code> 傳入參數，直接針對 Posts 中的 postID 進行新增或移除按讚。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "  新增與移除單筆貼文按讚資料格式  ",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "62930bf5f09683041ecd0b3a"
+                    },
+                    "userData": {
+                      "type": "string",
+                      "example": "6290f87ed5f22368e79e666e"
+                    },
+                    "discussContent": {
+                      "type": "string",
+                      "example": "測試github方面"
+                    },
+                    "discussPhoto": {
+                      "type": "string",
+                      "example": ""
+                    },
+                    "tag": {
+                      "type": "string",
+                      "example": "標籤 string"
+                    },
+                    "likes": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "628a53f86e242867112a2321"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "大明123"
+                          },
+                          "userPhoto": {
+                            "type": "string",
+                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "min-@mail.com"
+                          },
+                          "gender": {
+                            "type": "string",
+                            "example": "male"
+                          }
+                        }
+                      }
+                    },
+                    "createAt": {
+                      "type": "string",
+                      "example": "2022-05-29T06:00:21.753Z"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "62930bf5f09683041ecd0b3a"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/{id}/comment": {
+      "post": {
+        "tags": [
+          "posts (貼文留言)"
+        ],
+        "summary": "新增貼文留言功能",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  <li>Heders Token 指定留言 user (<code>commentUser</code>)。</li>  <li>網址路由 <code>:id</code> 傳入 post id 在特定貼文中留言。</li>  <li>成功留言將資料寫入 <code>Comment</code> collection 中建出 document。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Params path Variables <code>:id</code> (posts ID)"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "description": "Body 資料格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "type": "string",
+                  "example": "這是留言在貼文裡的一段話"
+                }
+              },
+              "required": [
+                "comment"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "新增貼文留言功能",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "comments": {
+                      "type": "object",
+                      "properties": {
+                        "comment": {
+                          "type": "string",
+                          "example": "這是留言在貼文裡的一段話 - swagger"
+                        },
+                        "commentUser": {
+                          "type": "string",
+                          "example": "628a629b1c4b458a51db745b"
+                        },
+                        "post": {
+                          "type": "string",
+                          "example": "628c367b714bc9f6a8e17857"
+                        },
+                        "_id": {
+                          "type": "string",
+                          "example": "628c6607e6b23dcb0832041d"
+                        },
+                        "createAt": {
+                          "type": "string",
+                          "example": "2022-05-24T04:58:47.058Z"
+                        },
+                        "__v": {
+                          "type": "number",
+                          "example": 0
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/comment/{id}": {
+      "delete": {
+        "tags": [
+          "posts (貼文留言)"
+        ],
+        "summary": "刪除單筆貼文留言",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "  <ul>  <li>取得特定使用者的所有貼文，關連留言訊息資料格式。</li>  <li>Params Path Variables <code>:id</code> (comment ID)</li>  </ul>  "
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/posts/user/{id}": {
+      "get": {
+        "tags": [
+          "posts (貼文留言)"
+        ],
+        "summary": "取得特定使用者的所有貼文，關連留言訊息",
+        "description": "  <ul>  <li>不帶 Token 在可對外查看。</li>  </ul>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "  <ul>  <li>取得特定使用者的所有貼文，關連留言訊息資料格式。</li>  <li>Params Path Variables <code>:id</code> (user ID)</li>  </ul>  "
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得貼文留言格式",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "results": {
+                  "type": "number",
+                  "example": 1
+                },
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "post ID"
+                      },
+                      "discussContent": {
+                        "type": "string",
+                        "example": "外面看起來就超冷…\n 我決定回被窩繼續睡…>.<-大明"
+                      },
+                      "discussPhoto": {
+                        "type": "string",
+                        "example": ""
+                      },
+                      "tag": {
+                        "type": "string",
+                        "example": "標籤 string"
+                      },
+                      "likes": {
+                        "type": "array",
+                        "example": [],
+                        "items": {}
+                      },
+                      "userData": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "example": "userData ID"
+                          },
+                          "userName": {
+                            "type": "string",
+                            "example": "大明"
+                          },
+                          "userPhoto": {
+                            "type": "string",
+                            "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                          },
+                          "email": {
+                            "type": "string",
+                            "example": "min-@mail.com"
+                          },
+                          "createAt": {
+                            "type": "string",
+                            "example": "2022-05-23T07:10:18.697Z"
+                          }
+                        }
+                      },
+                      "comments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "string",
+                              "example": "628c59c3d08d3db9169f9593"
+                            },
+                            "comment": {
+                              "type": "string",
+                              "example": "這是留言在貼文裡的一段話 for swagger min-@mail.com"
+                            },
+                            "commentUser": {
+                              "type": "object",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "example": "628b335a5509d304d26e9c70"
+                                },
+                                "userName": {
+                                  "type": "string",
+                                  "example": "大明"
+                                },
+                                "userPhoto": {
+                                  "type": "string",
+                                  "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                                },
+                                "email": {
+                                  "type": "string",
+                                  "example": "min-@mail.com"
+                                },
+                                "createAt": {
+                                  "type": "string",
+                                  "example": "2022-05-23T07:10:18.697Z"
+                                }
+                              }
+                            },
+                            "post": {
+                              "type": "string",
+                              "example": "post ID"
+                            },
+                            "createAt": {
+                              "type": "string",
+                              "example": "2022-05-24T04:06:27.159Z"
+                            }
+                          }
+                        }
+                      },
+                      "id": {
+                        "type": "string",
+                        "example": "post ID"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pay/": {
+      "get": {
+        "tags": [
+          "pay (綠界)"
+        ],
+        "summary": "產生訂單並要求付款",
+        "description": "<p>在資料庫先新增 pay 的紀錄，再向綠界產生訂單，並取得 form data 導向付款頁面</p>  參數用法：  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  流程用法：  <ul>  <li>取得 form data 後，用 html 觸發 form submit</li>  <li>測試卡號:4311-5922-2222-2222；安全碼:222；有效年月:大於當下的年月(e.g.07/28)</li>  </ul>  ",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "取得 form data",
+            "schema": {
+              "type": "string",
+              "example": "1",
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/pay/tradeResult/{id}": {
+      "get": {
+        "tags": [
+          "pay (綠界)"
+        ],
+        "summary": "取得付款結果",
+        "description": "  <p>取得付款結果</p>  ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "pay id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "取得單筆付款結果",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "629719ace801357b6d843506"
+                    },
+                    "tradeNo": {
+                      "type": "string",
+                      "example": "MWW6zvo77p3m0"
+                    },
+                    "tradeType": {
+                      "type": "string",
+                      "example": "creditonetime"
+                    },
+                    "totalAmount": {
+                      "type": "number",
+                      "example": 1000
+                    },
+                    "tradeDesc": {
+                      "type": "string",
+                      "example": "會員費用"
+                    },
+                    "itemName": {
+                      "type": "string",
+                      "example": "會員費用"
+                    },
+                    "tradeStatus": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "user": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "628a53f86e242867112a2321"
+                        },
+                        "userName": {
+                          "type": "string",
+                          "example": "大明123"
+                        }
+                      }
+                    },
+                    "ecPayRtnMsg": {
+                      "type": "string",
+                      "example": "交易成功"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  }
+}

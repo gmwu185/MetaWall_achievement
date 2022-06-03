@@ -113,4 +113,84 @@ module.exports = {
     );
     generateSendJWT(updatePasswordUser, 200, res);
   }),
+  // 新增追蹤
+  addFollow: handleError(async (req, res, next) => {
+    if (req.params.id === req.user.id)
+      return next(appError(401, '您無法追蹤自己', next));
+    const following = await User.updateOne(
+      {
+        _id: req.user.id,
+        'following.userData': { $ne: req.params.id },
+      },
+      {
+        $addToSet: { following: { userData: req.params.id } },
+      }
+    );
+    // console.log('following', following);
+    // 有更新 modifiedCount: 1 / 沒更新 modifiedCount: 0
+    if (following.modifiedCount == 0)
+      return next(appError(401, `正在追蹤 ${req.params.id} 已加入過`, next));
+
+    const followers = await User.updateOne(
+      {
+        _id: req.params.id,
+        'followers.userData': { $ne: req.user.id },
+      },
+      {
+        $addToSet: { followers: { userData: req.user.id } },
+      }
+    );
+    // console.log('followers', followers);
+    // 有更新 modifiedCount: 1 / 沒更新 modifiedCount: 0
+    if (followers.modifiedCount == 0)
+      return next(appError(401, `追蹤對象 ${req.params.id} 已加入過`, next));
+
+    handleSuccess(res, { message: `您已成功將 ${req.params.id} 加入追蹤！` });
+  }),
+  // 取消追蹤
+  unFollow: handleError(async (req, res, next) => {
+    if (req.params.id === req.user.id)
+      return next(appError(401, '您無法取消追蹤自己', next));
+    const following = await User.updateOne(
+      {
+        _id: req.user.id,
+      },
+      {
+        $pull: { following: { userData: req.params.id } },
+      }
+    );
+    // 有更新 modifiedCount: 1, / 沒更新 modifiedCount: 0,
+    if (following.modifiedCount == 0)
+      return next(appError(401, `追蹤對象 ${req.params.id} 不在列表中`, next));
+
+    const followers = await User.updateOne(
+      {
+        _id: req.params.id,
+      },
+      {
+        $pull: { followers: { userData: req.user.id } },
+      }
+    );
+    // 有更新 modifiedCount: 1, / 沒更新 modifiedCount: 0,
+    if (followers.modifiedCount == 0)
+      return next(appError(401, `追蹤對象 ${req.params.id} 不在列表中`, next));
+
+    handleSuccess(res, { message: `您已成功將 ${req.params.id} 取消追蹤！` });
+  }),
+  // 取得使用者追蹤名單
+  getFollows: handleError(async (req, res, next) => {
+    const followUsers = await User.find({ _id: req.user.id })
+      .populate({
+        path: 'followers.userData',
+        select: 'userPhoto userName createAt',
+      })
+      .populate({
+        path: 'following.userData',
+        select: 'userPhoto userName createAt',
+      });
+    handleSuccess(res, {
+      followers: followUsers[0].followers,
+      following: followUsers[0].following,
+    });
+  }),
 };

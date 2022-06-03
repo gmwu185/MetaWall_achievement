@@ -48,6 +48,24 @@ const userSchema = new mongoose.Schema(
         default: '0',
       },
     },
+    followers: [
+      {
+        userData: { type: mongoose.Schema.ObjectId, ref: 'user' },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
+    following: [
+      {
+        userData: { type: mongoose.Schema.ObjectId, ref: 'user' },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { versionKey: false }
 );
