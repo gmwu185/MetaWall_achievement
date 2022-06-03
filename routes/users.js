@@ -206,12 +206,17 @@ router.patch('/updatePassword', isAuth, (req, res, next) =>
   */
   UsersControllers.updatePassword(req, res, next)
 );
-
+// 新增追蹤
 router.post('/:id/follow', isAuth, (req, res, next) =>
   UsersControllers.addFollow(req, res, next)
 );
+// 取消追蹤
 router.delete('/:id/follow', isAuth, (req, res, next) =>
   UsersControllers.unFollow(req, res, next)
+);
+// 取得使用者追蹤名單
+router.get('/follow', isAuth, (req, res, next) =>
+  UsersControllers.getFollows(req, res, next)
 );
 
 module.exports = router;

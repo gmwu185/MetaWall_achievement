@@ -177,4 +177,20 @@ module.exports = {
 
     handleSuccess(res, { message: '您已成功取消追蹤！' });
   }),
+  // 取得使用者追蹤名單
+  getFollows: handleError(async (req, res, next) => {
+    const followUsers = await User.find({ _id: req.user.id })
+      .populate({
+        path: 'followers.userData',
+        select: 'userPhoto userName createAt',
+      })
+      .populate({
+        path: 'following.userData',
+        select: 'userPhoto userName createAt',
+      });
+    handleSuccess(res, {
+      followers: followUsers[0].followers,
+      following: followUsers[0].following,
+    });
+  }),
 };
