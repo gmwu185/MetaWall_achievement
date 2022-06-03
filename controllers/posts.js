@@ -14,9 +14,17 @@ const Comment = require('../model/comments');
 
 module.exports = {
   getPosts: handleError(async (req, res, next) => {
-    const { q, timeSort, pageNum, pageSize } = req.query;
-    const filterQuery = q ? { discussContent: new RegExp(q) } : {};
+    const { q, timeSort, pageNum, pageSize, queryUser } = req.query;
     const filterTimeSort = timeSort === 'asc' ? 'createAt' : '-createAt';
+    const filterQueryObj = {};
+    if (q) {
+      const regExpQ = new RegExp(q);
+      filterQueryObj.discussContent = regExpQ;
+    }
+    if (queryUser) {
+      filterQueryObj.userData = queryUser;
+    }
+
     function isPositiveInteger(str) {
       if (typeof str === 'number') {
         if (Number.isInteger(str) && str > 0) return true;
@@ -31,14 +39,12 @@ module.exports = {
     }
     const currentPageLimit = isPositiveInteger(pageSize) ? pageSize : 0;
     // console.log('currentPageLimit', currentPageLimit);
-
     const currentPageSkip =
       isPositiveInteger(pageNum) && currentPageLimit > 0
         ? Number(pageSize) * Number(pageNum)
         : 0;
     // console.log('currentPageSkip', currentPageSkip);
-
-    const posts = await Posts.find(filterQuery)
+    const posts = await Posts.find(filterQueryObj)
       .populate({
         path: 'comments',
         select: 'comment commentUser createAt',

@@ -649,6 +649,13 @@
             "description": "  <code>q</code> 參數：  <ul>  <li>查找物件中的留言 <code>discussContent</code>。</li>  <li>用正則表達式以 JS 轉 mongDB 語法 <code>.find( parName: /<查尋字串>/)</code>。</li>  </ul>  "
           },
           {
+            "name": "queryUser",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "  <code>queryUser</code> 參數：  <ul>  <li>查找 <code>userData</code> 指定 user id。</li>  </ul>  "
+          },
+          {
             "name": "pageNum",
             "in": "query",
             "type": "string",
@@ -1482,6 +1489,28 @@
             "apiKeyAuth": []
           }
         ]
+      }
+    },
+    "/tp-auth/google": {
+      "get": {
+        "tags": [
+          "tp-auth (第三方登入)"
+        ],
+        "summary": "google登入",
+        "description": "google登入，前端頁面需有一頁接回傳的token",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/tp-auth/facebook": {
+      "get": {
+        "tags": [
+          "tp-auth (第三方登入)"
+        ],
+        "summary": "facebook登入",
+        "description": "facebook登入，前端頁面需有一頁接回傳的token",
+        "parameters": [],
+        "responses": {}
       }
     }
   }

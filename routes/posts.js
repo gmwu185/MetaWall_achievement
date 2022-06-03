@@ -47,6 +47,17 @@ router.get(
         </ul>
       `,
     },
+    * #swagger.parameters['queryUser'] = {
+      in: 'query',
+      type: 'string',
+      required: false,
+      description: `
+        <code>queryUser</code> 參數：
+        <ul>
+          <li>查找 <code>userData</code> 指定 user id。</li>
+        </ul>
+      `,
+    },
     * #swagger.parameters['pageNum'] = {
       in: 'query',
       type: 'string',
