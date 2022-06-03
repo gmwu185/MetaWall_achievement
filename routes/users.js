@@ -210,5 +210,8 @@ router.patch('/updatePassword', isAuth, (req, res, next) =>
 router.post('/:id/follow', isAuth, (req, res, next) =>
   UsersControllers.addFollow(req, res, next)
 );
+router.delete('/:id/follow', isAuth, (req, res, next) =>
+  UsersControllers.unFollow(req, res, next)
+);
 
 module.exports = router;
