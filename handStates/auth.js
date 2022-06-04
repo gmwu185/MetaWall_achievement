@@ -58,6 +58,7 @@ const generateSendJWT = (user, statusCode, res) => {
   });
 };
 
+// 金流生成 JWT
 const generateRedirectJWT = (user, res) => {
   const token = jwt.sign(
     {
@@ -72,7 +73,7 @@ const generateRedirectJWT = (user, res) => {
     }
   );
   user.password = undefined;
-  res.redirect(`${process.env.FRONTEND_URL}?t=${token}`);
+  res.redirect(`${process.env.FRONTEND_URL}thirdLogin?t=${token}`);
 };
 
 module.exports = { isAuth, generateSendJWT, generateRedirectJWT };
