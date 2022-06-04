@@ -58,7 +58,7 @@ const generateSendJWT = (user, statusCode, res) => {
   });
 };
 
-// 金流生成 JWT
+// 第三方登入傳送 JWT token
 const generateRedirectJWT = (user, res) => {
   const token = jwt.sign(
     {
