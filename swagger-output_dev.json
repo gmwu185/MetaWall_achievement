@@ -35,6 +35,30 @@
         ]
       }
     },
+    "/users/admin/getUser/{id}": {
+      "get": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "列出單筆會員 (後台)",
+        "description": "列出單筆會員 (後台)",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "  <ul>  <li>Params Path Variables <code>:id</code> (user ID)</li>  </ul>  "
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/users/admin/createdUser": {
       "post": {
         "tags": [
