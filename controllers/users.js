@@ -7,6 +7,7 @@ const handleSuccess = require('../handStates/handleSuccess');
 const handleError = require('../handStates/handleError');
 const { isAuth, generateSendJWT } = require('../handStates/auth');
 const appError = require('../customErr/appError');
+const mongoose = require('mongoose');
 
 const User = require('../model/users');
 
@@ -16,6 +17,18 @@ module.exports = {
     console.log('listUsers');
     const allUser = await User.find();
     handleSuccess(res, allUser);
+  }),
+  // 列出單筆會員 (後台)
+  getUser: handleError(async (req, res, next) => {
+    const userID = req.params.id;
+    if (!mongoose.isObjectIdOrHexString(userID)) {
+      return next(appError(400, '無效id', next));
+    }
+    const userInfo = await User.findById(userID, 'id userName userPhoto');
+
+    if (userInfo == null) return next(appError(400, '查無資料', next));
+
+    handleSuccess(res, userInfo);
   }),
   // 新增單筆會員 (後台)
   createdUser: handleError(async (req, res, next) => {
