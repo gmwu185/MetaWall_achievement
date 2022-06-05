@@ -16,6 +16,27 @@ router.get(
    */
   (req, res, next) => UsersControllers.listUsers(req, res, next)
 );
+router.get(
+  '/admin/getUser/:id',
+  isAuth,
+  /** #swagger.summary = '列出單筆會員 (後台)',
+    * #swagger.description = '列出單筆會員 (後台)',
+    * #swagger.tags = ['users (使用者)'],
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.parameters['id'] = {
+        in: 'path',
+        type: 'string',
+        description: `
+          <ul>
+            <li>Params Path Variables <code>:id</code> (user ID)</li>
+          </ul>
+        `,
+      },
+   */
+  UsersControllers.getUser
+);
 router.post('/admin/createdUser', isAuth, (req, res, next) =>
   /** #swagger.summary = '新增單筆會員 (後台)',
     * #swagger.description = '新增單筆會員 (後台)',
