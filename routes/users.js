@@ -75,6 +75,8 @@ router.post('/login', (req, res, next) =>
           "token": "Token",
           "name": "王小明",
           "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+          "gender": "male",
+          "premiumMember": true
         }
       }
     },
@@ -116,6 +118,35 @@ router.post('/signUp', (req, res, next) =>
     }
   */
   UsersControllers.signUp(req, res, next)
+);
+router.post(
+  '/refreshToken',
+  isAuth,
+  /** #swagger.summary = '更新token'
+    #swagger.description = `
+      <ul>
+        <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+      </ul>
+    `,
+    * #swagger.tags = ['users (使用者)']
+    * #swagger.security = [{
+      'apiKeyAuth': []
+    }],
+    * #swagger.responses[200] = {
+      description: '同登入的資訊',
+      schema: {
+        status: 'success',
+        data: {
+          "token": "Token",
+          "name": "王小明",
+          "userPhoto": "https://avatars.githubusercontent.com/u/42748910?v=4",
+          "gender": "male",
+          "premiumMember": true
+        }
+      }
+    },
+  */
+  UsersControllers.refreshToken
 );
 router.get(
   '/ownProfile',

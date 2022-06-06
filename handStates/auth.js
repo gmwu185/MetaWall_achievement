@@ -39,6 +39,7 @@ const generateSendJWT = (user, statusCode, res) => {
       userName: user.userName,
       userPhoto: user.userPhoto,
       gender: user.gender,
+      premiumMember: user.premiumMember.paid === 1,
     },
     process.env.JWT_SECRET,
     {
@@ -54,6 +55,7 @@ const generateSendJWT = (user, statusCode, res) => {
       userName: user.userName,
       userPhoto: user.userPhoto,
       gender: user.gender,
+      premiumMember: user.premiumMember.paid === 1,
     },
   });
 };
@@ -66,6 +68,7 @@ const generateRedirectJWT = (user, res) => {
       userName: user.userName,
       userPhoto: user.userPhoto,
       gender: user.gender,
+      premiumMember: user.premiumMember.paid === 1,
     },
     process.env.JWT_SECRET,
     {
