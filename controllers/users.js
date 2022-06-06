@@ -92,6 +92,14 @@ module.exports = {
     if (!auth) return next(appError(400, '您的密碼不正確', next));
     generateSendJWT(user, 200, res);
   }),
+  // 更新token
+  refreshToken: handleError(async (req, res, next) => {
+    const userID = req.user.id;
+    if (!userID) return appError(400, 'user id 未帶入', next);
+    const user = await User.findById(userID);
+    if (user == null) return next(appError(400, '查無資料', next));
+    generateSendJWT(user, 200, res);
+  }),
   // 取得登入者個人資訊
   ownProfile: handleError(async (req, res, next) => {
     const userID = req.user;
