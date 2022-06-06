@@ -131,6 +131,14 @@
                     "userPhoto": {
                       "type": "string",
                       "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "male"
+                    },
+                    "premiumMember": {
+                      "type": "boolean",
+                      "example": true
                     }
                   }
                 }
@@ -218,6 +226,63 @@
             }
           }
         }
+      }
+    },
+    "/users/refreshToken": {
+      "post": {
+        "tags": [
+          "users (使用者)"
+        ],
+        "summary": "更新token",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "同登入的資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "Token"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "王小明"
+                    },
+                    "userPhoto": {
+                      "type": "string",
+                      "example": "https://avatars.githubusercontent.com/u/42748910?v=4"
+                    },
+                    "gender": {
+                      "type": "string",
+                      "example": "male"
+                    },
+                    "premiumMember": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
       }
     },
     "/users/ownProfile": {
