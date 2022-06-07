@@ -24,8 +24,8 @@ module.exports = {
       HashKey: process.env.ECPAY_HASH_KEY,
       HashIV: process.env.ECPAY_HASH_IV,
       ReturnURL: process.env.ECPAY_RETURNN_URL,
-      OrderResultURL: process.env.ORDER_RESULT_URL,
-      ClientBackURL: process.env.ORDER_RESULT_URL,
+      OrderResultURL: process.env.ECPAY_ORDER_RESULT_URL,
+      ClientBackURL: process.env.ECPAY_CLIENT_BACK_URL,
     });
     const baseParams = {
       MerchantTradeNo: newPay.tradeNo,
@@ -33,8 +33,8 @@ module.exports = {
       TotalAmount: newPay.totalAmount,
       TradeDesc: newPay.tradeDesc,
       ItemName: newPay.itemName,
-      OrderResultURL: process.env.ORDER_RESULT_URL,
-      ClientBackURL: process.env.ORDER_RESULT_URL,
+      OrderResultURL: process.env.ECPAY_ORDER_RESULT_URL,
+      ClientBackURL: process.env.ECPAY_CLIENT_BACK_URL,
     };
     const params = {
       // 皆為選填
@@ -77,6 +77,9 @@ module.exports = {
       },
     });
     res.status(200).send('OK');
+  }),
+  tradeRedirect: handleError(async (req, res, next) => {
+    res.redirect(process.env.FRONTEND_MEMBER_URL);
   }),
   getTradeResult: handleError(async (req, res, next) => {
     const user = req.user.id;
