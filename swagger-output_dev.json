@@ -1469,7 +1469,7 @@
           "pay (綠界)"
         ],
         "summary": "產生訂單並要求付款",
-        "description": "<p>在資料庫先新增 pay 的紀錄，再向綠界產生訂單，並取得 form data 導向付款頁面</p>  參數用法：  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  流程用法：  <ul>  <li>取得 form data 後，用 html 觸發 form submit</li>  <li>測試卡號:4311-5922-2222-2222；安全碼:222；有效年月:大於當下的年月(e.g.07/28)</li>  </ul>  ",
+        "description": "<p>在資料庫先新增 pay 的紀錄，再向綠界產生訂單，並取得 form data 導向付款頁面</p>  參數用法：  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  流程用法：  <ul>  <li>取得 form data 後，用 html 觸發 form submit</li>  <li>測試卡號:4311-9522-2222-2222；安全碼:222；有效年月:大於當下的年月(e.g.07/28)</li>  </ul>  ",
         "parameters": [],
         "responses": {
           "200": {
