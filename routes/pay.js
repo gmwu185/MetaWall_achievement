@@ -16,7 +16,7 @@ router.get(
       流程用法：
       <ul>
         <li>取得 form data 後，用 html 觸發 form submit</li>
-        <li>測試卡號:4311-5922-2222-2222；安全碼:222；有效年月:大於當下的年月(e.g.07/28)</li>
+        <li>測試卡號:4311-9522-2222-2222；安全碼:222；有效年月:大於當下的年月(e.g.07/28)</li>
       </ul>
     `,
     * #swagger.tags = ['pay (綠界)'],
@@ -42,6 +42,17 @@ router.post(
     `,
   */
   (req, res, next) => PayController.tradeConfirm(req, res, next)
+);
+router.post(
+  '/tradeRedirect',
+  /** #swagger.summary = '提供綠界回傳的url轉址前端',
+    * #swagger.tags = ['pay (綠界)'],
+    * #swagger.ignore = true
+    * #swagger.description = `
+      <p>提供綠界回傳的 url, 導回前端頁面</p>
+    `,
+  */
+  PayController.tradeRedirect
 );
 
 router.get(
