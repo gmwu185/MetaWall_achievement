@@ -6,6 +6,9 @@ const findOrCreateUser = async (tpType, profile) => {
   // tpType: 'google', 'facebook'
   const { name, email, sub, id } = profile;
 
+  if (name === undefined || email === undefined) {
+    return null;
+  }
   const existEmail = await User.findOne({ email: email });
   if (existEmail) {
     switch (tpType) {
