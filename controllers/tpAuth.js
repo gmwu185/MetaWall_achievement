@@ -7,6 +7,7 @@ const auth = {
     const user = await findOrCreateUser('google', req.user._json);
     if (user === null) {
       res.redirect(`${process.env.FRONTEND_MEMBER_URL}/login`);
+      res.end();
     }
     // res.status(200).json(user);
     generateRedirectJWT(user, res);
@@ -16,6 +17,7 @@ const auth = {
     const user = await findOrCreateUser('facebook', req.user._json);
     if (user === null) {
       res.redirect(`${process.env.FRONTEND_MEMBER_URL}/login`);
+      res.end();
     }
     // res.status(200).json(user);
     generateRedirectJWT(user, res);
