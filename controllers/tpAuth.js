@@ -11,7 +11,7 @@ const auth = {
     generateRedirectJWT(user, res);
   }),
   facebookCallback: handleError(async (req, res) => {
-    console.log('email', email, 'password', password, "id", id);
+    console.log('req.user._json', req.user._json);
     const user = await findOrCreateUser('facebook', req.user._json);
     // res.status(200).json(user);
     generateRedirectJWT(user, res);
