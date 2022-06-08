@@ -24,7 +24,8 @@ passport.use(
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       callbackURL: process.env.FACEBOOK_CALLBACK_URL,
-      profileFields: ['emails', 'displayName'],
+      scope: ['public_profile', 'email'],
+      profileFields: ['id', 'displayName', 'photos', 'email'],
     },
     function (accessToken, refreshToken, profile, cb) {
       return cb(null, profile);
