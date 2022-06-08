@@ -44,6 +44,7 @@ const findOrCreateUser = async (tpType, profile) => {
     }
   }
   // 加密密碼
+  console.log('email', email, 'password', password, 'name', name, "id", id);
   password = await bcrypt.hash(randomId(8), 12);
   const newUser = await User.create({
     email: email,
