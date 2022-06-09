@@ -1,20 +1,20 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var cors = require('cors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cors = require('cors');
 const swaggerUI = require('swagger-ui-express');
 const swaggerFilePath = `./swagger-output_${process.env.NODE_ENV}.json`;
 const swaggerFile = require(swaggerFilePath);
 const passport = require('passport');
 
-var usersRouter = require('./routes/users');
-var postsRouter = require('./routes/posts');
-var indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts');
+const indexRouter = require('./routes/index');
 const payRouter = require('./routes/pay');
 const tpAuthRouter = require('./routes/tpAuth');
 
-var app = express();
+const app = express();
 require('./connections');
 
 app.use(cors());
