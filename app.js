@@ -8,15 +8,12 @@ const swaggerFilePath = `./swagger-output_${process.env.NODE_ENV}.json`;
 const swaggerFile = require(swaggerFilePath);
 const passport = require('passport');
 
-/* router ------------------------------------------------------------------- */
 var usersRouter = require('./routes/users');
 var postsRouter = require('./routes/posts');
 var indexRouter = require('./routes/index');
 const payRouter = require('./routes/pay');
 const tpAuthRouter = require('./routes/tpAuth');
-/* /router ------------------------------------------------------------------- */
 
-/* express 設定 --------------------------------------------------------------- */
 var app = express();
 require('./connections');
 
@@ -33,10 +30,7 @@ app.use('/pay', payRouter);
 app.use('/tp-auth', tpAuthRouter);
 app.use('/', indexRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
-/* /express 設定 --------------------------------------------------------------- */
-/* /passport 設定 --------------------------------------------------------------- */
 require('./config/passport')(passport);
-/* /passport 設定 --------------------------------------------------------------- */
 
 // 404 錯誤
 app.use(function (req, res, next) {
