@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const appError = require('../customErr/appError');
-const handleError = require('../handStates/handleError');
-
-const { isAuth, generateSendJWT } = require('../handStates/auth');
+const { isAuth } = require('../handStates/auth');
 
 const PostsControllers = require('../controllers/posts');
 

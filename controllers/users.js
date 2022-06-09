@@ -14,7 +14,6 @@ const User = require('../model/users');
 module.exports = {
   // 列出全部會員 (後台)
   listUsers: handleError(async (req, res, next) => {
-    console.log('listUsers');
     const allUser = await User.find();
     handleSuccess(res, allUser);
   }),
@@ -154,7 +153,6 @@ module.exports = {
           $addToSet: { following: { userData: req.params.id } },
         }
       );
-      // console.log('following', following);
       // 有更新 modifiedCount: 1 / 沒更新 modifiedCount: 0
       if (following.modifiedCount == 0)
         return next(appError(401, `正在追蹤 ${req.params.id} 已加入過`, next));
@@ -168,7 +166,6 @@ module.exports = {
           $addToSet: { followers: { userData: req.user.id } },
         }
       );
-      // console.log('followers', followers);
       // 有更新 modifiedCount: 1 / 沒更新 modifiedCount: 0
       if (followers.modifiedCount == 0)
         return next(appError(401, `追蹤對象 ${req.params.id} 已加入過`, next));

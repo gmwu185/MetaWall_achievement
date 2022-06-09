@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { isAuth, generateSendJWT } = require('../handStates/auth');
+const { isAuth } = require('../handStates/auth');
 const UsersControllers = require('../controllers/users');
 
 router.get(

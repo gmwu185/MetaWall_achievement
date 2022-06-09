@@ -5,12 +5,10 @@ dotenv.config({ path: './.env' });
 
 const handleSuccess = require('../handStates/handleSuccess');
 const handleError = require('../handStates/handleError');
-// const { isAuth, generateSendJWT } = require('../handStates/auth');
 const appError = require('../customErr/appError');
 
 const Posts = require('../model/posts');
 const Comment = require('../model/comments');
-// const User = require('../model/users');
 
 module.exports = {
   getPosts: handleError(async (req, res, next) => {
@@ -38,12 +36,10 @@ module.exports = {
       return false;
     }
     const currentPageLimit = isPositiveInteger(pageSize) ? pageSize : 0;
-    // console.log('currentPageLimit', currentPageLimit);
     const currentPageSkip =
       isPositiveInteger(pageNum) && currentPageLimit > 0
         ? Number(pageSize) * Number(pageNum)
         : 0;
-    // console.log('currentPageSkip', currentPageSkip);
     const posts = await Posts.find(filterQueryObj)
       .populate({
         path: 'comments',
@@ -62,7 +58,6 @@ module.exports = {
       .sort(filterTimeSort);
 
     let postsLength = posts.length;
-    // console.log('postsLength', postsLength);
 
     handleSuccess(res, {
       postsLength: postsLength,
@@ -190,14 +185,11 @@ module.exports = {
       });
   }),
   toggleLike: handleError(async (req, res, next) => {
-    console.log('toggleLike');
     const postID = req.params.id;
     const userID = req.user.id;
-    // console.log('userID', userID, 'postID', postID);
     const findPost = await Posts.findById({
       _id: postID,
     }).catch((err) => appError(400, `無此貼文 ${postID} ID`, next));
-    // console.log('findPost', findPost);
     // 判斷貼文按讚欄位與值判斷
     if (findPost.like) return appError(400, `此貼文沒有 likes 欄位`, next);
     // 貼文按讚的 user id 判斷
@@ -235,7 +227,6 @@ module.exports = {
     const userID = req.user.id;
     const postID = req.params.id;
     const { comment } = req.body;
-    // console.log('postID', postID);
     if (!comment) return next(appError(404, 'comment 欄位未帶上', next));
     const newComment = await Comment.create({
       post: postID,
@@ -248,7 +239,6 @@ module.exports = {
   }),
   delOneComment: handleError(async (req, res, next) => {
     const commentID = req.params.id;
-    console.log('commentID', commentID);
     if (!commentID || commentID === '')
       return next(appError(400, '未帶入刪除的 commen id 或其他錯誤', next));
     const deleteComment = await Comment.findByIdAndDelete({
