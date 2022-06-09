@@ -5,7 +5,7 @@ dotenv.config({ path: './.env' });
 
 const handleSuccess = require('../handStates/handleSuccess');
 const handleError = require('../handStates/handleError');
-const { isAuth, generateSendJWT } = require('../handStates/auth');
+const { generateSendJWT } = require('../handStates/auth');
 const appError = require('../customErr/appError');
 const mongoose = require('mongoose');
 
