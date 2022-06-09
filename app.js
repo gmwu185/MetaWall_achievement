@@ -10,7 +10,6 @@ const passport = require('passport');
 
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
-const indexRouter = require('./routes/index');
 const payRouter = require('./routes/pay');
 const tpAuthRouter = require('./routes/tpAuth');
 
@@ -28,7 +27,6 @@ app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/pay', payRouter);
 app.use('/tp-auth', tpAuthRouter);
-app.use('/', indexRouter);
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile));
 require('./config/passport')(passport);
 
