@@ -1059,6 +1059,22 @@
         ]
       }
     },
+    "/posts/my/likelist": {
+      "get": {
+        "tags": [
+          "posts (貼文按讚)"
+        ],
+        "summary": "取得會員自己的按讚列表",
+        "description": "  <ul>  <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>  </ul>  ",
+        "parameters": [],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    },
     "/posts/{id}/likes": {
       "post": {
         "tags": [

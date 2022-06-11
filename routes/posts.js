@@ -247,6 +247,21 @@ router.delete(
    */
   (req, res, next) => PostsControllers.delOnePost(req, res, next)
 );
+router.get('/my/likelist', isAuth,
+  /** #swagger.summary = '取得會員自己的按讚列表',
+    * #swagger.description = `
+    <ul>
+      <li>取得 Token 至上方 Authorize 按鈕以格式 <code>Bearer ＜Token＞</code> 加入設定，swagger 文件中鎖頭上鎖表示登入，可使用登入權限。</li>
+    </ul>
+  `,
+  * #swagger.tags = ['posts (貼文按讚)'],
+  * #swagger.security = [{
+    'apiKeyAuth': []
+  }]
+ */
+(req, res, next) =>
+  PostsControllers.getMyLikeList(req, res, next)
+);
 router.post(
   '/:id/likes',
   isAuth,
