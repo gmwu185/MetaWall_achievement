@@ -67,6 +67,7 @@ module.exports = {
   getPost: handleError(async (req, res, next) => {
     if (!req.params.id || req.params.id === '')
       return next(appError(400, '未帶入 post id 或其他錯誤', next));
+    console.log('req.params.id', req.params.id);
     const findOnePost = await Posts.findOne({
       _id: req.params.id,
     })
@@ -147,6 +148,21 @@ module.exports = {
     if (!editPost)
       return appError(400, '更新失敗，查無此 id 或欄位格式錯誤', next);
     handleSuccess(res, editPost);
+  }),
+  getMyLikeList: handleError(async (req, res, next) => {
+    const userId = req.user.id;
+    if (!userId || userId === '')
+      return next(appError(400, '未帶入 user id 或其他錯誤', next));
+    const myClickLikePosts = await Posts.find({ likes: { $in: [userId] } })
+      .populate({
+        path: 'userData',
+        select: 'email userPhoto userName createAt',
+      })
+      .populate({
+        path: 'likes',
+        select: 'userPhoto userName',
+      });
+    handleSuccess(res, myClickLikePosts);
   }),
   addLike: handleError(async (req, res, next) => {
     const postID = req.params.id;
