@@ -1,7 +1,7 @@
 
 ## API 格式與 DEMO
 
-- [前端 GetHub Repo](https://github.com/sino980294/MetaWall)
+- [前端 GetHub Repo](https://github.com/sino980294/MetaWall)、[GitHub Pages](https://sino980294.github.io/MetaWall/login)
 - [前端 GetHub Pages](https://sino980294.github.io/MetaWall/login)
 - [swagger 文件](https://damp-plateau-24758.herokuapp.com/api-doc/)
 
