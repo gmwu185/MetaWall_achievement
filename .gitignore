@@ -3,3 +3,4 @@ node_modules
 swagger-output_dev.json
 # swagger-output_production.json
 .vscode
+/inbox
